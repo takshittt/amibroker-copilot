@@ -58,3 +58,6 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 *.swp
+
+# Bug-fix mode marker (see .claude/hooks/protect-tests.sh)
+.claude/bugfix-mode

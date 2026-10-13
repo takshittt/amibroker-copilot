@@ -21,7 +21,8 @@ From: intent.md (accepted), spec.md (accepted). Author: Takshit. Status: accepte
 
 **Constraints**
 Solo developer; ~2–3 weeks to v1. Stack: Next.js + Python. LLM: OpenAI API.
-Hosting in India (Mumbai region) for latency.
+Hosting in India (Mumbai region) for latency, across three providers:
+Vercel (Next.js), Oracle Cloud (FastAPI, Redis, Caddy), Supabase (Postgres).
 
 **Key insight driving the design**
 The LLM writes; **deterministic code decides** what counts as correct.
@@ -32,12 +33,12 @@ code. The AI is never the source of truth for them.
 
 ```
                      ┌──────────────────────────────┐
-  Browser ──HTTPS──▶ │  Next.js (web + BFF)         │
+  Browser ──HTTPS──▶ │  Next.js (web + BFF), Vercel │
                      │  - UI, session JWT in cookie │
                      │  - /api/* proxy, forwards JWT│
                      └──────────────┬───────────────┘
-                                    │ internal HTTP + SSE
-                                    │ (Authorization: Bearer JWT)
+                                    │ HTTPS + SSE over the public internet
+                                    │ (Authorization: Bearer JWT, X-Internal-Key)
                      ┌──────────────▼───────────────┐
                      │  FastAPI  (copilot-api)      │
                      │  ┌────────────────────────┐  │
@@ -59,10 +60,25 @@ code. The AI is never the source of truth for them.
   /evals/*          ──▶ eval runner ──▶ report (blocks merge on regression)
 ```
 
+**Where each part runs** (all in the Mumbai region)
+- **Vercel**: Next.js, web pages and BFF routes.
+- **Oracle Cloud**: one instance running Docker Compose with FastAPI,
+  Redis and Caddy. Caddy terminates HTTPS in front of FastAPI. Redis
+  listens on the Compose network only, never on a public port.
+- **Supabase**: Postgres with the pgvector extension. FastAPI connects
+  over TLS.
+
 **Why a BFF (Next.js proxies to FastAPI)**
-The browser never talks to FastAPI directly. There's no CORS, the session
-JWT sits in an httpOnly cookie that page scripts can't read, and FastAPI
-sits on a private network trusting only a JWT it signed itself.
+The browser never talks to FastAPI directly. There's no CORS, and the
+session JWT sits in an httpOnly cookie that page scripts can't read.
+
+**Shared BFF key**
+The BFF and FastAPI are on different providers, so FastAPI is reachable
+from the internet. To keep it callable only by the BFF, every request
+must carry an `X-Internal-Key` header equal to `BFF_SHARED_SECRET`, which
+is set in the environment of both services. FastAPI rejects any request
+without it, on every route including sign-up and login. The JWT check
+below is unchanged and runs after it.
 
 **Auth: one symmetric JWT**
 Sign-in is email + password. There is no auth library and no OAuth
@@ -85,7 +101,7 @@ provider.
 | Component | Responsibility | Notes |
 |---|---|---|
 | Next.js web | Pages: landing, sign-up, login, chat (Write/Review), history, usage | Session JWT in an httpOnly cookie |
-| BFF routes | Verify the session JWT → forward it to FastAPI → stream SSE back | No business logic |
+| BFF routes | Verify the session JWT → forward it to FastAPI with the shared BFF key → stream SSE back | No business logic |
 | Auth | Sign-up, login, password hashing, issuing the JWT | In FastAPI; HS256, one shared secret |
 | Rate limiter | Daily quota per user; global spend kill-switch | Redis counters |
 | Orchestrator | Runs the pipeline as explicit steps; emits progress events | Plain Python, no agent framework |
@@ -276,7 +292,7 @@ kb_functions(name pk, params jsonb, returns, description, doc_url,
              category, kb_version)
 kb_builtins(name pk, kind, type, description)
 kb_chunks(id, kind[function|concept|example|mistake|error],
-          ref, title, content, tsv tsvector, embedding vector(N),
+          ref, title, content, tsv tsvector, embedding vector(1536),
           tags text[], kb_version)
   index: GIN(tsv), HNSW(embedding)
 
@@ -306,7 +322,7 @@ the daily totals copied into `runs` for analytics.
 - The checker reads `kb_functions` and `kb_builtins`, so adding a function
   updates both the AI's context and the checker in one change.
 
-## 8. API (FastAPI, internal; called only by the BFF)
+## 8. API (FastAPI; called only by the BFF)
 
 | Method | Path | Purpose |
 |---|---|---|
@@ -322,9 +338,11 @@ the daily totals copied into `runs` for analytics.
 
 Every call except the two auth routes carries `Authorization: Bearer <JWT>`
 (HS256, `user_id` in `sub`). The BFF puts the `token` from the auth routes
-into the session cookie; it never reaches page scripts.
+into the session cookie; it never reaches page scripts. Every call,
+including the two auth routes, also carries `X-Internal-Key` (section 2).
 
-**Quota rule**: one unit per completed answer. Clarifying questions and
+**Quota rule**: 20 units per user per day to start (config value); one
+unit per completed answer. Clarifying questions and
 internal retries are free for the user.
 
 ## 9. Scale and cost
@@ -339,6 +357,16 @@ attempt. Average attempts are expected ≈ 1.3.
   tomorrow" message.
 - Cache embeddings of repeated concept queries in Redis.
 - Model names live in config, so they can be swapped without code changes.
+
+**Models** (starting choice, decided 2026-10-14)
+- Strong model, GPT-6.1 Sol: Generate, the Review LLM pass, "apply all
+  fixes", Fix-from-error.
+- Cheap model, GPT-6 Luna: Brief, Rerank.
+- Embedding model, `text-embedding-3-small` (1536 dimensions): the
+  indexer and the vector search in Retrieve. Changing it later means
+  re-embedding the knowledge base and altering the `kb_chunks` column.
+- The eval set can still overturn any of these choices. The exact API
+  model IDs go in config when the pipeline is built.
 
 **Scaling path**: v1 needs nothing special. FastAPI runs with several
 workers; the bottleneck is OpenAI latency, not our CPU. Next steps when
@@ -361,13 +389,20 @@ API instances behind a load balancer.
   code comments are ignored by prompt design, and the checker is
   deterministic.
 - We **never execute** AFL; there is no sandbox to escape.
-- FastAPI is private (not internet-facing); only the BFF can call it.
+- FastAPI is internet-facing behind Caddy, but only the BFF can call it:
+  every request needs the shared BFF key (section 2). Redis is not
+  exposed publicly.
 - Input size limits; per-user quota; basic abuse logging.
 - Secrets in environment variables; OpenAI key server-side only.
 - Passwords are stored only as argon2id hashes. Login attempts are rate
-  limited per email and per IP in Redis.
+  limited per email and per IP in Redis. FastAPI sees Vercel's address,
+  not the browser's, so the BFF forwards the browser's IP in a header;
+  FastAPI trusts that header only when the shared BFF key matched.
+- There is no self-service password reset in v1. The admin sets a new
+  password with a command on the server.
 - `JWT_SECRET` is at least 32 random bytes. Anyone who has it can sign a
   token for any user, so it lives only in the two services' environments.
+  `BFF_SHARED_SECRET` is handled the same way.
 
 ## 12. Observability
 - `runs` table = per-request trace: steps, attempts, checks, tokens, cost,
@@ -378,11 +413,18 @@ API instances behind a load balancer.
 - Thumbs-down + comment feeds new eval cases.
 
 ## 13. Deployment (v1)
-- **One VPS (Mumbai)** running Docker Compose: Next.js, FastAPI, Postgres
-  (pgvector), Redis, with Caddy for HTTPS.
-- Daily Postgres backups to object storage.
+- **Vercel**: builds and serves Next.js from the git repository, with the
+  function region set to Mumbai.
+- **Oracle Cloud (Mumbai)**: one instance running Docker Compose with
+  FastAPI, Redis and Caddy for HTTPS.
+- **Supabase (Mumbai)**: Postgres with the pgvector extension. Migrations
+  and the indexer run against it from CI.
+- Daily Postgres backups: Supabase's own if the plan includes them,
+  otherwise a daily `pg_dump` to object storage.
+- Local development uses a Compose file with Postgres (pgvector) and
+  Redis, so tests do not need Supabase.
 - GitHub Actions: tests → evals (on prompt/KB/checker changes) → build →
-  deploy.
+  deploy the API. Vercel deploys the web side itself.
 
 ## 14. Trade-offs
 
@@ -393,7 +435,8 @@ API instances behind a load balancer.
 | Keyword search | Postgres FTS | Elasticsearch | Good enough at this size; one less service |
 | Correctness | Deterministic checker | LLM-as-judge only | Exact names need exact checks; zero cost per check |
 | Pipeline execution | Inline + SSE | Job queue | Simpler for v1; add a queue when concurrency grows |
-| Hosting | Single VPS | Vercel + managed DB | Cheapest, no function timeouts on long streams; less HA |
+| Hosting | Vercel + Oracle Cloud + Supabase | Single VPS | Managed web deploys and managed Postgres; costs a public FastAPI (needs the shared BFF key), three providers, and a function time limit on long streams |
+| Password reset | Manual, by the admin | Email sender with reset links | No email service in v1; costs a manual step per request |
 | Rerank | OpenAI small model | Self-hosted cross-encoder | No GPU/infra in v1 |
 | KB | Files in git → DB | Scrape docs into DB | Copyright-safe, reviewable, versioned |
 | Auth | Email + password, one HS256 JWT | Auth.js with Google + email | One token and one secret across both services, no OAuth setup; costs Google sign-in and early revocation |
@@ -410,6 +453,5 @@ API instances behind a load balancer.
 - Paid tier → quotas per plan, billing service.
 
 ## 16. Open questions
-- Hosting: single VPS (recommended) vs Vercel + managed Postgres?
-- Model choice per step: pick during the plan by cost/quality on the eval set.
-- Password reset: needs an email sender. In v1, or manual reset by the admin?
+None. Hosting, the three models and password reset were decided on
+2026-10-14 (sections 9, 11 and 13).

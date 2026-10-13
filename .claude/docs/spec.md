@@ -1,5 +1,5 @@
 # Spec: AFL Copilot (v1)
-From: intent.md (accepted). Author: Takshit. Status: Complete.
+From: intent.md (accepted). Author: Takshit. Status: Accepted.
 
 ## 1. Product summary
 A website where a signed-in trader can:
@@ -16,6 +16,8 @@ markets. VS Code extension is a future version, not v1.
   sign-in in v1.
 - Landing page (public) explains the product with an example; everything
   else is behind login.
+- No self-service password reset in v1. The login page shows a contact
+  address, and the admin resets the password by hand.
 
 ### Write
 1. User picks a **market preset** (e.g. NSE equity, NSE F&O, MCX, NYSE,
@@ -66,7 +68,7 @@ guesswork.
 |---|---|---|
 | Function list | Our own record per AFL function: name, inputs, input types, return type (array/number), one-line description in our words, official doc link | Description + link only |
 | Concept notes | Our own short notes on key topics: arrays vs loops, `IIf`, `ExRem`, stops (`ApplyStop`), position sizing, trade delays, plotting, time filters | Yes |
-| Example strategies | Generic, tested example AFL written for this project (not my private strategies) | Yes |
+| Example strategies | Generic, tested example AFL written for this project. No private strategies | Yes |
 | Mistake catalogue | Known AFL mistakes with bad/good examples (feeds both retrieval and the checker) | Yes |
 
 AmiBroker's own docs and forum text are used only as reference while we
@@ -114,8 +116,8 @@ code, plugins/OLE, VS Code extension.
 
 ## 8. Limits and accounts
 - Sign-in required.
-- Rate limit per user per day, counted per request (exact number in
-  plan; starting proposal: 20 requests/day).
+- Rate limit per user per day, counted per request: 20 requests/day to
+  start. The number is a setting, so it can change without a code change.
 - Very long pasted code is rejected above a size limit.
 - Users see their remaining requests.
 
@@ -130,6 +132,11 @@ code, plugins/OLE, VS Code extension.
   in plan by cost and quality).
 - **Auth**: email + password. The session is a JWT signed with one
   shared secret (HS256), kept in an httpOnly cookie.
+- **Models**: GPT-6.1 Sol for writing and reviewing, GPT-6 Luna for the
+  smaller steps (understanding, reranking), and
+  `text-embedding-3-small` for embeddings.
+- **Hosting**: Next.js on Vercel; FastAPI, Redis and Caddy on Oracle
+  Cloud; Postgres on Supabase. All in the Mumbai region.
 
 ## 10. Measuring quality
 - **Test set**: 60–100 tasks (Write) and 30+ buggy AFL samples with known
@@ -154,8 +161,13 @@ code, plugins/OLE, VS Code extension.
   doesn't give trading advice, and users must backtest before trading.
 - **Copyright**: only our own written records are stored and shown.
 
-## 12. Open questions (please confirm)
-- Example strategies: generic ones written for the project, not my
-  private strategies. OK?
-- v1 scope as in section 7. OK?
-- Rate limit number: 20 requests/day to start?
+## 12. Decisions (confirmed 2026-10-14)
+- Example strategies: generic ones written for the project only. No
+  private strategies are stored anywhere; the strategy always comes from
+  what the user describes.
+- v1 scope is as in section 7.
+- Rate limit: 20 requests per user per day to start.
+- Models: GPT-6.1 Sol (main), GPT-6 Luna (small) and
+  `text-embedding-3-small` (embeddings).
+- Password reset: manual, by the admin.
+- Hosting: Vercel, Oracle Cloud and Supabase, as in section 9.
