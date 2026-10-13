@@ -1,0 +1,7 @@
+name: BarIndex
+category: lookup
+returns: array
+params: []
+description: >-
+  Position of each bar counted from zero at the start of the data.
+doc_url: https://www.amibroker.com/guide/afl/barindex.html

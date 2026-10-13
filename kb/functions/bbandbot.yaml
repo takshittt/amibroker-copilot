@@ -1,0 +1,11 @@
+name: BBandBot
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: number, optional: true}
+  - {name: width, type: number, optional: true}
+description: >-
+  Lower Bollinger band: the moving average minus `width` standard
+  deviations.
+doc_url: https://www.amibroker.com/guide/afl/bbandbot.html

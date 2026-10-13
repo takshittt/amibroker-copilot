@@ -1,0 +1,10 @@
+name: ParamToggle
+category: param
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: values, type: string, optional: false}
+  - {name: defaultval, type: number, optional: true}
+description: >-
+  Adds a two-choice switch to the Parameters window and returns 0 or 1.
+doc_url: https://www.amibroker.com/guide/afl/paramtoggle.html

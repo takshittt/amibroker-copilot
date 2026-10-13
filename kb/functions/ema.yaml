@@ -1,0 +1,10 @@
+name: EMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Exponential moving average, which gives recent bars more weight than
+  older ones.
+doc_url: https://www.amibroker.com/guide/afl/ema.html

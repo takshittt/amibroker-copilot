@@ -1,0 +1,7 @@
+name: _SECTION_END
+category: plot
+returns: none
+params: []
+description: >-
+  Ends the section started by _SECTION_BEGIN.
+doc_url: https://www.amibroker.com/guide/afl/_section_end.html

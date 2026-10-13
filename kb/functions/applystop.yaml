@@ -1,0 +1,16 @@
+name: ApplyStop
+category: stops
+returns: none
+params:
+  - {name: type, type: number, optional: false}
+  - {name: mode, type: number, optional: false}
+  - {name: amount, type: any, optional: false}
+  - {name: exitatstop, type: number, optional: true}
+  - {name: volatile, type: number, optional: true}
+  - {name: reentrydelay, type: number, optional: true}
+  - {name: validfrom, type: number, optional: true}
+  - {name: validto, type: number, optional: true}
+description: >-
+  Switches on a backtester stop of the given type (loss, profit, trailing
+  or N-bar), measured in the given mode.
+doc_url: https://www.amibroker.com/guide/afl/applystop.html

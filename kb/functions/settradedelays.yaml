@@ -1,0 +1,12 @@
+name: SetTradeDelays
+category: backtest
+returns: none
+params:
+  - {name: buydelay, type: number, optional: false}
+  - {name: selldelay, type: number, optional: false}
+  - {name: shortdelay, type: number, optional: false}
+  - {name: coverdelay, type: number, optional: false}
+description: >-
+  Sets how many bars after a signal each kind of trade is executed. All
+  zeros means trading on the signal bar.
+doc_url: https://www.amibroker.com/guide/afl/settradedelays.html

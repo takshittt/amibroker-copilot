@@ -1,0 +1,10 @@
+name: MA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Simple moving average: the plain mean of the last `periods` values of
+  the array.
+doc_url: https://www.amibroker.com/guide/afl/ma.html

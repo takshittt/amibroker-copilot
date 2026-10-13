@@ -1,0 +1,9 @@
+name: ATR
+category: indicator
+returns: array
+params:
+  - {name: period, type: number, optional: false}
+description: >-
+  Average True Range: the smoothed bar range including gaps, used to size
+  stops to volatility.
+doc_url: https://www.amibroker.com/guide/afl/atr.html

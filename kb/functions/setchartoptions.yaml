@@ -1,0 +1,14 @@
+name: SetChartOptions
+category: plot
+returns: none
+params:
+  - {name: mode, type: number, optional: true}
+  - {name: flags, type: number, optional: true}
+  - {name: gridflags, type: number, optional: true}
+  - {name: ymin, type: number, optional: true}
+  - {name: ymax, type: number, optional: true}
+  - {name: blankbars, type: number, optional: true}
+description: >-
+  Switches chart display options on or off, such as the date axis or trade
+  arrows.
+doc_url: https://www.amibroker.com/guide/afl/setchartoptions.html

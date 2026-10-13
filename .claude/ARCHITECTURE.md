@@ -269,6 +269,13 @@ AFL source ─▶ Lexer ─▶ tokens ─▶ Light parser ─▶ statements + ca
 | Signals not cleaned with `ExRem` where needed | Warning |
 | Hard-coded session times | Tip |
 
+**Input**: the checker does not read files or tables itself. It takes a
+`Catalog` object (functions, built-ins, markets, `kb_version`), built from
+the `/kb` files in tests and from the `kb_*` rows at runtime. Both come
+from the same files, so there is still one function list. A function
+whose return type is `any` (array or number depending on its arguments)
+counts as unknown for the type guess.
+
 **Known limitation**: the type guess is heuristic, so some array/number
 cases will be missed. Those are covered by AI review, and the set of cases is
 grown from user reports.
@@ -316,7 +323,11 @@ the daily totals copied into `runs` for analytics.
   /mistakes/*.yaml    bad example, good example, explanation, checker rule id
   /errors/*.yaml      AmiBroker error notes
   /markets.yaml       presets + DST rules + last_verified
+  /VERSION            kb_version, one whole number
 ```
+- `make validate-kb` checks every file against the record formats in
+  `api/copilot/kb/schema.py`: unknown fields, missing fields and duplicate
+  names are errors.
 - Every KB change goes through a pull request and is versioned (`kb_version`).
 - CI runs: schema validation → indexer (embed changed chunks only) → evals.
 - The checker reads `kb_functions` and `kb_builtins`, so adding a function

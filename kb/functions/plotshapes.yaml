@@ -1,0 +1,14 @@
+name: PlotShapes
+category: plot
+returns: none
+params:
+  - {name: shape, type: any, optional: false}
+  - {name: color, type: any, optional: false}
+  - {name: layer, type: number, optional: true}
+  - {name: yposition, type: any, optional: true}
+  - {name: offset, type: number, optional: true}
+  - {name: xshift, type: number, optional: true}
+description: >-
+  Draws markers such as arrows on the bars where the shape value is not
+  zero.
+doc_url: https://www.amibroker.com/guide/afl/plotshapes.html

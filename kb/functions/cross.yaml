@@ -1,0 +1,10 @@
+name: Cross
+category: signal
+returns: array
+params:
+  - {name: array1, type: any, optional: false}
+  - {name: array2, type: any, optional: false}
+description: >-
+  True on the bar where the first value moves from below the second to
+  above it. Swap the arguments for a downward cross.
+doc_url: https://www.amibroker.com/guide/afl/cross.html

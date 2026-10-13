@@ -1,0 +1,9 @@
+name: _SECTION_BEGIN
+category: plot
+returns: none
+params:
+  - {name: name, type: string, optional: false}
+description: >-
+  Starts a named section of a formula, so its parameters are grouped under
+  that name.
+doc_url: https://www.amibroker.com/guide/afl/_section_begin.html

@@ -1,0 +1,10 @@
+name: LLV
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Lowest value of the array over the last `periods` bars, current bar
+  included.
+doc_url: https://www.amibroker.com/guide/afl/llv.html

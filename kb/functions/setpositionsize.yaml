@@ -1,0 +1,10 @@
+name: SetPositionSize
+category: sizing
+returns: array
+params:
+  - {name: size, type: any, optional: false}
+  - {name: method, type: number, optional: false}
+description: >-
+  Sets the size of each new trade, in the unit chosen by the method:
+  shares, currency value or percent of equity.
+doc_url: https://www.amibroker.com/guide/afl/setpositionsize.html

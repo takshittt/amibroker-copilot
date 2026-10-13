@@ -1,0 +1,8 @@
+name: BarsSince
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Number of bars since the array was last true.
+doc_url: https://www.amibroker.com/guide/afl/barssince.html

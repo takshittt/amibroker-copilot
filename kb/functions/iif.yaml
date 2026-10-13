@@ -1,0 +1,11 @@
+name: IIf
+category: signal
+returns: any
+params:
+  - {name: condition, type: any, optional: false}
+  - {name: true_part, type: any, optional: false}
+  - {name: false_part, type: any, optional: false}
+description: >-
+  Chooses bar by bar between two values according to a condition. This is
+  the array form of if/else.
+doc_url: https://www.amibroker.com/guide/afl/iif.html

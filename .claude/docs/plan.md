@@ -62,15 +62,37 @@ and format.
 
 ## Stage 1: KB format and seed
 
+Status: done. Takshit verified the market session times on 2026-10-14.
+
 **Files that change** (all new)
 `api/copilot/kb/schema.py`, `api/copilot/kb/catalog.py`,
+`api/copilot/kb/__main__.py`,
 `api/tests/kb/test_schema.py`, `api/tests/kb/test_catalog.py`,
-`kb/functions/*.yaml`, `kb/builtins.yaml`, `kb/markets.yaml`.
+`api/tests/kb/test_seed.py`,
+`kb/functions/*.yaml`, `kb/builtins.yaml`, `kb/markets.yaml`,
+`kb/VERSION`. `pydantic` and `pyyaml` are added as dependencies.
+
+**What departed from the first draft of this stage**
+- `returns` has a fifth value, `any`, for functions whose result is an
+  array or a number depending on the arguments (`IIf`, `Max`, `Min`,
+  `abs`, `Nz`). The stage 2 `if`-on-array rule must treat `any` as
+  unknown and not fire.
+- `kb_version` is one whole number in `kb/VERSION`.
+- The validator is a command, `make validate-kb`, which CI runs.
+- A market's `last_verified` may be empty, meaning not yet checked. The
+  validator lists those markets but does not fail.
+- `ApplyStop` and `Param` are recorded more leniently than the reference
+  page's syntax line (`exitatstop`, and `min`/`max`/`step`, are marked
+  optional) so that short calls are not reported as Critical. Takshit
+  confirmed on 2026-10-14 that both short calls compile in AmiBroker.
+- Functions that take any number of arguments (`printf`, `StrFormat`)
+  are not in the seed; the format has no way to describe them yet.
+  Stage 3 must add one.
 
 **Order of work**
 1. Define the function record: `name`, `params` (each with `name`, `type`,
-   `optional`), `returns` (array, number, string or none), `description`,
-   `doc_url`, `category`.
+   `optional`), `returns` (array, number, string, none or any),
+   `description`, `doc_url`, `category`.
 2. Define the built-in record: `name`, `kind` (variable or constant),
    `type`, `description`, and `aliases` (`C` for `Close`).
 3. Write the validator. It rejects unknown fields, missing fields and
@@ -139,8 +161,8 @@ should pass, then the rule.
 - **The checker reads files, the architecture says tables.** The plan has
   the checker take a `Catalog` object, built from `/kb` files in tests
   and from the database rows at runtime. Both come from the same files,
-  so there is still one function list. ARCHITECTURE.md section 5 needs a
-  line saying this.
+  so there is still one function list. ARCHITECTURE.md section 5 says
+  this since stage 1.
 - **The light parser may not cover real-world AFL.** Pasted code in Review
   mode is less tidy than generated code. A parse failure must give a
   syntax finding or `checker_error`, never a pass.
