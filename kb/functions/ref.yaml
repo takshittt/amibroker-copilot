@@ -1,0 +1,10 @@
+name: Ref
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: period, type: any, optional: false}
+description: >-
+  The array shifted in time. A negative period reads earlier bars; a
+  positive period reads future bars, which is look-ahead in signal logic.
+doc_url: https://www.amibroker.com/guide/afl/ref.html

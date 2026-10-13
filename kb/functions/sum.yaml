@@ -1,0 +1,9 @@
+name: Sum
+category: math
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Running total of the array over the last `periods` bars.
+doc_url: https://www.amibroker.com/guide/afl/sum.html

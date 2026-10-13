@@ -1,0 +1,10 @@
+name: MACD
+category: indicator
+returns: array
+params:
+  - {name: fast, type: number, optional: true}
+  - {name: slow, type: number, optional: true}
+description: >-
+  MACD line: the fast exponential average of the close minus the slow one.
+  Defaults are 12 and 26.
+doc_url: https://www.amibroker.com/guide/afl/macd.html

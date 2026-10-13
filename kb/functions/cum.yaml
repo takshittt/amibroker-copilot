@@ -1,0 +1,8 @@
+name: Cum
+category: math
+returns: array
+params:
+  - {name: array, type: any, optional: false}
+description: >-
+  Running total of the array from the first bar to the current one.
+doc_url: https://www.amibroker.com/guide/afl/cum.html

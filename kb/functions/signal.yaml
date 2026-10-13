@@ -1,0 +1,11 @@
+name: Signal
+category: indicator
+returns: array
+params:
+  - {name: fast, type: number, optional: true}
+  - {name: slow, type: number, optional: true}
+  - {name: signal, type: number, optional: true}
+description: >-
+  Signal line of the MACD: an exponential average of the MACD line.
+  Defaults are 12, 26 and 9.
+doc_url: https://www.amibroker.com/guide/afl/signal.html

@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stage 0 of the plan (scaffolding) is done: `api/` is an empty Python project with one smoke test. No product code exists yet, and there is no `web/` side.
+The design is accepted. Stages 0 and 1 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`, and `/kb` holds a seed of 45 functions, the built-ins and the v1 markets. There is no checker, pipeline or API yet, and no `web/` side.
 
 ## Commands
 
@@ -14,6 +14,7 @@ Run from the repository root. Python is managed by `uv` (Python 3.12).
 - One test: `cd api && uv run pytest tests/test_smoke.py::test_package_imports`
 - Lint: `make lint` (ends with "All checks passed!" and "N files already formatted")
 - Auto-fix lint and formatting: `make format`
+- Validate the knowledge base: `make validate-kb` (ends with "KB ok: ..." or lists every problem and fails)
 
 ## Verifying your work
 

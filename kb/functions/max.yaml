@@ -1,0 +1,10 @@
+name: Max
+category: math
+returns: any
+params:
+  - {name: value1, type: any, optional: false}
+  - {name: value2, type: any, optional: false}
+description: >-
+  The larger of two values, compared bar by bar when either one is an
+  array.
+doc_url: https://www.amibroker.com/guide/afl/max.html

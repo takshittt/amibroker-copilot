@@ -1,0 +1,13 @@
+name: Optimize
+category: param
+returns: number
+params:
+  - {name: description, type: string, optional: false}
+  - {name: default, type: number, optional: false}
+  - {name: min, type: number, optional: false}
+  - {name: max, type: number, optional: false}
+  - {name: step, type: number, optional: false}
+description: >-
+  Marks a variable for optimisation over a range. Outside an optimisation
+  run it returns the default.
+doc_url: https://www.amibroker.com/guide/afl/optimize.html

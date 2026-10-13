@@ -1,0 +1,10 @@
+name: Flip
+category: signal
+returns: array
+params:
+  - {name: array1, type: array, optional: false}
+  - {name: array2, type: array, optional: false}
+description: >-
+  Turns a one-bar signal into a state: true from a true bar in the first
+  array until the second array is true.
+doc_url: https://www.amibroker.com/guide/afl/flip.html

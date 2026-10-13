@@ -1,0 +1,16 @@
+name: Plot
+category: plot
+returns: number
+params:
+  - {name: array, type: any, optional: false}
+  - {name: name, type: string, optional: false}
+  - {name: color, type: any, optional: false}
+  - {name: style, type: number, optional: true}
+  - {name: minvalue, type: number, optional: true}
+  - {name: maxvalue, type: number, optional: true}
+  - {name: xshift, type: number, optional: true}
+  - {name: zorder, type: number, optional: true}
+  - {name: width, type: number, optional: true}
+description: >-
+  Draws an array on the chart with the given name, colour and style.
+doc_url: https://www.amibroker.com/guide/afl/plot.html

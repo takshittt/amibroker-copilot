@@ -1,0 +1,10 @@
+name: ROC
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: number, optional: true}
+  - {name: absmode, type: number, optional: true}
+description: >-
+  Rate of change: the percentage move of the array over `periods` bars.
+doc_url: https://www.amibroker.com/guide/afl/roc.html

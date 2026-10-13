@@ -1,0 +1,10 @@
+name: StDev
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: number, optional: false}
+  - {name: population, type: number, optional: true}
+description: >-
+  Rolling standard deviation of the array over `periods` bars.
+doc_url: https://www.amibroker.com/guide/afl/stdev.html

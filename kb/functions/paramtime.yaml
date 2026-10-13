@@ -1,0 +1,11 @@
+name: ParamTime
+category: param
+returns: any
+params:
+  - {name: name, type: string, optional: false}
+  - {name: defaulttime, type: string, optional: false}
+  - {name: format, type: number, optional: true}
+description: >-
+  Adds a time field to the Parameters window and returns the chosen time,
+  by default in the same HHMMSS form as TimeNum.
+doc_url: https://www.amibroker.com/guide/afl/paramtime.html

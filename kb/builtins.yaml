@@ -1,0 +1,396 @@
+# Built-in variables and constants. One list; names are compared without case.
+# Quote True, False and Null: YAML reads the bare words as booleans and null.
+
+# Price arrays
+
+- name: Open
+  kind: variable
+  type: array
+  description: Opening price of each bar.
+  aliases: [O]
+
+- name: High
+  kind: variable
+  type: array
+  description: Highest price of each bar.
+  aliases: [H]
+
+- name: Low
+  kind: variable
+  type: array
+  description: Lowest price of each bar.
+  aliases: [L]
+
+- name: Close
+  kind: variable
+  type: array
+  description: Closing price of each bar.
+  aliases: [C]
+
+- name: Volume
+  kind: variable
+  type: array
+  description: Traded volume of each bar.
+  aliases: [V]
+
+- name: OpenInt
+  kind: variable
+  type: array
+  description: Open interest of each bar.
+  aliases: [OI]
+
+- name: Avg
+  kind: variable
+  type: array
+  description: Typical price of each bar, the mean of high, low and close.
+
+# Signals and trade prices
+
+- name: Buy
+  kind: variable
+  type: array
+  description: Long entry signal. True on the bars where a long trade should open.
+
+- name: Sell
+  kind: variable
+  type: array
+  description: Long exit signal. True on the bars where a long trade should close.
+
+- name: Short
+  kind: variable
+  type: array
+  description: Short entry signal. True on the bars where a short trade should open.
+
+- name: Cover
+  kind: variable
+  type: array
+  description: Short exit signal. True on the bars where a short trade should close.
+
+- name: BuyPrice
+  kind: variable
+  type: array
+  description: Price the backtester uses for long entries.
+
+- name: SellPrice
+  kind: variable
+  type: array
+  description: Price the backtester uses for long exits.
+
+- name: ShortPrice
+  kind: variable
+  type: array
+  description: Price the backtester uses for short entries.
+
+- name: CoverPrice
+  kind: variable
+  type: array
+  description: Price the backtester uses for short exits.
+
+- name: PositionSize
+  kind: variable
+  type: array
+  description: Size of each new trade. The older way to size trades; SetPositionSize is the newer one.
+
+- name: PositionScore
+  kind: variable
+  type: array
+  description: Ranking used to choose between signals when there are more signals than free positions.
+
+- name: Filter
+  kind: variable
+  type: array
+  description: Exploration filter. Bars where it is true appear in the result list.
+
+# Symbol and chart settings
+
+- name: TickSize
+  kind: variable
+  type: number
+  description: Smallest price step of the symbol.
+
+- name: PointValue
+  kind: variable
+  type: number
+  description: Currency value of a one-point move, for futures.
+
+- name: MarginDeposit
+  kind: variable
+  type: number
+  description: Margin needed for one futures contract.
+
+- name: RoundLotSize
+  kind: variable
+  type: number
+  description: Lot size that trade sizes are rounded to.
+
+- name: Title
+  kind: variable
+  type: string
+  description: Text shown in the chart title line.
+
+- name: graph0
+  kind: variable
+  type: array
+  description: The first plotted array of the chart; PlotShapes places its markers against it unless told otherwise.
+
+# Constants
+
+- name: "True"
+  kind: constant
+  type: number
+  description: Logical true, the number 1.
+
+- name: "False"
+  kind: constant
+  type: number
+  description: Logical false, the number 0.
+
+- name: "Null"
+  kind: constant
+  type: number
+  description: The empty value. Arrays hold it where there is no data yet.
+
+- name: stopTypeLoss
+  kind: constant
+  type: number
+  description: Kind of stop, for the first argument of ApplyStop.
+
+- name: stopTypeProfit
+  kind: constant
+  type: number
+  description: Kind of stop, for the first argument of ApplyStop.
+
+- name: stopTypeTrailing
+  kind: constant
+  type: number
+  description: Kind of stop, for the first argument of ApplyStop.
+
+- name: stopTypeNBar
+  kind: constant
+  type: number
+  description: Kind of stop, for the first argument of ApplyStop.
+
+- name: stopModePercent
+  kind: constant
+  type: number
+  description: Unit of the stop amount, for the second argument of ApplyStop.
+
+- name: stopModePoint
+  kind: constant
+  type: number
+  description: Unit of the stop amount, for the second argument of ApplyStop.
+
+- name: stopModeBars
+  kind: constant
+  type: number
+  description: Unit of the stop amount, for the second argument of ApplyStop.
+
+- name: stopModeDisable
+  kind: constant
+  type: number
+  description: Second argument of ApplyStop that switches a stop of the given type off.
+
+- name: spsShares
+  kind: constant
+  type: number
+  description: Sizing method, for the second argument of SetPositionSize.
+
+- name: spsValue
+  kind: constant
+  type: number
+  description: Sizing method, for the second argument of SetPositionSize.
+
+- name: spsPercentOfEquity
+  kind: constant
+  type: number
+  description: Sizing method, for the second argument of SetPositionSize.
+
+- name: spsPercentOfPosition
+  kind: constant
+  type: number
+  description: Sizing method, for the second argument of SetPositionSize.
+
+- name: spsNoChange
+  kind: constant
+  type: number
+  description: Sizing method, for the second argument of SetPositionSize.
+
+- name: colorDefault
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorBlack
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorWhite
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorRed
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorGreen
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorBlue
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorYellow
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorOrange
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorBrightGreen
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: colorLightGrey
+  kind: constant
+  type: number
+  description: Colour constant for plots and exploration columns.
+
+- name: styleLine
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleHistogram
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleThick
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleDots
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleNoLine
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleDashed
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleCandle
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleBar
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleArea
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleOwnScale
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleNoLabel
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: styleNoTitle
+  kind: constant
+  type: number
+  description: Chart style flag for Plot. Flags are combined with the | operator.
+
+- name: shapeNone
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeUpArrow
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeDownArrow
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeHollowUpArrow
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeHollowDownArrow
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeSmallCircle
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeCircle
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeSquare
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeUpTriangle
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: shapeDownTriangle
+  kind: constant
+  type: number
+  description: Marker shape for PlotShapes.
+
+- name: chartShowDates
+  kind: constant
+  type: number
+  description: Chart option flag for SetChartOptions.
+
+- name: chartShowArrows
+  kind: constant
+  type: number
+  description: Chart option flag for SetChartOptions.
+
+- name: chartLogarithmic
+  kind: constant
+  type: number
+  description: Chart option flag for SetChartOptions.
+
+- name: chartGridMiddle
+  kind: constant
+  type: number
+  description: Chart option flag for SetChartOptions.

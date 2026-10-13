@@ -1,0 +1,11 @@
+name: ValueWhen
+category: lookup
+returns: array
+params:
+  - {name: expression, type: array, optional: false}
+  - {name: array, type: array, optional: false}
+  - {name: n, type: number, optional: true}
+description: >-
+  The value the array had on the n-th most recent bar where the expression
+  was true.
+doc_url: https://www.amibroker.com/guide/afl/valuewhen.html

@@ -1,0 +1,14 @@
+name: Param
+category: param
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: defaultval, type: number, optional: false}
+  - {name: min, type: number, optional: true}
+  - {name: max, type: number, optional: true}
+  - {name: step, type: number, optional: true}
+  - {name: sincr, type: number, optional: true}
+description: >-
+  Adds a numeric slider to the Parameters window and returns the value the
+  user picked.
+doc_url: https://www.amibroker.com/guide/afl/param.html

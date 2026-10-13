@@ -1,0 +1,14 @@
+name: AddColumn
+category: exploration
+returns: none
+params:
+  - {name: array, type: any, optional: false}
+  - {name: name, type: string, optional: false}
+  - {name: format, type: number, optional: true}
+  - {name: textcolor, type: any, optional: true}
+  - {name: bkgndcolor, type: any, optional: true}
+  - {name: width, type: number, optional: true}
+  - {name: barchart, type: any, optional: true}
+description: >-
+  Adds a numeric column to the Exploration result list.
+doc_url: https://www.amibroker.com/guide/afl/addcolumn.html

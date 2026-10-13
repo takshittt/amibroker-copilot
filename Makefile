@@ -1,4 +1,4 @@
-.PHONY: test lint format bugfix-on bugfix-off
+.PHONY: test lint format validate-kb bugfix-on bugfix-off
 
 test:
 	cd api && uv run pytest
@@ -8,6 +8,10 @@ lint:
 
 format:
 	cd api && uv run ruff check --fix . && uv run ruff format .
+
+# Checks every file in kb/ against the record formats.
+validate-kb:
+	cd api && uv run python -m copilot.kb ../kb
 
 # Bug-fix mode: while it is on, Claude cannot change test files.
 # Commit the failing test first, then switch it on.

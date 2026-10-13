@@ -1,0 +1,88 @@
+# Market presets. Session times are in the exchange's own time zone, as
+# quoted "HH:MM" strings (YAML reads a bare 15:30 as the number 930).
+#
+# last_verified is the date someone last checked the times against the
+# exchange. null means nobody has checked them yet.
+#
+# dst_rules: a close that moves with daylight saving in another zone. The
+# rule whose dst_active matches the season replaces the session's close.
+
+- id: nse_eq
+  name: NSE equity
+  exchange: NSE
+  timezone: Asia/Kolkata
+  sessions:
+    - {name: pre_open, open: "09:00", close: "09:15", days: [mon, tue, wed, thu, fri]}
+    - {name: regular, open: "09:15", close: "15:30", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+- id: nse_fo
+  name: NSE futures and options
+  exchange: NSE
+  timezone: Asia/Kolkata
+  sessions:
+    - {name: regular, open: "09:15", close: "15:30", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+- id: bse_eq
+  name: BSE equity
+  exchange: BSE
+  timezone: Asia/Kolkata
+  sessions:
+    - {name: pre_open, open: "09:00", close: "09:15", days: [mon, tue, wed, thu, fri]}
+    - {name: regular, open: "09:15", close: "15:30", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+# MCX closes at 23:30 while the US is on daylight saving and at 23:55 the
+# rest of the year. These are the hours of the internationally linked
+# commodities (bullion, base metals, energy).
+- id: mcx
+  name: MCX commodities
+  exchange: MCX
+  timezone: Asia/Kolkata
+  sessions:
+    - {name: regular, open: "09:00", close: "23:55", days: [mon, tue, wed, thu, fri]}
+  dst_rules:
+    - {session: regular, reference_timezone: America/New_York, dst_active: true, close: "23:30"}
+    - {session: regular, reference_timezone: America/New_York, dst_active: false, close: "23:55"}
+  last_verified: 2026-10-14
+
+- id: nyse
+  name: NYSE
+  exchange: NYSE
+  timezone: America/New_York
+  sessions:
+    - {name: regular, open: "09:30", close: "16:00", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+- id: nasdaq
+  name: NASDAQ
+  exchange: NASDAQ
+  timezone: America/New_York
+  sessions:
+    - {name: regular, open: "09:30", close: "16:00", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+- id: lse
+  name: London Stock Exchange
+  exchange: LSE
+  timezone: Europe/London
+  sessions:
+    - {name: regular, open: "08:00", close: "16:30", days: [mon, tue, wed, thu, fri]}
+  dst_rules: []
+  last_verified: 2026-10-14
+
+# Trades all day, every day. 23:59 stands for the end of the day.
+- id: crypto
+  name: Crypto (24x7)
+  exchange: Crypto
+  timezone: UTC
+  sessions:
+    - {name: always, open: "00:00", close: "23:59", days: [mon, tue, wed, thu, fri, sat, sun]}
+  dst_rules: []
+  last_verified: 2026-10-14

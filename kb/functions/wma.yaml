@@ -1,0 +1,10 @@
+name: WMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Weighted moving average, with weights that rise in a straight line
+  toward the newest bar.
+doc_url: https://www.amibroker.com/guide/afl/wma.html

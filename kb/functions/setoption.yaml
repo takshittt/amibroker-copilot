@@ -1,0 +1,10 @@
+name: SetOption
+category: backtest
+returns: none
+params:
+  - {name: field, type: string, optional: false}
+  - {name: value, type: any, optional: false}
+description: >-
+  Sets one named backtester setting from code, such as starting equity or
+  the maximum number of open positions.
+doc_url: https://www.amibroker.com/guide/afl/setoption.html
