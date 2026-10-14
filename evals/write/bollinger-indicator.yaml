@@ -1,0 +1,12 @@
+id: bollinger-indicator
+market: nse_eq
+timeframe: daily
+difficulty: easy
+request: >-
+  Just an indicator, no trades: plot price as candles with Bollinger bands
+  around a 20 period average, 2 standard deviations wide. Let me change
+  the length and the width.
+expect:
+  status: checked
+  retrieved: [BBandTop, BBandBot, Plot]
+  calls: [BBandTop, BBandBot, Plot, Param]

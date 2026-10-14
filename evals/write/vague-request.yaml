@@ -1,0 +1,8 @@
+id: vague-request
+market: nse_fo
+timeframe: 5min
+difficulty: easy
+request: >-
+  Make me a good intraday strategy for Nifty.
+expect:
+  status: clarify

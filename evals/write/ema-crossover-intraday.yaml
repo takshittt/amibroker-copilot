@@ -1,0 +1,12 @@
+id: ema-crossover-intraday
+market: nse_fo
+timeframe: 5min
+difficulty: medium
+request: >-
+  Nifty futures on 5 minute bars. Go long when the 9 EMA crosses above the
+  21 EMA and short when it crosses below. Only take new trades between
+  9:30 and 2:30, close everything at 3:15, and do not trade on Fridays.
+expect:
+  status: checked
+  retrieved: [EMA, Cross, TimeNum]
+  calls: [EMA, Cross, TimeNum, ParamTime, DayOfWeek, SetTradeDelays]

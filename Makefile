@@ -1,4 +1,12 @@
-.PHONY: test lint format validate-kb services-up services-down db-migrate index bugfix-on bugfix-off
+.PHONY: test lint format validate-kb services-up services-down db-migrate index write evals bugfix-on bugfix-off
+
+# Settings such as OPENAI_API_KEY are read from .env when it exists, and
+# handed to every command below. Write each line as NAME=value, with no
+# quotes and no spaces around the equals sign.
+ifneq (,$(wildcard .env))
+include .env
+export
+endif
 
 # The local databases from docker-compose.yml. Set these in the
 # environment to use others; CI sets TEST_DATABASE_URL itself.
@@ -37,6 +45,16 @@ db-migrate:
 # `make index FAKE=1` uses made-up vectors instead (keyword search only).
 index:
 	cd api && uv run python -m copilot.indexer ../kb $(if $(FAKE),--fake-embeddings,)
+
+# Writes AFL for one request. Makes real OpenAI calls. Example:
+#   make write MARKET=nse_fo TIMEFRAME=5min TEXT="Buy when the 9 EMA crosses above the 21 EMA ..."
+write:
+	cd api && uv run python -m copilot.write --market "$(MARKET)" --timeframe "$(TIMEFRAME)" "$(TEXT)"
+
+# Runs the Write test set and prints the quality measures. Makes real
+# OpenAI calls for every task, so it costs money.
+evals:
+	cd api && uv run python -m copilot.evals ../evals/write --json ../evals/last-report.json
 
 # Bug-fix mode: while it is on, Claude cannot change test files.
 # Commit the failing test first, then switch it on.

@@ -3,7 +3,14 @@
 from copilot.checker import rules
 from copilot.checker.findings import Check, CheckResult, Context, Finding
 from copilot.checker.lexer import LexError, tokenize
-from copilot.checker.parser import Program, SyntaxProblem, bracket_problems, parse
+from copilot.checker.parser import (
+    Call,
+    Program,
+    SyntaxProblem,
+    bracket_problems,
+    parse,
+    walk,
+)
 from copilot.checker.symbols import Analysis
 from copilot.kb import Catalog
 
@@ -60,3 +67,20 @@ def _check(source: str, catalog: Catalog, context: Context) -> CheckResult:
         findings=tuple(findings),
         checks=tuple(checks),
     )
+
+
+def called_functions(source: str) -> list[str]:
+    """The names called in `source`, each once, in the order first met.
+
+    Returns an empty list for code that cannot be read. This reads the
+    code; it does not judge it.
+    """
+    try:
+        program = parse(tokenize(source))
+    except (LexError, RecursionError):
+        return []
+    names: dict[str, str] = {}  # lower-case name -> the name as first written
+    for node in walk(program.body):
+        if isinstance(node, Call) and node.name:
+            names.setdefault(node.name.lower(), node.name)
+    return list(names.values())

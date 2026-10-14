@@ -1,0 +1,12 @@
+id: mcx-atr-trailing-breakout
+market: mcx
+timeframe: 15min
+difficulty: hard
+request: >-
+  Crude oil on MCX, 15 minute chart. Buy when price breaks the highest high
+  of the last 20 bars. Trail a stop 2 ATR below. Do not enter late in the
+  evening and close the trade before the market shuts. Long only.
+expect:
+  status: checked
+  retrieved: [ATR, HHV, ApplyStop]
+  calls: [ATR, HHV, ApplyStop, TimeNum, ParamTime, SetTradeDelays]

@@ -1,0 +1,13 @@
+id: risk-sized-channel-breakout
+market: mcx
+timeframe: daily
+difficulty: hard
+request: >-
+  Daily gold. Buy on a close above the highest high of the previous 20
+  days, exit on a close below the lowest low of the previous 10 days.
+  Stop 2 ATR below entry, and size each trade so that hitting the stop
+  loses 1% of my account. Long only.
+expect:
+  status: checked
+  retrieved: [HHV, LLV, ATR, SetPositionSize, ApplyStop]
+  calls: [HHV, LLV, ATR, SetPositionSize, ApplyStop, Ref, SetTradeDelays]

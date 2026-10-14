@@ -61,3 +61,6 @@ Thumbs.db
 
 # Bug-fix mode marker (see .claude/hooks/protect-tests.sh)
 .claude/bugfix-mode
+
+# Output of `make evals`
+evals/last-report.json

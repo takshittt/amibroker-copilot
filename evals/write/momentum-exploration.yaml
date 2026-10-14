@@ -1,0 +1,12 @@
+id: momentum-exploration
+market: nse_eq
+timeframe: daily
+difficulty: medium
+request: >-
+  I want a scan, not a strategy. List stocks where ADX is above 25, RSI is
+  above 55 and the close is within 5% of the 250 day high. Show close, ADX
+  and RSI as columns.
+expect:
+  status: checked
+  retrieved: [ADX, RSI, AddColumn, HHV]
+  calls: [ADX, RSI, AddColumn, HHV]
