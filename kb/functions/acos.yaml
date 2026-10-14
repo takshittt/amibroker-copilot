@@ -1,0 +1,8 @@
+name: acos
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  Arc cosine, in radians.
+doc_url: https://www.amibroker.com/guide/afl/acos.html

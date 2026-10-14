@@ -1,0 +1,9 @@
+name: MxSort
+category: matrix
+returns: any
+params:
+  - {name: mx, type: any, optional: false}
+  - {name: dim, type: any, optional: true}
+  - {name: ascening, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/mxsort.html
+since: "6.10"

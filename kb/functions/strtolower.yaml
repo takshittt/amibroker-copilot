@@ -1,0 +1,7 @@
+name: StrToLower
+category: string
+returns: string
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strtolower.html
+since: "4.80"

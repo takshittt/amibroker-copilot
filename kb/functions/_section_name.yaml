@@ -1,0 +1,8 @@
+name: _SECTION_NAME
+category: plot
+returns: string
+params: []
+description: >-
+  The name of the current section.
+doc_url: https://www.amibroker.com/guide/afl/_section_name.html
+since: "4.70"

@@ -1,0 +1,9 @@
+name: Prec
+category: math
+returns: any
+params:
+  - {name: array, type: array, optional: false}
+  - {name: precision, type: any, optional: false}
+description: >-
+  Rounds to a given number of decimal places.
+doc_url: https://www.amibroker.com/guide/afl/prec.html

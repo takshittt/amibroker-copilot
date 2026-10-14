@@ -1,0 +1,7 @@
+name: GetExtraData
+category: misc
+returns: any
+params:
+  - {name: fieldname, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/getextradata.html
+since: "3.90"

@@ -1,0 +1,7 @@
+name: MapCreate
+category: misc
+returns: any
+params:
+  - {name: hash_size, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/mapcreate.html
+since: "6.90"

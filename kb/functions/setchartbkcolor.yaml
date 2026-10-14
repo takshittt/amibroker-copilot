@@ -1,0 +1,9 @@
+name: SetChartBkColor
+category: plot
+returns: none
+params:
+  - {name: color, type: any, optional: false}
+description: >-
+  Sets the chart's background colour.
+doc_url: https://www.amibroker.com/guide/afl/setchartbkcolor.html
+since: "4.80"

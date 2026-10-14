@@ -1,0 +1,7 @@
+name: InternetGetStatusCode
+category: file
+returns: number
+params:
+  - {name: handle, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/internetgetstatuscode.html
+since: "6.40"

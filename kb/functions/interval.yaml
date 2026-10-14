@@ -1,0 +1,9 @@
+name: Interval
+category: time
+returns: number
+params:
+  - {name: format, type: any, optional: true}
+description: >-
+  Length of one bar in seconds.
+doc_url: https://www.amibroker.com/guide/afl/interval.html
+since: "4.10"

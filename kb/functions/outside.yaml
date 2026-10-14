@@ -1,0 +1,8 @@
+name: Outside
+category: pattern
+returns: array
+params: []
+description: >-
+  True on bars whose range reaches beyond the previous bar's range on both
+  sides.
+doc_url: https://www.amibroker.com/guide/afl/outside.html

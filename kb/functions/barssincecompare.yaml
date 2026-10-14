@@ -1,0 +1,9 @@
+name: BarsSinceCompare
+category: lookup
+returns: array
+params:
+  - {name: past, type: any, optional: false}
+  - {name: comparison, type: any, optional: false}
+  - {name: current, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/barssincecompare.html
+since: "6.40"

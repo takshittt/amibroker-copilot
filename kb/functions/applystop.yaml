@@ -14,3 +14,4 @@ description: >-
   Switches on a backtester stop of the given type (loss, profit, trailing
   or N-bar), measured in the given mode.
 doc_url: https://www.amibroker.com/guide/afl/applystop.html
+since: "3.70"

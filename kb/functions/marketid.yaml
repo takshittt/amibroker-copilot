@@ -1,0 +1,7 @@
+name: MarketID
+category: info
+returns: any
+params:
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/marketid.html
+since: "3.80"

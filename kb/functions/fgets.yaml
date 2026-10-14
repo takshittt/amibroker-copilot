@@ -1,0 +1,7 @@
+name: fgets
+category: file
+returns: string
+params:
+  - {name: filehandle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/fgets.html
+since: "4.50"

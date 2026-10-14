@@ -1,0 +1,10 @@
+name: SetBacktestMode
+category: backtest
+returns: none
+params:
+  - {name: mode, type: any, optional: false}
+description: >-
+  Sets how the backtester treats signals, for example regular, raw or
+  rotational.
+doc_url: https://www.amibroker.com/guide/afl/setbacktestmode.html
+since: "5.0"

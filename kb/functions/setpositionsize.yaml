@@ -8,3 +8,4 @@ description: >-
   Sets the size of each new trade, in the unit chosen by the method:
   shares, currency value or percent of equity.
 doc_url: https://www.amibroker.com/guide/afl/setpositionsize.html
+since: "4.70"

@@ -1,0 +1,12 @@
+name: DateTimeAdd
+category: time
+returns: any
+params:
+  - {name: datetime, type: any, optional: false}
+  - {name: amount, type: any, optional: false}
+  - {name: interval, type: any, optional: true}
+description: >-
+  Adds an amount of time, in seconds, minutes, hours or days, to a date-
+  time value.
+doc_url: https://www.amibroker.com/guide/afl/datetimeadd.html
+since: "5.40"

@@ -1,0 +1,8 @@
+name: StrMatch
+category: string
+returns: number
+params:
+  - {name: string, type: string, optional: false}
+  - {name: searchstring, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strmatch.html
+since: "6.0"

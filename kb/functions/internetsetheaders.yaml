@@ -1,0 +1,7 @@
+name: InternetSetHeaders
+category: file
+returns: none
+params:
+  - {name: headers, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetsetheaders.html
+since: "6.40"

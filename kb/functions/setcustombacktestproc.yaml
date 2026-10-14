@@ -1,0 +1,8 @@
+name: SetCustomBacktestProc
+category: cbi
+returns: none
+params:
+  - {name: filename, type: any, optional: false}
+  - {name: enable, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/setcustombacktestproc.html
+since: "4.70"

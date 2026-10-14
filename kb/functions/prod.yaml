@@ -1,0 +1,10 @@
+name: Prod
+category: math
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: range, type: any, optional: false}
+description: >-
+  Product of the array's values over the last given number of bars.
+doc_url: https://www.amibroker.com/guide/afl/prod.html
+since: "6.20"

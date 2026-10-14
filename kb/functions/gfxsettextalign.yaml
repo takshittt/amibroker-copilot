@@ -1,0 +1,7 @@
+name: GfxSetTextAlign
+category: graphics
+returns: none
+params:
+  - {name: align, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxsettextalign.html
+since: "5.0"

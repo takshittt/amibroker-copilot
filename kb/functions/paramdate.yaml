@@ -1,0 +1,11 @@
+name: ParamDate
+category: param
+returns: any
+params:
+  - {name: name, type: string, optional: false}
+  - {name: default_date, type: string, optional: false}
+  - {name: format, type: any, optional: true}
+description: >-
+  Adds a date field to the Parameters window and returns the chosen date.
+doc_url: https://www.amibroker.com/guide/afl/paramdate.html
+since: "4.60"

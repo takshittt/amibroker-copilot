@@ -1,0 +1,7 @@
+name: GuiSendKeyEvents
+category: gui
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisendkeyevents.html
+since: "6.40"

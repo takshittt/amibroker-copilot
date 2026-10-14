@@ -1,0 +1,10 @@
+name: PDI
+category: indicator
+returns: array
+params:
+  - {name: period, type: any, optional: true}
+description: >-
+  Plus Directional Indicator (+DI), the upward half of the directional
+  movement system.
+doc_url: https://www.amibroker.com/guide/afl/pdi.html
+since: "3.30"

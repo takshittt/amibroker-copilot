@@ -1,0 +1,12 @@
+name: Percentile
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: period, type: any, optional: false}
+  - {name: rank, type: any, optional: false}
+description: >-
+  Rolling percentile: the value below which a given percentage of the last
+  bars fall.
+doc_url: https://www.amibroker.com/guide/afl/percentile.html
+since: "4.50"

@@ -1,0 +1,12 @@
+name: SetForeign
+category: foreign
+returns: number
+params:
+  - {name: ticker, type: any, optional: false}
+  - {name: fixup, type: any, optional: true}
+  - {name: tradeprices, type: any, optional: true}
+description: >-
+  Replaces the price arrays with another symbol's until RestorePriceArrays
+  is called.
+doc_url: https://www.amibroker.com/guide/afl/setforeign.html
+since: "4.50"

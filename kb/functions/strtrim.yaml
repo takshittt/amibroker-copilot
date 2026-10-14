@@ -1,0 +1,9 @@
+name: StrTrim
+category: string
+returns: string
+params:
+  - {name: string, type: string, optional: false}
+  - {name: targets, type: string, optional: false}
+  - {name: side, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/strtrim.html
+since: "5.90"

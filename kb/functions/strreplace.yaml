@@ -1,0 +1,9 @@
+name: StrReplace
+category: string
+returns: string
+params:
+  - {name: srcstring, type: any, optional: false}
+  - {name: oldsubstring, type: any, optional: false}
+  - {name: newsubstring, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strreplace.html
+since: "4.90"

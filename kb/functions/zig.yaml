@@ -1,0 +1,12 @@
+name: ZIG
+category: pattern
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: change, type: any, optional: false}
+description: >-
+  Zig-zag line joining swings of at least a given percentage. It is
+  redrawn as new bars arrive, so it looks ahead and must not drive
+  backtest signals.
+doc_url: https://www.amibroker.com/guide/afl/zig.html
+since: "3.10"

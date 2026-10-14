@@ -1,0 +1,9 @@
+name: StrExtract
+category: string
+returns: string
+params:
+  - {name: list, type: any, optional: false}
+  - {name: item, type: any, optional: false}
+  - {name: separator, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/strextract.html
+since: "4.40"

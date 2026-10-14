@@ -1,0 +1,8 @@
+name: GetChartBkColor
+category: plot
+returns: number
+params: []
+description: >-
+  The chart's background colour.
+doc_url: https://www.amibroker.com/guide/afl/getchartbkcolor.html
+since: "5.20"

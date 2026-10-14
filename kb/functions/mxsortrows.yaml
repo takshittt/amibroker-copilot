@@ -1,0 +1,11 @@
+name: MxSortRows
+category: matrix
+returns: any
+params:
+  - {name: mx, type: any, optional: false}
+  - {name: ascending, type: any, optional: true}
+  - {name: col1, type: any, optional: true}
+  - {name: col2, type: any, optional: true}
+  - {name: col3, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/mxsortrows.html
+since: "6.10"

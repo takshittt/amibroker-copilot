@@ -1,0 +1,9 @@
+name: RWILo
+category: indicator
+returns: array
+params:
+  - {name: minperiods, type: any, optional: false}
+  - {name: maxperiods, type: any, optional: false}
+description: >-
+  Random Walk Index of the lows.
+doc_url: https://www.amibroker.com/guide/afl/rwilo.html

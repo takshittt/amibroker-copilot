@@ -1,0 +1,8 @@
+name: StrCount
+category: string
+returns: number
+params:
+  - {name: string, type: string, optional: false}
+  - {name: substring, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strcount.html
+since: "5.20"

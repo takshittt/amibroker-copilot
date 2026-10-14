@@ -1,0 +1,14 @@
+name: AddTextColumn
+category: exploration
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+  - {name: name, type: any, optional: false}
+  - {name: format, type: any, optional: true}
+  - {name: textcolor, type: any, optional: true}
+  - {name: bkgndcolor, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+description: >-
+  Adds a text column to the Exploration result list.
+doc_url: https://www.amibroker.com/guide/afl/addtextcolumn.html
+since: "3.80"

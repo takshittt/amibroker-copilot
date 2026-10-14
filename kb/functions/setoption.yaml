@@ -8,3 +8,4 @@ description: >-
   Sets one named backtester setting from code, such as starting equity or
   the maximum number of open positions.
 doc_url: https://www.amibroker.com/guide/afl/setoption.html
+since: "4.30"

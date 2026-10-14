@@ -1,0 +1,7 @@
+name: TimeFrameSet
+category: timeframe
+returns: none
+params:
+  - {name: interval, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/timeframeset.html
+since: "4.50"

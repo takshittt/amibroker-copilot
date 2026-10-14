@@ -1,0 +1,7 @@
+name: InWatchListName
+category: info
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/inwatchlistname.html
+since: "5.0"

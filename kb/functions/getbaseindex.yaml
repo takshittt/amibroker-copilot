@@ -1,0 +1,6 @@
+name: GetBaseIndex
+category: foreign
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getbaseindex.html
+since: "4.10"

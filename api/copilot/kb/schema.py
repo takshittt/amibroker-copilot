@@ -59,6 +59,20 @@ Category = Literal[
     "lookup",
     "backtest",
     "exploration",
+    "statistics",
+    "pattern",
+    "composite",
+    "foreign",
+    "timeframe",
+    "string",
+    "info",
+    "file",
+    "graphics",
+    "gui",
+    "matrix",
+    "speech",
+    "cbi",
+    "misc",
 ]
 Day = Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 
@@ -86,8 +100,18 @@ class FunctionRecord(Record):
     category: Category
     returns: ReturnType
     params: list[Param]
-    description: Text
+    # True when any number of further arguments may follow `params` (printf).
+    variadic: bool = False
+    # In our own words. May be left out until one is written.
+    description: Text | None = None
     doc_url: Text
+    # AmiBroker version that introduced the function, as "major.minor".
+    since: (
+        Annotated[
+            str, BeforeValidator(_must_be_text), StringConstraints(pattern=r"^[0-9]+\.[0-9]+$")
+        ]
+        | None
+    ) = None
 
     @field_validator("doc_url")
     @classmethod
@@ -116,8 +140,9 @@ class FunctionRecord(Record):
         return sum(1 for param in self.params if not param.optional)
 
     @property
-    def max_args(self) -> int:
-        return len(self.params)
+    def max_args(self) -> int | None:
+        """The most arguments a call may have, or None when there is no limit."""
+        return None if self.variadic else len(self.params)
 
 
 class BuiltinRecord(Record):

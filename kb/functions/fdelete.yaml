@@ -1,0 +1,7 @@
+name: fdelete
+category: file
+returns: number
+params:
+  - {name: filename, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/fdelete.html
+since: "4.70"

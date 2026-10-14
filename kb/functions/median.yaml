@@ -1,0 +1,10 @@
+name: Median
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: period, type: any, optional: false}
+description: >-
+  Rolling median of the array.
+doc_url: https://www.amibroker.com/guide/afl/median.html
+since: "4.50"

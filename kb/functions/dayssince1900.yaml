@@ -1,0 +1,9 @@
+name: DaysSince1900
+category: time
+returns: array
+params: []
+description: >-
+  Number of days from 1 January 1900 to each bar, useful for date
+  arithmetic.
+doc_url: https://www.amibroker.com/guide/afl/dayssince1900.html
+since: "5.20"

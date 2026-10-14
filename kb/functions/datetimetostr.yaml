@@ -1,0 +1,10 @@
+name: DateTimeToStr
+category: time
+returns: string
+params:
+  - {name: number, type: any, optional: false}
+  - {name: mode, type: any, optional: true}
+description: >-
+  Converts a date-time value to text.
+doc_url: https://www.amibroker.com/guide/afl/datetimetostr.html
+since: "4.80"

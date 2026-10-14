@@ -1,0 +1,13 @@
+name: AddSummaryRows
+category: exploration
+returns: none
+params:
+  - {name: flags, type: any, optional: false}
+  - {name: format, type: any, optional: true}
+  - {name: onlycols, type: any, optional: true}
+variadic: true
+description: >-
+  Adds total, average, minimum, maximum or count rows to the exploration
+  results.
+doc_url: https://www.amibroker.com/guide/afl/addsummaryrows.html
+since: "5.20"

@@ -1,0 +1,8 @@
+name: StrRight
+category: string
+returns: string
+params:
+  - {name: string, type: string, optional: false}
+  - {name: count, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strright.html
+since: "4.0"

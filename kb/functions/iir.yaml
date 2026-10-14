@@ -1,0 +1,19 @@
+name: IIR
+category: indicator
+returns: array
+params:
+  - {name: input, type: any, optional: false}
+  - {name: b0, type: any, optional: true}
+  - {name: a1, type: any, optional: true}
+  - {name: b1, type: any, optional: true}
+  - {name: a2, type: any, optional: true}
+  - {name: b2, type: any, optional: true}
+  - {name: a3, type: any, optional: true}
+  - {name: b3, type: any, optional: true}
+  - {name: a4, type: any, optional: true}
+  - {name: b4, type: any, optional: true}
+description: >-
+  Infinite impulse response filter with coefficients you supply, for
+  building custom smoothers.
+doc_url: https://www.amibroker.com/guide/afl/iir.html
+since: "6.0"

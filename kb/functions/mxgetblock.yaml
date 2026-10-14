@@ -1,0 +1,12 @@
+name: MxGetBlock
+category: matrix
+returns: any
+params:
+  - {name: matrix, type: any, optional: false}
+  - {name: startrow, type: any, optional: false}
+  - {name: endrow, type: any, optional: false}
+  - {name: startcol, type: any, optional: false}
+  - {name: endcol, type: any, optional: false}
+  - {name: asarray, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/mxgetblock.html
+since: "6.10"

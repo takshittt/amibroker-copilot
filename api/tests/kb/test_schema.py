@@ -98,9 +98,7 @@ def test_function_rejects_unknown_field():
         FunctionRecord.model_validate(function_data(notes="extra"))
 
 
-@pytest.mark.parametrize(
-    "field", ["name", "category", "returns", "params", "description", "doc_url"]
-)
+@pytest.mark.parametrize("field", ["name", "category", "returns", "params", "doc_url"])
 def test_function_rejects_missing_field(field):
     data = function_data()
     del data[field]
@@ -165,11 +163,6 @@ def test_function_rejects_name_that_is_not_an_identifier(name):
 def test_function_rejects_doc_url_outside_the_official_site(url):
     with pytest.raises(ValidationError, match="doc_url"):
         FunctionRecord.model_validate(function_data(doc_url=url))
-
-
-def test_function_rejects_empty_description():
-    with pytest.raises(ValidationError, match="description"):
-        FunctionRecord.model_validate(function_data(description=""))
 
 
 def test_records_are_frozen():
@@ -332,3 +325,73 @@ def test_market_rejects_dst_rule_with_unknown_reference_time_zone():
         rule["reference_timezone"] = "America/Wall_Street"
     with pytest.raises(ValidationError, match="time zone"):
         Market.model_validate(data)
+
+
+# Fields added for the full function list (stage 3)
+
+
+def test_function_description_may_be_left_out():
+    data = function_data()
+    del data["description"]
+    assert FunctionRecord.model_validate(data).description is None
+
+
+def test_function_description_given_must_not_be_empty():
+    with pytest.raises(ValidationError, match="description"):
+        FunctionRecord.model_validate(function_data(description=""))
+
+
+def test_variadic_function_has_no_upper_argument_limit():
+    params = [{"name": "formatstr", "type": "string", "optional": False}]
+    record = FunctionRecord.model_validate(function_data(params=params, variadic=True))
+    assert record.variadic
+    assert record.min_args == 1
+    assert record.max_args is None
+
+
+def test_function_is_not_variadic_unless_it_says_so():
+    assert not FunctionRecord.model_validate(function_data()).variadic
+
+
+def test_variadic_must_be_true_or_false():
+    with pytest.raises(ValidationError, match="variadic"):
+        FunctionRecord.model_validate(function_data(variadic="yes"))
+
+
+@pytest.mark.parametrize("since", ["3.70", "5.0", "6.30"])
+def test_function_may_record_the_version_that_introduced_it(since):
+    assert FunctionRecord.model_validate(function_data(since=since)).since == since
+
+
+def test_function_since_defaults_to_nothing():
+    assert FunctionRecord.model_validate(function_data()).since is None
+
+
+@pytest.mark.parametrize("since", [5.0, 6, "six", "6", "v6.0"])
+def test_function_since_must_be_quoted_major_dot_minor(since):
+    # Unquoted 5.0 in YAML arrives as a number and would lose "6.30" vs "6.3".
+    with pytest.raises(ValidationError, match="since"):
+        FunctionRecord.model_validate(function_data(since=since))
+
+
+@pytest.mark.parametrize(
+    "category",
+    [
+        "statistics",
+        "pattern",
+        "composite",
+        "foreign",
+        "timeframe",
+        "string",
+        "info",
+        "file",
+        "graphics",
+        "gui",
+        "matrix",
+        "speech",
+        "cbi",
+        "misc",
+    ],
+)
+def test_categories_for_the_full_list(category):
+    assert FunctionRecord.model_validate(function_data(category=category)).category == category

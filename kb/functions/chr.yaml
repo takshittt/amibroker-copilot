@@ -1,0 +1,7 @@
+name: Chr
+category: string
+returns: string
+params:
+  - {name: code, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/chr.html
+since: "6.40"

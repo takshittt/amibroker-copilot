@@ -1,0 +1,12 @@
+name: GfxSelectFont
+category: graphics
+returns: none
+params:
+  - {name: facename, type: string, optional: false}
+  - {name: pointsize, type: any, optional: false}
+  - {name: weight, type: any, optional: true}
+  - {name: italic, type: any, optional: true}
+  - {name: underline, type: any, optional: true}
+  - {name: orientation, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/gfxselectfont.html
+since: "5.0"

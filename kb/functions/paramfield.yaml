@@ -1,0 +1,11 @@
+name: ParamField
+category: param
+returns: array
+params:
+  - {name: name, type: string, optional: false}
+  - {name: field, type: any, optional: true}
+description: >-
+  Adds a choice of price field (open, high, low, close and so on) and
+  returns that array.
+doc_url: https://www.amibroker.com/guide/afl/paramfield.html
+since: "4.70"

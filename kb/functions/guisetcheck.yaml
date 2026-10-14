@@ -1,0 +1,8 @@
+name: GuiSetCheck
+category: gui
+returns: any
+params:
+  - {name: id, type: any, optional: false}
+  - {name: check, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisetcheck.html
+since: "6.30"

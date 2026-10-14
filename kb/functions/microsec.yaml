@@ -1,0 +1,7 @@
+name: MicroSec
+category: time
+returns: array
+params: []
+description: >-
+  Microsecond part of each bar's time stamp.
+doc_url: https://www.amibroker.com/guide/afl/microsec.html

@@ -1,0 +1,14 @@
+name: GuiCheckBox
+category: gui
+returns: number
+params:
+  - {name: text, type: string, optional: false}
+  - {name: id, type: any, optional: false}
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: width, type: any, optional: false}
+  - {name: height, type: any, optional: false}
+  - {name: notifyflags, type: any, optional: false}
+  - {name: style, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/guicheckbox.html
+since: "6.30"

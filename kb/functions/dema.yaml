@@ -1,0 +1,11 @@
+name: DEMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Double exponential moving average, which lags less than a plain EMA of
+  the same length.
+doc_url: https://www.amibroker.com/guide/afl/dema.html
+since: "4.0"

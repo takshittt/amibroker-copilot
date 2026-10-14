@@ -7,3 +7,4 @@ params:
 description: >-
   Replaces empty (Null) values with zero or with the given value.
 doc_url: https://www.amibroker.com/guide/afl/nz.html
+since: "4.30"

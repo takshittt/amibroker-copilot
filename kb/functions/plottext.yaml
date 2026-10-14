@@ -1,0 +1,14 @@
+name: PlotText
+category: plot
+returns: none
+params:
+  - {name: text, type: string, optional: false}
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: color, type: any, optional: false}
+  - {name: bkcolor, type: any, optional: true}
+  - {name: yoffset, type: any, optional: true}
+description: >-
+  Writes text on the chart at a given bar and price.
+doc_url: https://www.amibroker.com/guide/afl/plottext.html
+since: "4.80"

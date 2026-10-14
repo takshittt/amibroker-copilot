@@ -1,0 +1,8 @@
+name: LowestBars
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Number of bars since the lowest value so far.
+doc_url: https://www.amibroker.com/guide/afl/lowestbars.html

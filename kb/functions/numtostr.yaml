@@ -1,0 +1,12 @@
+name: NumToStr
+category: string
+returns: string
+params:
+  - {name: number, type: any, optional: false}
+  - {name: format, type: any, optional: true}
+  - {name: separator, type: any, optional: true}
+  - {name: roundandpad, type: any, optional: true}
+description: >-
+  Converts a number to text with a chosen number of decimals.
+doc_url: https://www.amibroker.com/guide/afl/numtostr.html
+since: "4.50"

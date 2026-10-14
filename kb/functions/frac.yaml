@@ -1,0 +1,8 @@
+name: frac
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  The fractional part of a number.
+doc_url: https://www.amibroker.com/guide/afl/frac.html

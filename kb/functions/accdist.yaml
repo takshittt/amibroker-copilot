@@ -1,0 +1,8 @@
+name: AccDist
+category: indicator
+returns: array
+params: []
+description: >-
+  Accumulation/distribution line: a running total of volume, weighted by
+  where each bar closes within its range.
+doc_url: https://www.amibroker.com/guide/afl/accdist.html

@@ -1,0 +1,9 @@
+name: Study
+category: misc
+returns: array
+params:
+  - {name: studyid, type: any, optional: false}
+  - {name: chartid, type: any, optional: true}
+  - {name: scale, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/study.html
+since: "3.50"

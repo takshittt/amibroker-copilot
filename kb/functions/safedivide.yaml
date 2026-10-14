@@ -1,0 +1,11 @@
+name: SafeDivide
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: valueifzerodiv, type: any, optional: false}
+description: >-
+  Division that returns a value you choose where the divisor is zero.
+doc_url: https://www.amibroker.com/guide/afl/safedivide.html
+since: "6.40"

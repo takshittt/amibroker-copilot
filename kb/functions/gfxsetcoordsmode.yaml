@@ -1,0 +1,7 @@
+name: GfxSetCoordsMode
+category: graphics
+returns: none
+params:
+  - {name: mode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxsetcoordsmode.html
+since: "4.80"

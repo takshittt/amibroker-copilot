@@ -1,0 +1,8 @@
+name: GetPlaybackDateTime
+category: time
+returns: number
+params: []
+description: >-
+  The date and time the bar replay tool is currently at.
+doc_url: https://www.amibroker.com/guide/afl/getplaybackdatetime.html
+since: "5.0"

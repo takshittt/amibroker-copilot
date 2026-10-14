@@ -1,0 +1,10 @@
+name: FindIndex
+category: misc
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+  - {name: value, type: any, optional: false}
+  - {name: start_from, type: any, optional: true}
+  - {name: dir, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/findindex.html
+since: "6.40"

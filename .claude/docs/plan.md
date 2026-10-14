@@ -86,8 +86,7 @@ Status: done. Takshit verified the market session times on 2026-10-14.
   optional) so that short calls are not reported as Critical. Takshit
   confirmed on 2026-10-14 that both short calls compile in AmiBroker.
 - Functions that take any number of arguments (`printf`, `StrFormat`)
-  are not in the seed; the format has no way to describe them yet.
-  Stage 3 must add one.
+  were not in the seed. Stage 3 added `variadic` for them.
 
 **Order of work**
 1. Define the function record: `name`, `params` (each with `name`, `type`,
@@ -105,6 +104,62 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    `LLV`, `ValueWhen` and others), the price and signal built-ins, and
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
+
+## Stage 3: Full function list
+
+Status: done. `/kb` holds 447 functions (`kb_version` 2): every function
+in the official alphabetical index, plus `RSIa` and `CCIa`, which share
+a page with `RSI` and `CCI`.
+
+**Files that changed**
+`api/copilot/kb/schema.py` (new fields), `api/copilot/kb/importer.py`
+and `api/tests/kb/test_importer.py` (new), `kb/functions/*.yaml` (402
+new files), `kb/VERSION`, `api/copilot/checker/rules/arg_count.py`, two
+new samples in `api/tests/fixtures/afl/`.
+
+**How it was built**
+1. The function record gained `variadic` (any number of further
+   arguments), `since` (the AmiBroker version that introduced the
+   function) and 14 more categories. `description` became optional.
+2. `importer.py` reads saved pages of the official reference and takes
+   only facts from them: name, parameter names, which parameters have
+   defaults, return type, category and version. It is run by hand
+   (`python -m copilot.kb.importer`), never in CI and never by the
+   checker. It never overwrites an existing file.
+3. The importer was first compared with the 45 hand-checked seed
+   functions. It reproduced all of them except `ApplyStop` and `Param`,
+   which are deliberately more lenient than the reference.
+4. About 20 pages have a cut-off syntax line, an empty RETURNS cell, a
+   misspelt name or a variable argument list. Each has a hand correction
+   in the importer's `OVERRIDES` table, with the reason.
+5. Descriptions in our own words were written for the functions v1
+   generates from (indicators, signals, stops, sizing, time, plotting,
+   parameters, maths, explorations, statistics, patterns): 237 of the
+   447 have one. A test keeps those categories fully described. The
+   reference's own descriptive text is not stored anywhere.
+
+**Proof**
+- `make validate-kb` reports 447 functions.
+- `python -m copilot.kb.importer compare` reports 0 functions missing
+  from `/kb`.
+- A sample that uses functions from beyond the seed gives no findings.
+- The proof in the build-order table, "no unknown function on the
+  example strategies", could not be used as written because
+  `/kb/examples` does not exist yet.
+
+**Known gaps**
+- Where the reference leaves out a default that AmiBroker has, a valid
+  short call is reported as a wrong argument count. `Param` and
+  `ApplyStop` were found this way. Each new case is a KB fix and an
+  eval case.
+- A return type of `array` is trusted from the reference except for
+  maths functions and `IsEmpty`/`IsTrue`, which give a number for a
+  number and are recorded as `any`.
+- `Peak`, `Trough`, `PeakBars`, `TroughBars` and `ZIG` look ahead. Their
+  descriptions say so, but no checker rule flags them yet.
+- Built-in constants beyond the seed (`inDaily`, `actionIndicator`) are
+  not in `builtins.yaml`. The checker does not flag unknown identifiers,
+  so nothing is reported wrongly because of that.
 
 ## Stage 2: Checker
 

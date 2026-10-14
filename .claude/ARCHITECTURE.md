@@ -318,8 +318,8 @@ runs(id, message_id, status, attempts, checks jsonb,
      kb_version, created_at)                -- one row per pipeline run
 feedback(id, message_id, user_id, rating, comment, created_at)
 
-kb_functions(name pk, params jsonb, returns, description, doc_url,
-             category, kb_version)
+kb_functions(name pk, params jsonb, variadic, returns, description null,
+             doc_url, category, since null, kb_version)
 kb_builtins(name pk, kind, type, description)
 kb_chunks(id, kind[function|concept|example|mistake|error],
           ref, title, content, tsv tsvector, embedding vector(1536),
@@ -339,7 +339,8 @@ the daily totals copied into `runs` for analytics.
 
 ```
 /kb
-  /functions/*.yaml   one file per AFL function (our own wording + doc link)
+  /functions/*.yaml   one file per AFL function (signature + doc link; our own
+                      description for the functions v1 generates from)
   /builtins.yaml
   /concepts/*.md      arrays vs loops, stops, sizing, trade delays, time filters
   /examples/*.afl     generic, tested strategies (+ .md description)
@@ -348,6 +349,11 @@ the daily totals copied into `runs` for analytics.
   /markets.yaml       presets + DST rules + last_verified
   /VERSION            kb_version, one whole number
 ```
+- Function signatures come from the official reference through
+  `api/copilot/kb/importer.py`, a tool run by hand. It stores only facts
+  (names, parameters, return type, category, version), never the
+  reference's text, and never overwrites a file, so hand corrections in
+  `/kb` stay.
 - `make validate-kb` checks every file against the record formats in
   `api/copilot/kb/schema.py`: unknown fields, missing fields and duplicate
   names are errors.

@@ -1,0 +1,15 @@
+name: PlotForeign
+category: foreign
+returns: number
+params:
+  - {name: tickersymbol, type: any, optional: false}
+  - {name: name, type: any, optional: false}
+  - {name: color_barcolor, type: any, optional: false}
+  - {name: style, type: any, optional: true}
+  - {name: minvalue, type: any, optional: true}
+  - {name: maxvalue, type: any, optional: true}
+  - {name: xshift, type: any, optional: true}
+  - {name: zorder, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/plotforeign.html
+since: "4.20"

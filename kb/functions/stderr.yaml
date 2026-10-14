@@ -1,0 +1,10 @@
+name: StdErr
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Standard error of a straight-line fit over the last bars.
+doc_url: https://www.amibroker.com/guide/afl/stderr.html
+since: "3.40"

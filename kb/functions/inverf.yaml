@@ -1,0 +1,9 @@
+name: inverf
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  Inverse of the Gauss error function.
+doc_url: https://www.amibroker.com/guide/afl/inverf.html
+since: "6.40"

@@ -1,0 +1,9 @@
+name: SetBarFillColor
+category: plot
+returns: none
+params:
+  - {name: colorarray, type: any, optional: false}
+description: >-
+  Sets the fill colour of candles, bars or cloud charts, bar by bar.
+doc_url: https://www.amibroker.com/guide/afl/setbarfillcolor.html
+since: "5.10"

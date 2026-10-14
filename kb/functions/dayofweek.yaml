@@ -5,3 +5,4 @@ params: []
 description: >-
   Day of the week of each bar, from 0 for Sunday to 6 for Saturday.
 doc_url: https://www.amibroker.com/guide/afl/dayofweek.html
+since: "3.40"

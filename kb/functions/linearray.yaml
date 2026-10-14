@@ -1,0 +1,15 @@
+name: LineArray
+category: plot
+returns: array
+params:
+  - {name: x0, type: any, optional: false}
+  - {name: y0, type: any, optional: false}
+  - {name: x1, type: any, optional: false}
+  - {name: y1, type: any, optional: false}
+  - {name: extend, type: any, optional: true}
+  - {name: usebarindex, type: any, optional: true}
+description: >-
+  Builds an array holding a straight line between two points, for drawing
+  trend lines.
+doc_url: https://www.amibroker.com/guide/afl/linearray.html
+since: "4.50"

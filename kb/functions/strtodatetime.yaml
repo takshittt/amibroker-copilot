@@ -1,0 +1,7 @@
+name: StrToDateTime
+category: string
+returns: number
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strtodatetime.html
+since: "4.80"

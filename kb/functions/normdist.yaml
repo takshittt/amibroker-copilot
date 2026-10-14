@@ -1,0 +1,13 @@
+name: NormDist
+category: statistics
+returns: number
+params:
+  - {name: x, type: any, optional: false}
+  - {name: mean, type: any, optional: true}
+  - {name: sigma, type: any, optional: true}
+  - {name: cumulative, type: any, optional: true}
+description: >-
+  Normal distribution function, as a density or as a cumulative
+  probability.
+doc_url: https://www.amibroker.com/guide/afl/normdist.html
+since: "6.20"

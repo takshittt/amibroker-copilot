@@ -1,0 +1,7 @@
+name: StrToNum
+category: string
+returns: number
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strtonum.html
+since: "4.50"

@@ -1,0 +1,10 @@
+name: ADX
+category: indicator
+returns: array
+params:
+  - {name: period, type: any, optional: true}
+description: >-
+  Average Directional Index, a 0 to 100 reading of how strong the trend
+  is, whichever way it points. The period is 14 unless given.
+doc_url: https://www.amibroker.com/guide/afl/adx.html
+since: "3.30"

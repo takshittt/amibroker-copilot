@@ -1,0 +1,8 @@
+name: Month
+category: time
+returns: array
+params: []
+description: >-
+  Month of each bar, from 1 to 12.
+doc_url: https://www.amibroker.com/guide/afl/month.html
+since: "3.40"

@@ -1,0 +1,6 @@
+name: RequestMouseMoveRefresh
+category: gui
+returns: none
+params: []
+doc_url: https://www.amibroker.com/guide/afl/requestmousemoverefresh.html
+since: "6.30"

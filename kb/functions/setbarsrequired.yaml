@@ -1,0 +1,8 @@
+name: SetBarsRequired
+category: misc
+returns: none
+params:
+  - {name: backwardref, type: any, optional: true}
+  - {name: forwardref, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/setbarsrequired.html
+since: "4.10"

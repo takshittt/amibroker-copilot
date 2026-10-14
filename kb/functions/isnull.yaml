@@ -1,0 +1,9 @@
+name: IsNull
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  True where the value is Null.
+doc_url: https://www.amibroker.com/guide/afl/isnull.html
+since: "4.30"

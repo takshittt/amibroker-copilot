@@ -1,0 +1,7 @@
+name: PVI
+category: indicator
+returns: array
+params: []
+description: >-
+  Positive Volume Index, which moves only on bars where volume rose.
+doc_url: https://www.amibroker.com/guide/afl/pvi.html

@@ -1,0 +1,9 @@
+name: StaticVarSetText
+category: misc
+returns: number
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: value, type: string, optional: false}
+  - {name: persist, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/staticvarsettext.html
+since: "4.60"

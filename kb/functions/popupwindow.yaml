@@ -1,0 +1,14 @@
+name: PopupWindow
+category: misc
+returns: none
+params:
+  - {name: bodytext, type: any, optional: false}
+  - {name: captiontext, type: any, optional: false}
+  - {name: timeout, type: any, optional: true}
+  - {name: left, type: any, optional: true}
+  - {name: top, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+  - {name: height, type: any, optional: true}
+  - {name: capturefocus, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/popupwindow.html
+since: "5.0"

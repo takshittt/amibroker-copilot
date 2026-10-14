@@ -1,0 +1,8 @@
+name: InternetSetOption
+category: file
+returns: none
+params:
+  - {name: option, type: any, optional: false}
+  - {name: value, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetsetoption.html
+since: "6.40"

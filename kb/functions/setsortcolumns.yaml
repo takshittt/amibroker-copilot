@@ -1,0 +1,10 @@
+name: SetSortColumns
+category: exploration
+returns: none
+params:
+  - {name: col1, type: any, optional: false}
+variadic: true
+description: >-
+  Sets which exploration columns the results are sorted by.
+doc_url: https://www.amibroker.com/guide/afl/setsortcolumns.html
+since: "4.90"

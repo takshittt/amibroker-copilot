@@ -1,0 +1,7 @@
+name: PlaySound
+category: misc
+returns: number
+params:
+  - {name: filename, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/playsound.html
+since: "5.40"

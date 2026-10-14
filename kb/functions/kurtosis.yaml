@@ -1,0 +1,11 @@
+name: Kurtosis
+category: statistics
+returns: any
+params:
+  - {name: array, type: array, optional: false}
+  - {name: range, type: any, optional: false}
+  - {name: population, type: any, optional: true}
+description: >-
+  Rolling kurtosis of the array over a number of bars.
+doc_url: https://www.amibroker.com/guide/afl/kurtosis.html
+since: "6.20"

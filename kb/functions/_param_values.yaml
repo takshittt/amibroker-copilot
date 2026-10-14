@@ -1,0 +1,9 @@
+name: _PARAM_VALUES
+category: plot
+returns: string
+params: []
+description: >-
+  The current parameter values of the section as text, for use in plot
+  names.
+doc_url: https://www.amibroker.com/guide/afl/_param_values.html
+since: "4.70"

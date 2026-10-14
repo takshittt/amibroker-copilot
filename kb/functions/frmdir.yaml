@@ -1,0 +1,7 @@
+name: frmdir
+category: file
+returns: number
+params:
+  - {name: dirname, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/frmdir.html
+since: "4.70"

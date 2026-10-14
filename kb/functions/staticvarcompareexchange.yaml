@@ -1,0 +1,9 @@
+name: StaticVarCompareExchange
+category: misc
+returns: number
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: exchange, type: any, optional: false}
+  - {name: comperand, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvarcompareexchange.html
+since: "5.50"

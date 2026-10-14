@@ -1,0 +1,7 @@
+name: VoiceSelect
+category: speech
+returns: none
+params:
+  - {name: num, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/voiceselect.html
+since: "6.20"

@@ -1,0 +1,10 @@
+name: OscV
+category: indicator
+returns: array
+params:
+  - {name: fast, type: any, optional: false}
+  - {name: slow, type: any, optional: false}
+description: >-
+  Volume oscillator: compares a fast moving average of volume with a slow
+  one.
+doc_url: https://www.amibroker.com/guide/afl/oscv.html

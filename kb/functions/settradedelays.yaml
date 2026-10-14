@@ -10,3 +10,4 @@ description: >-
   Sets how many bars after a signal each kind of trade is executed. All
   zeros means trading on the signal bar.
 doc_url: https://www.amibroker.com/guide/afl/settradedelays.html
+since: "4.10"

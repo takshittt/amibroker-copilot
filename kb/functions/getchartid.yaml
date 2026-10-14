@@ -1,0 +1,8 @@
+name: GetChartID
+category: plot
+returns: number
+params: []
+description: >-
+  The identifier of the current chart pane.
+doc_url: https://www.amibroker.com/guide/afl/getchartid.html
+since: "4.30"

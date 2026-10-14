@@ -1,0 +1,8 @@
+name: Round
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Rounds to the nearest whole number.
+doc_url: https://www.amibroker.com/guide/afl/round.html

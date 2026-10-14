@@ -1,0 +1,9 @@
+name: Hold
+category: signal
+returns: array
+params:
+  - {name: expression, type: any, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Keeps a signal true for a given number of bars after it occurs.
+doc_url: https://www.amibroker.com/guide/afl/hold.html

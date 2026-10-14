@@ -1,0 +1,7 @@
+name: TimeFrameMode
+category: timeframe
+returns: none
+params:
+  - {name: mode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/timeframemode.html
+since: "4.80"

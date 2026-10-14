@@ -1,0 +1,11 @@
+name: Ultimate
+category: indicator
+returns: array
+params:
+  - {name: fast, type: any, optional: true}
+  - {name: med, type: any, optional: true}
+  - {name: slow, type: any, optional: true}
+description: >-
+  Ultimate oscillator, which blends buying pressure measured over three
+  periods.
+doc_url: https://www.amibroker.com/guide/afl/ultimate.html

@@ -1,0 +1,10 @@
+name: ExRemSpan
+category: signal
+returns: array
+params:
+  - {name: array1, type: array, optional: false}
+  - {name: numbars, type: any, optional: false}
+description: >-
+  Removes repeated signals for a given number of bars after each signal.
+doc_url: https://www.amibroker.com/guide/afl/exremspan.html
+since: "4.0"

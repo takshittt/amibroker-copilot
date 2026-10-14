@@ -11,3 +11,4 @@ description: >-
   Marks a variable for optimisation over a range. Outside an optimisation
   run it returns the default.
 doc_url: https://www.amibroker.com/guide/afl/optimize.html
+since: "3.70"

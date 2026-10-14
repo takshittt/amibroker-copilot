@@ -1,0 +1,7 @@
+name: MxSum
+category: matrix
+returns: number
+params:
+  - {name: matrix, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxsum.html
+since: "6.20"

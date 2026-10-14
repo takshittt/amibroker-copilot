@@ -1,0 +1,7 @@
+name: GetFnData
+category: info
+returns: any
+params:
+  - {name: field, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/getfndata.html
+since: "4.90"

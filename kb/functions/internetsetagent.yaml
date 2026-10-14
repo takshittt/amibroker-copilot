@@ -1,0 +1,7 @@
+name: InternetSetAgent
+category: file
+returns: none
+params:
+  - {name: agent_string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetsetagent.html
+since: "6.30"

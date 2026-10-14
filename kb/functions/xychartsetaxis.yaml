@@ -1,0 +1,12 @@
+name: XYChartSetAxis
+category: exploration
+returns: none
+params:
+  - {name: chartname, type: string, optional: false}
+  - {name: x_axis_name, type: string, optional: false}
+  - {name: y_axis_name, type: string, optional: false}
+  - {name: style, type: any, optional: true}
+description: >-
+  Names the axes of an exploration scatter chart.
+doc_url: https://www.amibroker.com/guide/afl/xychartsetaxis.html
+since: "5.60"

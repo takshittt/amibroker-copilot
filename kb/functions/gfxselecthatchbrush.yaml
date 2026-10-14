@@ -1,0 +1,8 @@
+name: GfxSelectHatchBrush
+category: graphics
+returns: none
+params:
+  - {name: color, type: any, optional: false}
+  - {name: style, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxselecthatchbrush.html
+since: "6.0"

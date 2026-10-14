@@ -1,0 +1,7 @@
+name: GfxSelectSolidBrush
+category: graphics
+returns: none
+params:
+  - {name: color, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxselectsolidbrush.html
+since: "5.0"

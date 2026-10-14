@@ -1,0 +1,8 @@
+name: Day
+category: time
+returns: array
+params: []
+description: >-
+  Day of the month of each bar.
+doc_url: https://www.amibroker.com/guide/afl/day.html
+since: "3.40"

@@ -1,0 +1,11 @@
+name: ParamColor
+category: param
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: defaultcolor, type: any, optional: false}
+description: >-
+  Adds a colour picker to the Parameters window and returns the chosen
+  colour.
+doc_url: https://www.amibroker.com/guide/afl/paramcolor.html
+since: "4.30"

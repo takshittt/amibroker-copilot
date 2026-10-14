@@ -1,0 +1,12 @@
+name: ParamList
+category: param
+returns: string
+params:
+  - {name: name, type: string, optional: false}
+  - {name: values, type: string, optional: false}
+  - {name: defaultval, type: any, optional: true}
+description: >-
+  Adds a drop-down list of choices to the Parameters window and returns
+  the chosen text.
+doc_url: https://www.amibroker.com/guide/afl/paramlist.html
+since: "4.70"

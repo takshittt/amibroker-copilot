@@ -1,0 +1,10 @@
+name: Matrix
+category: matrix
+returns: any
+params:
+  - {name: rows, type: any, optional: false}
+  - {name: cols, type: any, optional: false}
+  - {name: initvalue, type: any, optional: false}
+  - {name: increment, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/matrix.html
+since: "6.0"

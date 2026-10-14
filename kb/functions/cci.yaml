@@ -1,0 +1,9 @@
+name: CCI
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+description: >-
+  Commodity Channel Index: how far price sits from its average, measured
+  in typical deviations. The period is 14 unless given.
+doc_url: https://www.amibroker.com/guide/afl/cci.html

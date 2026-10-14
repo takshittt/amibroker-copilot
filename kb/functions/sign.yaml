@@ -1,0 +1,9 @@
+name: sign
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  Gives -1, 0 or 1 according to the sign of the value.
+doc_url: https://www.amibroker.com/guide/afl/sign.html
+since: "4.50"

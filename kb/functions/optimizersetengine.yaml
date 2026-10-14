@@ -1,0 +1,7 @@
+name: OptimizerSetEngine
+category: misc
+returns: none
+params:
+  - {name: name, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/optimizersetengine.html
+since: "5.20"

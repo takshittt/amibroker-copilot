@@ -1,0 +1,7 @@
+name: GapUp
+category: pattern
+returns: array
+params: []
+description: >-
+  True on bars whose low is above the previous bar's high.
+doc_url: https://www.amibroker.com/guide/afl/gapup.html

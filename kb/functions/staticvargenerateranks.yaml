@@ -1,0 +1,10 @@
+name: StaticVarGenerateRanks
+category: misc
+returns: none
+params:
+  - {name: outputprefix, type: string, optional: false}
+  - {name: inputprefix, type: string, optional: false}
+  - {name: topranks, type: any, optional: false}
+  - {name: tiemode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvargenerateranks.html
+since: "5.70"

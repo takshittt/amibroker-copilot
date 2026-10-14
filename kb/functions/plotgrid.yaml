@@ -1,0 +1,13 @@
+name: PlotGrid
+category: plot
+returns: none
+params:
+  - {name: level, type: any, optional: false}
+  - {name: color, type: any, optional: true}
+  - {name: pattern, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+  - {name: label, type: any, optional: true}
+description: >-
+  Draws a horizontal line across the chart at a given level.
+doc_url: https://www.amibroker.com/guide/afl/plotgrid.html
+since: "4.30"

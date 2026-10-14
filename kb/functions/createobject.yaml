@@ -1,0 +1,7 @@
+name: CreateObject
+category: misc
+returns: any
+params:
+  - {name: server_class, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/createobject.html
+since: "3.80"

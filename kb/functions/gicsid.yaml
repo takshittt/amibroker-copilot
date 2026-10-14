@@ -1,0 +1,7 @@
+name: GicsID
+category: info
+returns: string
+params:
+  - {name: mode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gicsid.html
+since: "5.40"

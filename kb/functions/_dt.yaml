@@ -1,0 +1,10 @@
+name: _DT
+category: time
+returns: number
+params:
+  - {name: date_string, type: string, optional: false}
+description: >-
+  Converts a date and time written as text into AmiBroker's date-time
+  number.
+doc_url: https://www.amibroker.com/guide/afl/_dt.html
+since: "5.40"

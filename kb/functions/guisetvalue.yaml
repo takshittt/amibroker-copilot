@@ -1,0 +1,8 @@
+name: GuiSetValue
+category: gui
+returns: number
+params:
+  - {name: id, type: any, optional: false}
+  - {name: value, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisetvalue.html
+since: "6.30"

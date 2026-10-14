@@ -1,0 +1,15 @@
+name: AlertIf
+category: backtest
+returns: none
+params:
+  - {name: boolean_expression, type: any, optional: false}
+  - {name: command, type: any, optional: false}
+  - {name: text, type: any, optional: false}
+  - {name: type, type: any, optional: true}
+  - {name: flags, type: any, optional: true}
+  - {name: lookback, type: any, optional: true}
+description: >-
+  Triggers an alert action, such as a sound, an email or a program, when a
+  condition becomes true.
+doc_url: https://www.amibroker.com/guide/afl/alertif.html
+since: "4.10"

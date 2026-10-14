@@ -12,3 +12,4 @@ description: >-
   Draws markers such as arrows on the bars where the shape value is not
   zero.
 doc_url: https://www.amibroker.com/guide/afl/plotshapes.html
+since: "4.30"

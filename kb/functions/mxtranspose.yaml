@@ -1,0 +1,7 @@
+name: MxTranspose
+category: matrix
+returns: any
+params:
+  - {name: matrix, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxtranspose.html
+since: "6.0"

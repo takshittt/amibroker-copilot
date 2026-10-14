@@ -1,0 +1,11 @@
+name: ParamTrigger
+category: param
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: button_text, type: string, optional: false}
+description: >-
+  Adds a button to the Parameters window and returns true once when it is
+  pressed.
+doc_url: https://www.amibroker.com/guide/afl/paramtrigger.html
+since: "4.70"

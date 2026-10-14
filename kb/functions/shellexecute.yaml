@@ -1,0 +1,10 @@
+name: ShellExecute
+category: misc
+returns: number
+params:
+  - {name: filepath, type: string, optional: false}
+  - {name: arguments, type: string, optional: false}
+  - {name: parameters, type: string, optional: false}
+  - {name: showcmd, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/shellexecute.html
+since: "5.40"

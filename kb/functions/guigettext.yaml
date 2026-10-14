@@ -1,0 +1,7 @@
+name: GuiGetText
+category: gui
+returns: string
+params:
+  - {name: id, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guigettext.html
+since: "6.30"

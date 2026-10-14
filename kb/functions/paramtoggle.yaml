@@ -8,3 +8,4 @@ params:
 description: >-
   Adds a two-choice switch to the Parameters window and returns 0 or 1.
 doc_url: https://www.amibroker.com/guide/afl/paramtoggle.html
+since: "4.70"

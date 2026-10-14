@@ -1,0 +1,11 @@
+name: ParamStr
+category: param
+returns: string
+params:
+  - {name: name, type: string, optional: false}
+  - {name: default, type: string, optional: false}
+description: >-
+  Adds a text field to the Parameters window and returns what the user
+  typed.
+doc_url: https://www.amibroker.com/guide/afl/paramstr.html
+since: "4.30"

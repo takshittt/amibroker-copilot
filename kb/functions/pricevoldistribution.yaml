@@ -1,0 +1,13 @@
+name: PriceVolDistribution
+category: matrix
+returns: any
+params:
+  - {name: priceh, type: any, optional: false}
+  - {name: pricel, type: any, optional: false}
+  - {name: vol, type: any, optional: false}
+  - {name: bins, type: any, optional: false}
+  - {name: absolute, type: any, optional: true}
+  - {name: startbar, type: any, optional: true}
+  - {name: endbar, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/pricevoldistribution.html
+since: "6.20"

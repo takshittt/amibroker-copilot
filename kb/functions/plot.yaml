@@ -14,3 +14,4 @@ params:
 description: >-
   Draws an array on the chart with the given name, colour and style.
 doc_url: https://www.amibroker.com/guide/afl/plot.html
+since: "3.80"

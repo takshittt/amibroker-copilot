@@ -1,0 +1,13 @@
+name: Equity
+category: backtest
+returns: array
+params:
+  - {name: flags, type: any, optional: true}
+  - {name: rangetype, type: any, optional: true}
+  - {name: from, type: any, optional: true}
+  - {name: to, type: any, optional: true}
+description: >-
+  Runs a single-symbol backtest inside the formula and returns its equity
+  line.
+doc_url: https://www.amibroker.com/guide/afl/equity.html
+since: "4.0"

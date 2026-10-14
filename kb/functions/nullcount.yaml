@@ -1,0 +1,8 @@
+name: NullCount
+category: misc
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/nullcount.html
+since: "5.90"

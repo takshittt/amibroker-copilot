@@ -6,7 +6,9 @@ from copilot.checker.symbols import Analysis
 RULE = "arg_count"
 
 
-def _describe(low: int, high: int) -> str:
+def _describe(low: int, high: int | None) -> str:
+    if high is None:
+        return f"at least {low} argument{'' if low == 1 else 's'}"
     if high == 0:
         return "no arguments"
     if low == high:
@@ -26,7 +28,7 @@ def run(analysis: Analysis) -> list[Finding]:
         else:
             continue  # unknown_function reports it
         given = len(call.args)
-        if low <= given <= high:
+        if given >= low and (high is None or given <= high):
             continue
         findings.append(
             Finding(

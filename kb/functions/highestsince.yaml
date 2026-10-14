@@ -1,0 +1,11 @@
+name: HighestSince
+category: lookup
+returns: array
+params:
+  - {name: expression, type: any, optional: false}
+  - {name: array, type: array, optional: false}
+  - {name: nth, type: any, optional: true}
+description: >-
+  Highest value of the array since the condition was last true.
+doc_url: https://www.amibroker.com/guide/afl/highestsince.html
+since: "3.40"

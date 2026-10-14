@@ -1,0 +1,8 @@
+name: MxSolve
+category: matrix
+returns: any
+params:
+  - {name: a, type: any, optional: false}
+  - {name: b, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxsolve.html
+since: "6.10"

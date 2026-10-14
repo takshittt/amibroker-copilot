@@ -8,3 +8,4 @@ description: >-
   Removes repeated signals: after a true bar in the first array, later
   trues are dropped until the second array is true.
 doc_url: https://www.amibroker.com/guide/afl/exrem.html
+since: "3.50"

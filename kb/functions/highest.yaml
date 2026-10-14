@@ -1,0 +1,8 @@
+name: Highest
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Highest value of the array from the first bar up to each bar.
+doc_url: https://www.amibroker.com/guide/afl/highest.html

@@ -1,0 +1,8 @@
+name: Year
+category: time
+returns: array
+params: []
+description: >-
+  Year of each bar.
+doc_url: https://www.amibroker.com/guide/afl/year.html
+since: "3.40"

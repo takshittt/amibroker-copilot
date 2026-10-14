@@ -1,0 +1,7 @@
+name: Inside
+category: pattern
+returns: array
+params: []
+description: >-
+  True on bars whose range lies within the previous bar's range.
+doc_url: https://www.amibroker.com/guide/afl/inside.html

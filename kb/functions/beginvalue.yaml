@@ -1,0 +1,9 @@
+name: BeginValue
+category: lookup
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  The array's value at the start of the range marked on the chart.
+doc_url: https://www.amibroker.com/guide/afl/beginvalue.html
+since: "4.30"

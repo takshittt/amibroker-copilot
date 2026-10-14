@@ -1,0 +1,9 @@
+name: SetFormulaName
+category: backtest
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+description: >-
+  Sets the formula name shown in the backtest report.
+doc_url: https://www.amibroker.com/guide/afl/setformulaname.html
+since: "4.50"

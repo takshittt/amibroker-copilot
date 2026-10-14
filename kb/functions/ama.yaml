@@ -1,0 +1,11 @@
+name: AMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: smoothingfactor, type: any, optional: false}
+description: >-
+  Adaptive moving average whose smoothing factor, between 0 and 1, can be
+  different on every bar.
+doc_url: https://www.amibroker.com/guide/afl/ama.html
+since: "3.50"

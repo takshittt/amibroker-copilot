@@ -1,0 +1,9 @@
+name: CategoryRemoveSymbol
+category: info
+returns: none
+params:
+  - {name: symbol, type: any, optional: false}
+  - {name: category, type: any, optional: false}
+  - {name: number, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/categoryremovesymbol.html
+since: "4.50"

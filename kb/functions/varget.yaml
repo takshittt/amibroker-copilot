@@ -1,0 +1,7 @@
+name: VarGet
+category: misc
+returns: any
+params:
+  - {name: varname, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/varget.html
+since: "4.60"

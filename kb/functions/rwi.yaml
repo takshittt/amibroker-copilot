@@ -1,0 +1,10 @@
+name: RWI
+category: indicator
+returns: array
+params:
+  - {name: minperiods, type: any, optional: false}
+  - {name: maxperiods, type: any, optional: false}
+description: >-
+  Random Walk Index: compares the actual price move with the move a random
+  walk would be expected to make.
+doc_url: https://www.amibroker.com/guide/afl/rwi.html

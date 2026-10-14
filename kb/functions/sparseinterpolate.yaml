@@ -1,0 +1,9 @@
+name: SparseInterpolate
+category: misc
+returns: array
+params:
+  - {name: sparse_points, type: any, optional: false}
+  - {name: data, type: any, optional: false}
+  - {name: order, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/sparseinterpolate.html
+since: "6.90"

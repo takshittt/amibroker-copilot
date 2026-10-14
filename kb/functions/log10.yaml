@@ -1,0 +1,8 @@
+name: log10
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Base-10 logarithm.
+doc_url: https://www.amibroker.com/guide/afl/log10.html

@@ -1,0 +1,10 @@
+name: StochK
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+  - {name: ksmooth, type: any, optional: true}
+description: >-
+  Slow stochastic %K: where the close sits within the recent high-low
+  range, smoothed.
+doc_url: https://www.amibroker.com/guide/afl/stochk.html

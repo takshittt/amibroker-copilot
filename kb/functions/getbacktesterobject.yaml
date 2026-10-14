@@ -1,0 +1,6 @@
+name: GetBacktesterObject
+category: cbi
+returns: any
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getbacktesterobject.html
+since: "4.60"

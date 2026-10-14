@@ -1,0 +1,10 @@
+name: Chaikin
+category: indicator
+returns: array
+params:
+  - {name: fast, type: any, optional: true}
+  - {name: slow, type: any, optional: true}
+description: >-
+  Chaikin oscillator: a fast average of the accumulation/distribution line
+  minus a slow one.
+doc_url: https://www.amibroker.com/guide/afl/chaikin.html

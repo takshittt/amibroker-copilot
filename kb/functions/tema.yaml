@@ -1,0 +1,10 @@
+name: TEMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Triple exponential moving average, with less lag again than DEMA.
+doc_url: https://www.amibroker.com/guide/afl/tema.html
+since: "4.0"

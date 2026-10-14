@@ -1,0 +1,8 @@
+name: RelStrength
+category: foreign
+returns: array
+params:
+  - {name: tickername, type: string, optional: false}
+  - {name: fixup, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/relstrength.html
+since: "3.30"

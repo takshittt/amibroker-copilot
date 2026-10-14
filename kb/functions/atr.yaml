@@ -7,3 +7,4 @@ description: >-
   Average True Range: the smoothed bar range including gaps, used to size
   stops to volatility.
 doc_url: https://www.amibroker.com/guide/afl/atr.html
+since: "3.30"

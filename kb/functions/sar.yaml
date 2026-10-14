@@ -1,0 +1,11 @@
+name: SAR
+category: indicator
+returns: array
+params:
+  - {name: accel, type: any, optional: true}
+  - {name: max, type: any, optional: true}
+description: >-
+  Parabolic stop-and-reverse: a trailing level that speeds up as the trend
+  continues.
+doc_url: https://www.amibroker.com/guide/afl/sar.html
+since: "3.30"

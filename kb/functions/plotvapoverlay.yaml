@@ -1,0 +1,12 @@
+name: PlotVAPOverlay
+category: plot
+returns: none
+params:
+  - {name: lines, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+  - {name: color, type: any, optional: true}
+  - {name: vapstyle, type: any, optional: true}
+description: >-
+  Draws a volume-at-price histogram over the chart.
+doc_url: https://www.amibroker.com/guide/afl/plotvapoverlay.html
+since: "4.40"

@@ -1,0 +1,9 @@
+name: CumProd
+category: math
+returns: array
+params:
+  - {name: factor, type: any, optional: false}
+description: >-
+  Running product of the values from the first bar to the current one.
+doc_url: https://www.amibroker.com/guide/afl/cumprod.html
+since: "6.20"

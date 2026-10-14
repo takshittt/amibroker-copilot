@@ -1,0 +1,7 @@
+name: GetPerformanceCounter
+category: misc
+returns: number
+params:
+  - {name: breset, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/getperformancecounter.html
+since: "4.90"

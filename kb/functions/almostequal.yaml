@@ -1,0 +1,12 @@
+name: AlmostEqual
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: ulps, type: any, optional: true}
+description: >-
+  Compares two values while ignoring tiny floating-point rounding
+  differences.
+doc_url: https://www.amibroker.com/guide/afl/almostequal.html
+since: "4.80"

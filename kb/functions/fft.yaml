@@ -1,0 +1,10 @@
+name: FFT
+category: pattern
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: len, type: any, optional: true}
+description: >-
+  Fast Fourier Transform of the array.
+doc_url: https://www.amibroker.com/guide/afl/fft.html
+since: "4.90"

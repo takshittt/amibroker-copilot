@@ -1,0 +1,8 @@
+name: GuiSetFont
+category: gui
+returns: none
+params:
+  - {name: fontface, type: string, optional: false}
+  - {name: size, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisetfont.html
+since: "6.30"

@@ -1,0 +1,8 @@
+name: cos
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Cosine of an angle given in radians.
+doc_url: https://www.amibroker.com/guide/afl/cos.html

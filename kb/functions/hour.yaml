@@ -1,0 +1,8 @@
+name: Hour
+category: time
+returns: array
+params: []
+description: >-
+  Hour of each bar's time.
+doc_url: https://www.amibroker.com/guide/afl/hour.html
+since: "4.0"

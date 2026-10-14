@@ -1,0 +1,7 @@
+name: GfxSetTextColor
+category: graphics
+returns: none
+params:
+  - {name: color, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxsettextcolor.html
+since: "5.0"

@@ -1,0 +1,7 @@
+name: InternetOpenURL
+category: file
+returns: any
+params:
+  - {name: url, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetopenurl.html
+since: "6.20"

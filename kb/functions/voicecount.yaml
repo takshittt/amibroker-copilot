@@ -1,0 +1,6 @@
+name: VoiceCount
+category: speech
+returns: number
+params: []
+doc_url: https://www.amibroker.com/guide/afl/voicecount.html
+since: "6.20"

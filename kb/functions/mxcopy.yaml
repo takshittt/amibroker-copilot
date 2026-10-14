@@ -1,0 +1,16 @@
+name: MxCopy
+category: matrix
+returns: none
+params:
+  - {name: dstmatrix, type: any, optional: false}
+  - {name: src_matrix, type: any, optional: false}
+  - {name: dst_start_row, type: any, optional: false}
+  - {name: dst_endrow, type: any, optional: false}
+  - {name: dst_start_col, type: any, optional: false}
+  - {name: dst_end_col, type: any, optional: false}
+  - {name: src_start_row, type: any, optional: true}
+  - {name: src_end_row, type: any, optional: true}
+  - {name: src_start_col, type: any, optional: true}
+  - {name: src_end_col, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/mxcopy.html
+since: "6.40"

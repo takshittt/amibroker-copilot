@@ -1,0 +1,6 @@
+name: InWatchList
+category: info
+returns: number
+params:
+  - {name: listno, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/inwatchlist.html

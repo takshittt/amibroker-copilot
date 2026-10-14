@@ -1,0 +1,7 @@
+name: InternetClose
+category: file
+returns: none
+params:
+  - {name: handle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetclose.html
+since: "6.20"

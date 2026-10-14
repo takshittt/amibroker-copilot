@@ -1,0 +1,11 @@
+name: Correlation
+category: statistics
+returns: array
+params:
+  - {name: array1, type: array, optional: false}
+  - {name: array2, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Rolling correlation coefficient between two arrays.
+doc_url: https://www.amibroker.com/guide/afl/correlation.html
+since: "3.40"

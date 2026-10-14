@@ -1,0 +1,10 @@
+name: WriteIf
+category: string
+returns: string
+params:
+  - {name: expression, type: any, optional: false}
+  - {name: true_text, type: string, optional: false}
+  - {name: false_text, type: string, optional: false}
+description: >-
+  Chooses between two texts by a condition, read at the selected bar.
+doc_url: https://www.amibroker.com/guide/afl/writeif.html

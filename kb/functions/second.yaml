@@ -1,0 +1,8 @@
+name: Second
+category: time
+returns: array
+params: []
+description: >-
+  Second of each bar's time.
+doc_url: https://www.amibroker.com/guide/afl/second.html
+since: "4.0"

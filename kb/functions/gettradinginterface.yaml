@@ -1,0 +1,7 @@
+name: GetTradingInterface
+category: misc
+returns: any
+params:
+  - {name: name, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gettradinginterface.html
+since: "4.70"

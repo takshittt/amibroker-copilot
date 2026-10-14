@@ -1,0 +1,10 @@
+name: HighestVisibleValue
+category: plot
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  The highest value of the array among the bars currently visible on the
+  chart.
+doc_url: https://www.amibroker.com/guide/afl/highestvisiblevalue.html
+since: "5.30"

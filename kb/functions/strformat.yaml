@@ -1,0 +1,11 @@
+name: StrFormat
+category: string
+returns: string
+params:
+  - {name: formatstr, type: string, optional: false}
+variadic: true
+description: >-
+  Builds text from a format string and values, like printf, and returns
+  it.
+doc_url: https://www.amibroker.com/guide/afl/strformat.html
+since: "4.50"

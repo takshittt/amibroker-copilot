@@ -12,3 +12,4 @@ description: >-
   Adds a numeric slider to the Parameters window and returns the value the
   user picked.
 doc_url: https://www.amibroker.com/guide/afl/param.html
+since: "4.30"

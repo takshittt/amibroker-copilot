@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 2 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`; `/kb` holds a seed of 45 functions, the built-ins and the v1 markets; and `api/copilot/checker/` holds the checker with its 10 rules. Until stage 3 adds the full function list, the checker reports any real AFL function outside the seed as unknown. There is no pipeline or API yet, and no `web/` side.
+The design is accepted. Stages 0 to 3 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`; `/kb` holds all 447 AFL functions, the built-ins and the v1 markets; and `api/copilot/checker/` holds the checker with its 10 rules. There is no database, pipeline or API yet, and no `web/` side.
 
 ## Commands
 
@@ -14,6 +14,7 @@ Run from the repository root. Python is managed by `uv` (Python 3.12).
 - One test: `cd api && uv run pytest tests/test_smoke.py::test_package_imports`
 - Lint: `make lint` (ends with "All checks passed!" and "N files already formatted")
 - Auto-fix lint and formatting: `make format`
+- Compare `/kb` with saved pages of the official reference (by hand, needs the network once to fetch): `cd api && uv run python -m copilot.kb.importer fetch <dir>`, then `compare <dir> ../kb`
 - Validate the knowledge base: `make validate-kb` (ends with "KB ok: ..." or lists every problem and fails)
 
 ## Verifying your work

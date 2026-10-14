@@ -1,0 +1,9 @@
+name: MFI
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+description: >-
+  Money Flow Index, a 0 to 100 oscillator like RSI that also weighs
+  volume.
+doc_url: https://www.amibroker.com/guide/afl/mfi.html

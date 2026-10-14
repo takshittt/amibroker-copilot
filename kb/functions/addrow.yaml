@@ -1,0 +1,9 @@
+name: AddRow
+category: exploration
+returns: none
+params:
+  - {name: text, type: string, optional: false}
+description: >-
+  Adds a row of raw text to the exploration results.
+doc_url: https://www.amibroker.com/guide/afl/addrow.html
+since: "6.0"

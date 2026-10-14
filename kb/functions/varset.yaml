@@ -1,0 +1,8 @@
+name: VarSet
+category: misc
+returns: number
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: value, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/varset.html
+since: "4.60"

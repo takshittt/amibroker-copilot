@@ -1,0 +1,9 @@
+name: Error
+category: misc
+returns: none
+params:
+  - {name: text, type: string, optional: false}
+description: >-
+  Stops the formula with a message you supply.
+doc_url: https://www.amibroker.com/guide/afl/error.html
+since: "5.70"
