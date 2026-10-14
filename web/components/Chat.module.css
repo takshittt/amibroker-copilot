@@ -1,0 +1,264 @@
+.chat {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.context {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.thread {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+}
+
+.user {
+  justify-self: start;
+  max-width: 62ch;
+  padding: 0.75rem 1rem;
+  background: var(--pencil-wash);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pasted,
+.pastedCode pre {
+  margin: 0;
+  font-size: 0.8125rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.pastedCode summary {
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.assistant {
+  min-width: 0;
+}
+
+.questions {
+  display: grid;
+  gap: 0.5rem;
+  padding-inline-start: 1rem;
+  border-inline-start: 4px solid var(--ink);
+}
+
+.questions ul {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+}
+
+.progress {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.progress ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+}
+
+.progress li {
+  color: var(--ink-soft);
+}
+
+.progress li::before {
+  content: "✓ ";
+  color: var(--pass);
+}
+
+.progress li[data-current] {
+  color: var(--ink);
+}
+
+.progress li[data-current]::before {
+  content: "› ";
+  color: var(--ink);
+}
+
+.error {
+  color: var(--fail);
+  font-weight: 700;
+}
+
+.composer {
+  display: grid;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.composer[data-first] {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.title {
+  font-size: var(--step-2);
+}
+
+.setup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: end;
+}
+
+.setup label,
+.field {
+  display: grid;
+  gap: 0.3rem;
+  font-weight: 700;
+}
+
+.modes {
+  display: flex;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.modes label {
+  display: block;
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid var(--ink);
+  margin-inline-start: -1.5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.modes label:first-of-type {
+  border-radius: var(--radius) 0 0 var(--radius);
+  margin-inline-start: 0;
+}
+
+.modes label:last-of-type {
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.modes label[data-checked] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.modes input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modes label:has(input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.composer select,
+.composer textarea,
+.comment input {
+  font: inherit;
+  font-weight: 400;
+  padding: 0.5rem 0.65rem;
+  border: 1.5px solid var(--ink-soft);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+
+.composer textarea {
+  resize: vertical;
+}
+
+.codeInput {
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+  font-variant-ligatures: none;
+}
+
+.submitRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.primary {
+  appearance: none;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.secondary {
+  appearance: none;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.small {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  color: var(--ink-soft);
+}
+
+.thumb {
+  appearance: none;
+  border: 1.5px solid var(--ink-soft);
+  background: var(--paper);
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.thumb[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.comment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.comment label {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.thanks {
+  color: var(--pass);
+}

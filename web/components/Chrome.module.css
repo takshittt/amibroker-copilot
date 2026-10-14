@@ -1,0 +1,20 @@
+.link {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.usage {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.usage[data-empty] {
+  color: var(--fail);
+  font-weight: 700;
+}

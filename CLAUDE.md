@@ -4,13 +4,15 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 7 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; all three modes (Write, Review with "apply all fixes", Fix-from-error) in `api/copilot/pipeline/`, with command-line tools and eval sets; and the API in `api/copilot/api/` (auth, BFF key, conversations, event stream, quota, spend cap) with an admin command. **Everything that involves the model has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, nothing has been run against Supabase, and nothing is deployed (see `.claude/changes/`). Next is stage 8, the website. There is no `web/` side yet.
+The design is accepted. Stages 0 to 8 of the plan are built: the KB, the checker, the database and searches, all three modes in `api/copilot/pipeline/`, the API in `api/copilot/api/`, and the website in `web/` (Next.js; landing, sign-up, login, chat, history, usage; the BFF routes in `web/app/api/`). **Everything that involves the model has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, nothing has been run against Supabase, and nothing is deployed (see `.claude/changes/`). Next is stage 9, deployment.
 
 ## Commands
 
 Run from the repository root. Python is managed by `uv` (Python 3.12).
 
 - Start local Postgres and Redis: `make services-up` (Docker must be running: `colima start`). Stop them: `make services-down`
+- Website: `make web-install` once, then `make web` (http://localhost:3000). Without an OpenAI key, run `make demo` alongside it for scripted answers. `make e2e` runs the browser tests (needs `make services-up`; they start their own servers)
+- `make test` and `make lint` cover both `api/` and `web/`. The web lint is Biome plus the TypeScript compiler
 - Run the API on port 8000: `make api` (needs every setting in `.env.example`, including the OpenAI key and model ids). Give a user a new password: `make reset-password EMAIL=...`
 - Test: `make test` (ends with "N passed"). The database, Redis and API tests need `make services-up` first; if those are not reachable they are skipped and the summary says "N skipped". The API tests create and wipe their own database (`copilot_api_test`) and Redis database 15
 - Apply database migrations: `make db-migrate` (uses `DATABASE_URL`, default the `copilot_dev` database from `docker-compose.yml`)
@@ -71,6 +73,9 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 - Every API route, including health, refuses a request without the BFF key, before anything else runs. Never add an exception.
 - A run takes a unit of quota before anything is saved and gives it back if no answer comes. A failure must never cost the user quota.
 - API errors are JSON (`{"error": {"code", "message"}}`) and never show internals; another user's data answers 404.
+- On the website, code is shown as "Checked" only when the answer's status is `checked`. Keep the Verified and AI-suggested findings visually separate. Both rules have tests in `web/`.
+- `web/AGENTS.md` is written by Next.js: this version has breaking changes, so read the bundled docs in `web/node_modules/next/dist/docs/` before using a Next.js API.
+- The offline demo API (`make demo`) is for development and tests only. Never deploy it or relax its guards.
 - Every KB change bumps `kb_version` and goes through a pull request. Every user-reported bug becomes a new eval case.
 
 ## Documentation layout

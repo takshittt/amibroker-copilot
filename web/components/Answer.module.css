@@ -1,0 +1,256 @@
+.answer {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* The status strip says, before anything else, what is known about the code. */
+.status {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.9rem;
+  align-items: baseline;
+  padding: 0.75rem 1rem;
+  border-inline-start: 6px solid var(--ink-soft);
+  background: var(--pencil-wash);
+}
+
+.status[data-tone="checked"] {
+  border-color: var(--pass);
+  background: var(--pass-wash);
+}
+
+.status[data-tone="failed"] {
+  border-color: var(--fail);
+  background: var(--fail-wash);
+}
+
+.status[data-tone="unverified"] {
+  border-color: var(--fail);
+  background: repeating-linear-gradient(-45deg, var(--fail-wash) 0 10px, var(--paper) 10px 20px);
+}
+
+.statusTitle {
+  font-weight: 700;
+  font-size: var(--step-1);
+}
+
+.status[data-tone="checked"] .statusTitle {
+  color: var(--pass);
+}
+
+.status[data-tone="failed"] .statusTitle,
+.status[data-tone="unverified"] .statusTitle {
+  color: var(--fail);
+}
+
+.statusDetail {
+  color: var(--ink);
+}
+
+@media (max-width: 36rem) {
+  .status {
+    grid-template-columns: 1fr;
+  }
+}
+
+.problems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.problems li,
+.group li {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.where {
+  font-family: var(--font-code);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  padding-top: 0.15rem;
+}
+
+.fix {
+  color: var(--ink-soft);
+}
+
+.codeBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.codeTools {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  appearance: none;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.heading {
+  font-size: var(--step-0);
+  margin-bottom: 0.5rem;
+}
+
+.explainNarrow {
+  display: none;
+}
+
+.explainNarrow ul {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+@media (max-width: 56rem) {
+  .explainNarrow {
+    display: block;
+  }
+}
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  align-items: start;
+}
+
+/* The checker's slip: what was verified, line by line. */
+.slip ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 15rem;
+  column-gap: 1.5rem;
+}
+
+.slip li {
+  break-inside: avoid;
+  margin-bottom: 0.15rem;
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.4rem;
+}
+
+.tick {
+  font-weight: 700;
+  color: var(--pass);
+}
+
+.slip li[data-outcome="failed"] .tick {
+  color: var(--fail);
+}
+
+.slip li[data-outcome="skipped"] .tick {
+  color: var(--ink-soft);
+}
+
+.docs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.findingGroups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1.5rem 2.5rem;
+}
+
+.group {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius);
+}
+
+.group[data-kind="verified"] {
+  border: 1.5px solid var(--ink);
+}
+
+/* AI suggestions are written in pencil: dashed outline, cursive italic. */
+.group[data-kind="ai"] {
+  border: 1.5px dashed var(--pencil);
+  color: var(--pencil);
+}
+
+.group[data-kind="ai"] .findingText {
+  font-family: var(--font-code);
+  font-style: italic;
+  font-size: 0.9375rem;
+}
+
+.group ul {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.group[data-kind="verified"] li[data-severity="critical"] .where,
+.group[data-kind="verified"] li[data-severity="warning"] .where {
+  color: var(--fail);
+  font-weight: 600;
+}
+
+.groupIntro {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.group[data-kind="ai"] .groupIntro {
+  color: var(--pencil);
+}
+
+.empty {
+  margin-top: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.summary {
+  font-family: var(--font-code);
+  font-style: italic;
+  color: var(--pencil);
+}
+
+.notes {
+  display: grid;
+  gap: 0.5rem;
+  padding-inline-start: 1rem;
+  border-inline-start: 2px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+@media (max-width: 56rem) {
+  .lower {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

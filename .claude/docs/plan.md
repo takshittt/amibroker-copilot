@@ -112,6 +112,73 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
 
+## Stage 8: Website
+
+Status: built. The full Write and the full Review work in the browser,
+at desktop and phone size, against the offline demo API. **Not yet
+deployed, and not yet seen with real model answers.**
+
+**Files** (all new unless noted)
+`web/`: Next.js 16 (App Router) with TypeScript, pnpm, Biome for lint
+and format, Vitest, Playwright. `web/app/api/*`: the BFF routes.
+`web/lib/server/`: session check and forwarding. `web/components/`:
+the answer view, listing, chat, forms. `web/e2e/`: browser tests.
+`api/copilot/api/offline.py`: the offline demo API. Changed:
+`Makefile` (`make test` and `make lint` now cover `web/`; new `web`,
+`demo`, `e2e`), CI (a `web` job), `.env.example`, `.gitignore`.
+
+**What was decided** (agreed 2026-10-14)
+- **The look: "the reviewed listing".** Code is set as a program
+  listing on green-bar printer paper. Checker problems are red marks
+  in a gutter beside the line; AI suggestions are a dashed pencil mark,
+  and AI findings are in a dashed box in a cursive italic, so the two
+  can never be mistaken for each other. Victor Mono for code (ligatures
+  off, so `>=` shows as typed) and Atkinson Hyperlegible for text.
+  Colour is used only for meaning. Light and dark themes.
+- **Browser tests run against an offline demo API**: the real API,
+  checker, database, Redis, quota and stream, with scripted answers. It
+  starts only with `OFFLINE_DEMO=1`, listens only on 127.0.0.1, and
+  every answer says it is scripted.
+- **Plain CSS modules** with design tokens in `app/globals.css`.
+
+**Also decided while building**
+- The BFF keeps the token in an `httpOnly`, `Secure`, `SameSite=Lax`
+  cookie, verifies it (HS256 only, with `jose`) before forwarding, and
+  never sends it to the browser. Requests that change something must
+  come from the site's own origin. A refused session clears the cookie.
+- Ids in BFF paths are checked to look like ids before they are put in
+  an API path.
+- Streams pass through untouched; if the browser goes away, the BFF's
+  call to the API is aborted, so the run stops.
+- Submit buttons stay disabled until the page's script is running, so
+  an early click is never silently lost. (The browser tests found this.)
+- The login page is rendered per request, so the support address comes
+  from the environment, not from the build.
+- A review shows the reviewed code with its findings marked.
+- `/preview` shows the three kinds of answer for design work; it does
+  not exist in a production build.
+
+**Proof**
+- `make e2e`: 8 browser tests pass. A full Write (a clarifying question,
+  the answer, checked code, feedback, then reopening it from history),
+  a full Review (Verified and AI-suggested apart, then "Apply all
+  fixes"), logging out, and pages behind login, each at desktop and
+  phone size.
+- 46 unit and component tests, including that code which failed its
+  checks, or was never checked, can never be shown as checked.
+
+**Checked now, decided later**
+- How long a Vercel function may run: each streaming route declares
+  `maxDuration = 120`. The plan's real limit is confirmed when the
+  Vercel project is created (stage 9).
+
+**Known gaps**
+- The CI `web` job, with its browser tests, has not run yet.
+- No real model answers have been seen in the page; long or unusual
+  answers may need layout work.
+- Margin notes that are longer than the lines they explain can overlap
+  the next note on wide screens.
+
 ## Stage 7: API
 
 Status: built and tested against the Docker Postgres and Redis, with a

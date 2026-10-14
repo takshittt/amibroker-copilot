@@ -1,4 +1,4 @@
-.PHONY: test lint format validate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai api reset-password bugfix-on bugfix-off
+.PHONY: test test-api test-web lint lint-api lint-web formatvalidate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai api reset-password web-install web demo e2e bugfix-on bugfix-off
 
 # Settings such as OPENAI_API_KEY are read from .env when it exists, and
 # handed to every command below. Write each line as NAME=value, with no
@@ -29,14 +29,47 @@ services-up:
 services-down:
 	docker compose down
 
-test:
+# `make test` and `make lint` cover both halves. CI runs each half in its
+# own job, since the API job has no Node and the web job no Python.
+test: test-api test-web
+
+test-api:
 	cd api && uv run pytest
 
-lint:
+test-web:
+	cd web && pnpm test
+
+lint: lint-api lint-web
+
+lint-api:
 	cd api && uv run ruff check . && uv run ruff format --check .
+
+lint-web:
+	cd web && pnpm lint
 
 format:
 	cd api && uv run ruff check --fix . && uv run ruff format .
+	cd web && pnpm format
+
+# Installs the website's packages (once, and after they change).
+web-install:
+	cd web && pnpm install --frozen-lockfile
+
+# Runs the website on http://localhost:3000. Needs API_URL, JWT_SECRET and
+# BFF_SHARED_SECRET; with `make demo` running, API_URL=http://127.0.0.1:8000.
+web:
+	cd web && pnpm dev
+
+# The API with scripted answers instead of OpenAI, for working on the
+# website without a key. Listens only on this machine. Needs the dev
+# database migrated and indexed, and JWT_SECRET and BFF_SHARED_SECRET.
+demo:
+	cd api && OFFLINE_DEMO=1 uv run python -m copilot.api.offline
+
+# Browser tests of the full Write and Review flows, against the demo API.
+# They start their own servers. Needs `make services-up` first.
+e2e:
+	cd web && pnpm e2e
 
 # Checks every file in kb/ against the record formats.
 validate-kb:
@@ -94,8 +127,8 @@ evals-review-ai:
 # Bug-fix mode: while it is on, Claude cannot change test files.
 # Commit the failing test first, then switch it on.
 bugfix-on:
-	@if [ -n "$$(git status --porcelain -- api/tests)" ]; then \
-		echo "Commit the failing test first: api/tests has uncommitted changes."; exit 1; \
+	@if [ -n "$$(git status --porcelain -- api/tests 'web/*.test.ts' 'web/*.test.tsx' web/e2e)" ]; then \
+		echo "Commit the failing test first: there are uncommitted changes to test files."; exit 1; \
 	fi
 	@touch .claude/bugfix-mode && echo "Bug-fix mode is on. Test files are locked."
 

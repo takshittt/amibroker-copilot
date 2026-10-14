@@ -65,3 +65,7 @@ Thumbs.db
 # Output of `make evals`
 evals/last-report.json
 evals/last-review-report.json
+
+# Website test output
+web/test-results/
+web/playwright-report/
