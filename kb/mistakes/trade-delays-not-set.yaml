@@ -1,0 +1,19 @@
+id: trade-delays-not-set
+title: Leaving trade delays to the Settings window
+checker_rule: trade_delays
+explanation: >-
+  Without SetTradeDelays the backtest uses whatever delays are in the
+  Settings window, so the same formula gives different results on
+  different computers. Set the delays in the code, and set the trade
+  prices to match: a delay of 1 with the open trades at the next bar's
+  open.
+bad_example: |
+  Buy = Cross(MACD(), Signal());
+  Sell = Cross(Signal(), MACD());
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Cross(MACD(), Signal());
+  Sell = Cross(Signal(), MACD());
+  BuyPrice = Open;
+  SellPrice = Open;
+tags: [backtest, trade-delays]

@@ -11,7 +11,8 @@ params:
   - {name: validfrom, type: number, optional: true}
   - {name: validto, type: number, optional: true}
 description: >-
-  Switches on a backtester stop of the given type (loss, profit, trailing
-  or N-bar), measured in the given mode.
+  Switches on one of the backtester's built-in stops: a stop loss, a
+  profit target, a trailing stop or an N-bar stop. The amount is read in
+  the given mode: percent, points or bars.
 doc_url: https://www.amibroker.com/guide/afl/applystop.html
 since: "3.70"

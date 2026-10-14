@@ -1,0 +1,19 @@
+id: hardcoded-session-times
+title: Session times written as numbers inside the logic
+checker_rule: hardcoded_times
+timeframe: 5min
+explanation: >-
+  The formula works, but 143000 and 151500 are buried in the conditions.
+  Anyone moving it to another market, or to a data feed in another time
+  zone, has to hunt for them. Keep each time in a parameter at the top.
+bad_example: |
+  SetTradeDelays(0, 0, 0, 0);
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND TimeNum() < 143000;
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR TimeNum() >= 151500;
+good_example: |
+  LastEntryTime = ParamTime("Last entry", "14:30");
+  ExitTime = ParamTime("Exit time", "15:15");
+  SetTradeDelays(0, 0, 0, 0);
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND TimeNum() < LastEntryTime;
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR TimeNum() >= ExitTime;
+tags: [intraday, time, parameters]

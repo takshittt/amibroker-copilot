@@ -11,6 +11,7 @@ from typing import Annotated, Any, Literal
 from zoneinfo import ZoneInfo
 
 from pydantic import (
+    AfterValidator,
     BaseModel,
     BeforeValidator,
     ConfigDict,
@@ -229,3 +230,80 @@ class Market(Record):
                     "(dst_active true and dst_active false)"
                 )
         return self
+
+
+# Notes: the text the copilot retrieves. All of it is written for this
+# project, in our own words.
+
+TIMEFRAMES = (
+    "1min",
+    "3min",
+    "5min",
+    "10min",
+    "15min",
+    "30min",
+    "hourly",
+    "daily",
+    "weekly",
+    "monthly",
+)
+Timeframe = Literal[
+    "1min", "3min", "5min", "10min", "15min", "30min", "hourly", "daily", "weekly", "monthly"
+]
+SLUG_PATTERN = r"^[a-z0-9]+(-[a-z0-9]+)*$"
+Slug = Annotated[str, BeforeValidator(_must_be_text), StringConstraints(pattern=SLUG_PATTERN)]
+
+
+def _must_not_be_blank(value: str) -> str:
+    if not value.strip():
+        raise ValueError("must not be blank")
+    return value
+
+
+Body = Annotated[str, BeforeValidator(_must_be_text), AfterValidator(_must_not_be_blank)]
+
+
+class MistakeRecord(Record):
+    """A known AFL mistake, with a wrong and a right version of the code."""
+
+    id: Slug
+    title: Text
+    # The checker rule that catches it, or null when only the AI review can.
+    checker_rule: Text | None
+    # The timeframe the two examples are written for.
+    timeframe: Timeframe = "daily"
+    explanation: Body
+    bad_example: Body
+    good_example: Body
+    tags: list[Slug] = []
+
+
+class ConceptNote(Record):
+    id: Slug
+    title: Text
+    content: Body
+    tags: list[Slug] = []
+
+
+class ExampleRecord(Record):
+    """A generic strategy written for this project. Never a private one."""
+
+    id: Slug
+    title: Text
+    timeframe: Timeframe
+    market: Text
+    description: Body
+    code: Body
+    tags: list[Slug] = []
+
+
+class ErrorNote(Record):
+    """Our own note on an AmiBroker error: what it means and how to fix it."""
+
+    id: Slug
+    # AmiBroker's error number, or null when the error has none.
+    code: int | None
+    title: Text
+    explanation: Body
+    fix: Body
+    tags: list[Slug] = []

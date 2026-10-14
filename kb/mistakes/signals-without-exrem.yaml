@@ -1,0 +1,23 @@
+id: signals-without-exrem
+title: Arrows on every bar because the signals were not cleaned
+checker_rule: exrem
+explanation: >-
+  Close > MA is true on every bar above the average, not only on the bar
+  where the trade starts. Plotted as it is, the chart shows an arrow on
+  each of those bars. ExRem keeps the first signal and removes the
+  repeats until the opposite signal arrives.
+bad_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > MA(Close, 20);
+  Sell = Close < MA(Close, 20);
+  PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+  PlotShapes(Sell * shapeDownArrow, colorRed, 0, High);
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > MA(Close, 20);
+  Sell = Close < MA(Close, 20);
+  Buy = ExRem(Buy, Sell);
+  Sell = ExRem(Sell, Buy);
+  PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+  PlotShapes(Sell * shapeDownArrow, colorRed, 0, High);
+tags: [signals, exrem, plot]

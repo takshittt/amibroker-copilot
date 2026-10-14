@@ -4,13 +4,16 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 3 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`; `/kb` holds all 447 AFL functions, the built-ins and the v1 markets; and `api/copilot/checker/` holds the checker with its 10 rules. There is no database, pipeline or API yet, and no `web/` side.
+The design is accepted. Stages 0 to 4 of the plan are done: `api/copilot/kb/` holds the KB record formats and loaders; `/kb` holds all 447 AFL functions, the built-ins, the v1 markets and ten mistake entries; `api/copilot/checker/` holds the checker with its 10 rules; and the Postgres schema, the indexer and the keyword and vector searches exist. Next is stage 4b, the rest of the KB content (concept notes, examples, error notes). There is no pipeline or API yet, and no `web/` side. Nothing has been run against Supabase or with real OpenAI embeddings yet.
 
 ## Commands
 
 Run from the repository root. Python is managed by `uv` (Python 3.12).
 
-- Test: `make test` (ends with "N passed")
+- Start local Postgres and Redis: `make services-up` (Docker must be running: `colima start`). Stop them: `make services-down`
+- Test: `make test` (ends with "N passed"). The database tests need `make services-up` first; if the database is not reachable they are skipped and the summary says "N skipped"
+- Apply database migrations: `make db-migrate` (uses `DATABASE_URL`, default the `copilot_dev` database from `docker-compose.yml`)
+- Load `/kb` into the database: `make index` (needs `OPENAI_API_KEY`), or `make index FAKE=1` for made-up vectors
 - One test: `cd api && uv run pytest tests/test_smoke.py::test_package_imports`
 - Lint: `make lint` (ends with "All checks passed!" and "N files already formatted")
 - Auto-fix lint and formatting: `make format`
@@ -52,6 +55,9 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 - Market session times come from the market table, never from prompts or code. Generated AFL puts timings in editable parameters at the top, and intraday strategies must have an end-of-day exit.
 - Model names, the quota and other limits live in config, not code.
 - The pipeline is plain Python steps. Do not add an agent framework or an auth library.
+- The knowledge base tables are a copy of `/kb`, written only by the indexer. Never edit those rows by hand or from other code.
+- A migration file that has been applied is never edited; a schema change is a new numbered file.
+- Tests never call OpenAI. Code that needs embeddings takes an `Embedder`, and tests pass the fake one.
 - Every KB change bumps `kb_version` and goes through a pull request. Every user-reported bug becomes a new eval case.
 
 ## Documentation layout

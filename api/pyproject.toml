@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "AFL Copilot API: pipeline and checker"
 requires-python = ">=3.12"
 dependencies = [
+    "openai>=1.50",
+    "psycopg[binary]>=3.2",
     "pydantic>=2",
     "pyyaml>=6",
 ]

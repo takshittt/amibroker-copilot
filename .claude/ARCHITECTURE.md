@@ -318,19 +318,29 @@ runs(id, message_id, status, attempts, checks jsonb,
      kb_version, created_at)                -- one row per pipeline run
 feedback(id, message_id, user_id, rating, comment, created_at)
 
-kb_functions(name pk, params jsonb, variadic, returns, description null,
-             doc_url, category, since null, kb_version)
-kb_builtins(name pk, kind, type, description)
+kb_functions(name pk, key unique (lower-case name), params jsonb,
+             is_variadic, returns, description null, doc_url, category,
+             since null, kb_version)
+kb_builtins(name pk, kind, type, description, aliases text[], kb_version)
 kb_chunks(id, kind[function|concept|example|mistake|error],
-          ref, title, content, tsv tsvector, embedding vector(1536),
-          tags text[], kb_version)
+          ref, title, content, tags text[], meta jsonb,
+          content_hash, embedding vector(1536), embedding_model,
+          tsv tsvector (generated; title weighted above content),
+          kb_version, unique(kind, ref))
   index: GIN(tsv), HNSW(embedding)
+kb_state(kb_version, indexed_at)            -- one row
+schema_migrations(name pk, applied_at)
 
 markets(id pk, name, exchange, timezone,
         sessions jsonb,      -- [{name, open, close, days}]
         dst_rules jsonb,     -- e.g. MCX evening close by US DST season
         last_verified date)
 ```
+
+The knowledge base tables and `markets` are a copy of the `/kb` files,
+written only by the indexer. `content_hash` is how the indexer knows
+which chunks to embed again. `meta` holds what a kind needs besides its
+text, such as a mistake's checker rule or an example's market.
 
 Usage counters live in Redis (`quota:{user}:{yyyy-mm-dd}`, TTL 48 h), with
 the daily totals copied into `runs` for analytics.
@@ -343,12 +353,21 @@ the daily totals copied into `runs` for analytics.
                       description for the functions v1 generates from)
   /builtins.yaml
   /concepts/*.md      arrays vs loops, stops, sizing, trade delays, time filters
-  /examples/*.afl     generic, tested strategies (+ .md description)
+                      (Markdown with a title and tags header)
+  /examples/*.afl     generic, tested strategies, each with a .md beside it
+                      holding title, timeframe, market and description
   /mistakes/*.yaml    bad example, good example, explanation, checker rule id
-  /errors/*.yaml      AmiBroker error notes
+  /errors/*.yaml      AmiBroker error notes: number, meaning and fix, our words
   /markets.yaml       presets + DST rules + last_verified
   /VERSION            kb_version, one whole number
 ```
+- Every mistake entry is run through the checker in the tests: its bad
+  example must set off the rule it names and no other, and its good
+  example must be clean.
+- `make index` loads the files into Postgres: it replaces the function,
+  built-in and market rows, and inserts, updates or deletes chunks so
+  the tables match the files. Only chunks whose text changed are
+  embedded again.
 - Function signatures come from the official reference through
   `api/copilot/kb/importer.py`, a tool run by hand. It stores only facts
   (names, parameters, return type, category, version), never the
@@ -461,8 +480,11 @@ API instances behind a load balancer.
   and the indexer run against it from CI.
 - Daily Postgres backups: Supabase's own if the plan includes them,
   otherwise a daily `pg_dump` to object storage.
-- Local development uses a Compose file with Postgres (pgvector) and
-  Redis, so tests do not need Supabase.
+- Local development and tests use `docker-compose.yml` at the repository
+  root, with Postgres (pgvector) and Redis, so they do not need
+  Supabase. Its user name and password are for development only.
+- Schema changes are numbered SQL files in `api/migrations`, applied in
+  order by `make db-migrate`. An applied file is never edited.
 - GitHub Actions: tests → evals (on prompt/KB/checker changes) → build →
   deploy the API. Vercel deploys the web side itself.
 

@@ -19,6 +19,7 @@ pipeline, and the website needs the API.
 | 2 | Checker | Lexer, parser, symbol table, all 10 rules | Rule tests pass; fixture files give the expected findings; tests run with no network |
 | 3 | Full function list | Every AFL function with name, parameters and return type | Checker reports no unknown function on the example strategies |
 | 4 | Database and indexer | Postgres schema, migrations, KB files loaded with embeddings; local Postgres in Compose for development, Supabase for production | Indexer run twice gives the same rows; search returns `ApplyStop` for "trailing stop" |
+| 4b | KB content | Concept notes, example strategies and error notes, in the formats stage 4 defined | Every example passes the checker; `make validate-kb` passes; the notes are indexed |
 | 5 | Write pipeline | Steps 1–7 as a command-line tool, no HTTP | 10 sample requests give checked code; eval runner reports the spec section 10 metrics |
 | 6 | Review and Fix-from-error | Both modes on the command line | Planted bugs in the Review samples are found; findings carry Verified or AI-suggested |
 | 7 | API | Auth, shared BFF key check, conversations, SSE stream, quota, spend cap, admin command to reset a password | API tests pass; a request without the BFF key is rejected; a failed upstream call uses no quota |
@@ -104,6 +105,86 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    `LLV`, `ValueWhen` and others), the price and signal built-ins, and
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
+
+## Stage 4b: KB content (not started)
+
+Stage 5 retrieves concept notes, pins mistake entries and may show
+examples, so this content must exist before it. No earlier stage wrote
+it. The formats, the validator and the indexer support are done (stage
+4), and the ten mistake entries that match the checker rules exist.
+Still to write, all in our own words:
+
+- **Concept notes** (`kb/concepts/*.md`): arrays and loops, `IIf`,
+  `ExRem`, stops with `ApplyStop`, position sizing, trade delays and
+  trade prices, plotting, time filters and the data-feed time zone.
+- **Example strategies** (`kb/examples/*.afl` with a `.md` beside each):
+  generic strategies across markets and timeframes. A test must run the
+  checker over every example and require a clean pass.
+- **Error notes** (`kb/errors/*.yaml`): the AmiBroker errors users paste
+  most often, for Fix-from-error.
+- **More mistake entries** where the checker has no rule, with
+  `checker_rule: null`.
+
+## Stage 4: Database and indexer
+
+Status: done on local and CI Postgres. Not yet run against Supabase, and
+search by meaning has not been tried with real embeddings (no OpenAI key
+was available).
+
+**Files** (all new unless noted)
+`api/migrations/0001_initial.sql`, `api/copilot/config.py`,
+`api/copilot/db/` (`connection.py`, `migrate.py`, `kb.py`),
+`api/copilot/embeddings.py`, `api/copilot/chunks.py`,
+`api/copilot/indexer.py`, `api/copilot/search.py`,
+`api/copilot/kb/notes.py`, `kb/mistakes/*.yaml` (ten),
+tests under `api/tests/db/` and `api/tests/`; changed: `schema.py`,
+`kb/__main__.py`, `Makefile`, CI, `.env.example`; also new:
+`docker-compose.yml` and `docker/postgres-init.sql`. New dependencies:
+`psycopg` and `openai`. `kb_version` is 3.
+
+**What was decided while building it**
+- Migrations are numbered plain SQL files applied by a small runner
+  (`make db-migrate`). No Alembic and no ORM.
+- Local development uses `docker-compose.yml`: Postgres 17 with
+  pgvector (databases `copilot_dev` and `copilot_test`) and Redis,
+  started with `make services-up`. On the development Mac, Docker runs
+  through Colima. The production Compose file (FastAPI, Redis, Caddy)
+  is a separate file, written at stage 9.
+- The database code is synchronous (`psycopg` 3). FastAPI can run it in
+  its thread pool at stage 7.
+- `index_kb` does not commit; the command line wraps it in one
+  transaction, so a failed run changes nothing.
+- Chunks are re-embedded only when their title or text changes, or when
+  the embedding model changes. A function with no description gets no
+  chunk; it is still found by exact lookup.
+- Keyword search matches any word of the query. Chunks with more of the
+  different words come first, then a title-weighted rank, so an exact
+  function name beats a long note that mentions it.
+- Database tests share one connection and never commit. Without a
+  reachable test database they are skipped with the reason shown; with
+  `REQUIRE_DB` set, as in CI, they fail instead.
+- Four new note formats: mistakes and error notes as YAML, concept notes
+  as Markdown with a header, examples as an `.afl` file with a `.md`
+  beside it. A test runs the checker over every mistake entry: the wrong
+  example must set off its rule and no other, the right one must be
+  clean.
+
+**Proof**
+- The indexer run twice gives identical rows and embeds nothing the
+  second time (a test, and `make index FAKE=1` twice on the dev
+  database).
+- Keyword search for "trailing stop" returns `ApplyStop` first.
+- The catalog read back from the database equals the one from the
+  files, and the checker gives the same result with either.
+
+**Still open**
+- Vector search with real embeddings: run `make index` with
+  `OPENAI_API_KEY` set, then search for "trailing stop".
+- Supabase: apply the migrations and run the indexer there. Believed,
+  not confirmed: free projects pause after about a week without
+  activity and have no automatic backups; the direct connection is
+  IPv6-only, so CI and Oracle Cloud may need the pooled address with
+  `DB_PREPARED_STATEMENTS=false`.
 
 ## Stage 3: Full function list
 

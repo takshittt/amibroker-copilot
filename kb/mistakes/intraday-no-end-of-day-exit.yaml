@@ -1,0 +1,20 @@
+id: intraday-no-end-of-day-exit
+title: Intraday strategy with nothing to close the position before the market does
+checker_rule: eod_exit
+timeframe: 5min
+explanation: >-
+  An intraday strategy that exits only on its indicator will sometimes
+  still be in a trade at the close, and the backtest then carries the
+  position overnight. Add an exit that depends on the time of day, and
+  keep that time in a parameter at the top so it can be changed for
+  another market.
+bad_example: |
+  SetTradeDelays(0, 0, 0, 0);
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21));
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9));
+good_example: |
+  ExitTime = ParamTime("Exit time", "15:15");
+  SetTradeDelays(0, 0, 0, 0);
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21));
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR TimeNum() >= ExitTime;
+tags: [intraday, time, exit]
