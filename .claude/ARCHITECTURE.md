@@ -269,6 +269,29 @@ AFL source ─▶ Lexer ─▶ tokens ─▶ Light parser ─▶ statements + ca
 | Signals not cleaned with `ExRem` where needed | Warning |
 | Hard-coded session times | Tip |
 
+**When each rule fires** (rule ids are fixed; the mistake catalogue refers
+to them)
+
+| Rule id | Fires when |
+|---|---|
+| `unknown_function` | A called name is neither in the function list nor declared with `function` in the code. Warning instead of Critical when the code has an `#include` |
+| `arg_count` | The number of arguments is outside the function's required-to-total range. Functions declared in the code are checked against their own parameters |
+| `if_on_array` | The condition of `if`, `while` or `for` is known to be an array. Unknown types do not fire |
+| `lookahead_ref` | `Ref(x, n)` with `n` a positive constant feeds `Buy`, `Sell`, `Short` or `Cover`, directly or through variables and functions. A positive `Ref` that is only plotted does not fire |
+| `syntax` | A bracket, string or comment is never closed; a semicolon is missing; a token makes no sense; or `=` is used in a condition (including the condition of `IIf`) |
+| `eod_exit` | The timeframe is intraday, a side is entered (`Buy` or `Short`), and its exit (`Sell` or `Cover`) does not depend on `TimeNum()` |
+| `intrabar_stop_price` | A signal triggers on `High` rising to a level (`Buy`, `Cover`) or `Low` falling to one (`Sell`, `Short`), and the matching price variable is never assigned |
+| `trade_delays` | The code has signals and no `SetTradeDelays` call; or two calls with different delays; or a side has delay 0 with its price variable set to `Open`, unless the signal reads earlier bars with a negative `Ref` |
+| `exrem` | `Buy`/`Sell` or `Short`/`Cover` are both assigned, one of them is used in `PlotShapes`, `AddColumn` or `Filter`, and it was not passed through `ExRem` with its partner. A backtest alone does not fire |
+| `hardcoded_times` | A number literal is compared with `TimeNum()`, or with a variable set from it. A time held in a `Param`, `ParamTime` or a variable does not fire |
+
+**Result**: `check(source, catalog, context)` returns a status, the
+findings and one pass/fail/skipped entry for each rule. The status is
+`failed` when there is any Critical or Warning finding, `passed`
+otherwise (a Tip alone passes), and `checker_error` when the checker
+itself raised. When the code does not parse, only `syntax` reports and
+the other rules are skipped.
+
 **Input**: the checker does not read files or tables itself. It takes a
 `Catalog` object (functions, built-ins, markets, `kb_version`), built from
 the `/kb` files in tests and from the `kb_*` rows at runtime. Both come

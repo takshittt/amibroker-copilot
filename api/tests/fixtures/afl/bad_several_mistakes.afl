@@ -1,0 +1,11 @@
+// context: timeframe=5min market=mcx
+// expect: lookahead_ref 9
+// expect: trade_delays 10
+// expect: eod_exit 10
+// expect: unknown_function 11
+// expect: hardcoded_times 10
+//
+// MCX gold, 5-minute bars, with several mistakes at once.
+Peek = Ref(Close, 2) > Close;
+Buy = Peek AND TimeNum() > 100000;
+Sell = Cross(Chandelier(22, 3), Close);

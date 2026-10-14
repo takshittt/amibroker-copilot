@@ -1,0 +1,40 @@
+// context: timeframe=daily market=nse_eq
+// expect: none
+//
+// Code of the kind people paste into Review: a function, a loop and
+// subscripts. v1 does not write this style, but the checker must read it.
+
+SetTradeDelays(1, 1, 1, 1);
+
+function Midpoint(a, b)
+{
+    local result;
+    result = (a + b) / 2;
+    return result;
+}
+
+mid = Midpoint(High, Low);
+trail = Null;
+count = 0;
+
+for (i = 1; i < BarIndex()[0] + 10; i++)
+{
+    if (Close[i] > mid[i] AND count < 5)
+    {
+        trail[i] = Low[i - 1];
+        count++;
+    }
+    else
+    {
+        trail[i] = trail[i - 1];
+    }
+}
+
+Buy = Close > mid;
+Sell = Close < trail;
+
+showTrail = ParamToggle("Show trail", "No|Yes", 1);
+if (showTrail)
+{
+    Plot(trail, "Trail", colorRed, styleLine);
+}

@@ -1,0 +1,13 @@
+// context: timeframe=daily market=nse_eq
+// expect: intrabar_stop_price 12
+//
+// The stop is hit when the low trades through it, but with no SellPrice
+// the backtest sells at the close of that bar instead of at the stop.
+
+SetTradeDelays(0, 0, 0, 0);
+
+StopLevel = Ref(LLV(Low, 10), -1);
+
+Buy = Cross(Close, MA(Close, 50));
+Sell = Low < StopLevel;
+BuyPrice = Close;

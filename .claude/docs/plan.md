@@ -108,6 +108,27 @@ Status: done. Takshit verified the market session times on 2026-10-14.
 
 ## Stage 2: Checker
 
+Status: done. The exact condition under which each rule fires is in
+ARCHITECTURE.md section 5.
+
+**What was decided while building it**
+- `status` is `failed` when there is any Critical or Warning finding. A
+  Tip alone passes.
+- `CheckResult` also holds `checks`, one entry for each rule (`passed`,
+  `failed` or `skipped`), for the answer's check panel.
+- When the code does not parse, only the `syntax` rule reports and the
+  other nine are `skipped`: they would be judging code that was only
+  partly read. Parsing stops at the first token that makes no sense, so
+  one mistake is not reported many times; missing semicolons are the
+  exception and are all reported.
+- A function written in the code is checked for argument count against
+  its own parameter list.
+- The parser accepts `for`, `while`, `do`, `switch`, subscripts and
+  `procedure`, because pasted code contains them.
+- The samples in `api/tests/fixtures/afl/` say in header comments what
+  the checker must report, so they can be reused as Review eval cases.
+  Nothing was added to `/evals` in this stage.
+
 **Files that change** (all new, under `api/copilot/checker/` and
 `api/tests/checker/`)
 `lexer.py`, `parser.py`, `symbols.py`, `engine.py`, `findings.py`,

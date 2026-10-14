@@ -1,0 +1,5 @@
+// context: timeframe=daily market=nse_eq
+// expect: trade_delays 4
+
+Buy = Cross(MACD(), Signal());
+Sell = Cross(Signal(), MACD());

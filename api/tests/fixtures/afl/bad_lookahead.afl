@@ -1,0 +1,11 @@
+// context: timeframe=daily market=nse_eq
+// expect: lookahead_ref 9
+//
+// Buys today when tomorrow closes higher. The backtest looks superb
+// and cannot be traded.
+
+SetTradeDelays(0, 0, 0, 0);
+
+TomorrowUp = Ref(Close, 1) > Close;
+Buy = TomorrowUp AND RSI(14) < 40;
+Sell = RSI(14) > 70;

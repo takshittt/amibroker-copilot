@@ -1,0 +1,10 @@
+// context: timeframe=daily market=nse_eq
+// expect: arg_count 7
+// expect: arg_count 9
+
+SetTradeDelays(1, 1, 1, 1);
+
+Fast = MA(Close);
+Slow = MA(Close, 50);
+Buy = Cross(Fast, Slow, 1);
+Sell = Cross(Slow, Fast);

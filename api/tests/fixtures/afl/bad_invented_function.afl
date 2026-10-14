@@ -1,0 +1,13 @@
+// context: timeframe=daily market=nse_eq
+// expect: unknown_function 10
+// expect: unknown_function 13
+//
+// Functions that sound real but are not AFL: the main thing the
+// checker exists to catch.
+
+SetTradeDelays(1, 1, 1, 1);
+
+Trend = SuperTrend(10, 3);
+Buy = Cross(Close, Trend);
+Sell = Cross(Trend, Close);
+Stop = TrailingStop(Close, 2);
