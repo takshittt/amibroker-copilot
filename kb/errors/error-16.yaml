@@ -1,0 +1,10 @@
+id: error-16
+code: 16
+title: Too many arguments in a function call
+explanation: >-
+  A function was called with more arguments than it takes.
+fix: >-
+  Compare the call with the function's parameter list and remove the extra
+  argument. Check for a comma typed where a decimal point was meant, which
+  turns one number into two arguments.
+tags: [functions, arguments]

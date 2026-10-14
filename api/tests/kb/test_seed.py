@@ -155,3 +155,7 @@ def test_functions_v1_generates_from_all_have_a_description(catalog):
 def test_descriptions_that_warn_about_looking_ahead(catalog):
     for name in ["Peak", "Trough", "ZIG", "Ref"]:
         assert "ahead" in catalog.function(name).description
+
+
+def test_only_crypto_never_closes(catalog):
+    assert [m.id for m in catalog.markets.values() if m.never_closes] == ["crypto"]

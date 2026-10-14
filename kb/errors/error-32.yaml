@@ -1,0 +1,11 @@
+id: error-32
+code: 32
+title: A semicolon is missing on the line before
+explanation: >-
+  Every statement ends with a semicolon. When one is left out, AFL runs
+  the two lines together and reports the problem on the second line,
+  although the mistake is at the end of the first.
+fix: >-
+  Add a semicolon at the end of the line above the one the message points
+  to.
+tags: [syntax, semicolon]

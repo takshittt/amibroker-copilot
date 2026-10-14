@@ -1,0 +1,9 @@
+id: error-17
+code: 17
+title: Not enough arguments in a function call
+explanation: >-
+  A function was called without one of the arguments it requires.
+fix: >-
+  Compare the call with the function's parameter list and add what is
+  missing. MA, for example, needs both the array and the number of bars.
+tags: [functions, arguments]

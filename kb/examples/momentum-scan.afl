@@ -1,0 +1,25 @@
+_SECTION_BEGIN("Momentum scan");
+
+MinTrend = Param("Minimum ADX", 25, 10, 50, 1);
+MinMomentum = Param("Minimum RSI", 55, 40, 80, 1);
+NearHighPercent = Param("Within % of yearly high", 5, 1, 25, 1);
+MinVolume = Param("Minimum average volume", 100000, 0, 5000000, 50000);
+
+Trend = ADX(14);
+Momentum = RSI(14);
+YearHigh = HHV(High, 250);
+AvgVolume = MA(Volume, 20);
+
+NearHigh = Close > YearHigh * (1 - NearHighPercent / 100);
+
+Filter = Trend > MinTrend AND Momentum > MinMomentum AND NearHigh AND AvgVolume > MinVolume;
+
+AddTextColumn(FullName(), "Name");
+AddColumn(Close, "Close");
+AddColumn(Trend, "ADX");
+AddColumn(Momentum, "RSI");
+AddColumn(100 * (Close / YearHigh - 1), "% from yearly high");
+AddColumn(AvgVolume, "Average volume", 1.0);
+SetSortColumns(-4);
+
+_SECTION_END();

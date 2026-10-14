@@ -1,0 +1,12 @@
+id: error-5
+code: 5
+title: An argument of the wrong kind
+explanation: >-
+  A function was given a value of a kind it does not accept in that
+  position: text where it wants a number or an array, or the other way
+  round. The message says which argument it is.
+fix: >-
+  Count to the argument the message names and compare it with the
+  function's parameter list. A common slip is leaving out an earlier
+  argument, which shifts all the later ones by one place.
+tags: [functions, arguments, types]

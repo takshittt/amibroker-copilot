@@ -279,7 +279,7 @@ to them)
 | `if_on_array` | The condition of `if`, `while` or `for` is known to be an array. Unknown types do not fire |
 | `lookahead_ref` | `Ref(x, n)` with `n` a positive constant feeds `Buy`, `Sell`, `Short` or `Cover`, directly or through variables and functions. A positive `Ref` that is only plotted does not fire |
 | `syntax` | A bracket, string or comment is never closed; a semicolon is missing; a token makes no sense; or `=` is used in a condition (including the condition of `IIf`) |
-| `eod_exit` | The timeframe is intraday, a side is entered (`Buy` or `Short`), and its exit (`Sell` or `Cover`) does not depend on `TimeNum()` |
+| `eod_exit` | The timeframe is intraday, the market closes (not a market that trades all day, every day), a side is entered (`Buy` or `Short`), and its exit (`Sell` or `Cover`) does not depend on `TimeNum()` |
 | `intrabar_stop_price` | A signal triggers on `High` rising to a level (`Buy`, `Cover`) or `Low` falling to one (`Sell`, `Short`), and the matching price variable is never assigned |
 | `trade_delays` | The code has signals and no `SetTradeDelays` call; or two calls with different delays; or a side has delay 0 with its price variable set to `Open`, unless the signal reads earlier bars with a negative `Ref` |
 | `exrem` | `Buy`/`Sell` or `Short`/`Cover` are both assigned, one of them is used in `PlotShapes`, `AddColumn` or `Filter`, and it was not passed through `ExRem` with its partner. A backtest alone does not fire |
@@ -327,7 +327,7 @@ kb_chunks(id, kind[function|concept|example|mistake|error],
           content_hash, embedding vector(1536), embedding_model,
           tsv tsvector (generated; title weighted above content),
           kb_version, unique(kind, ref))
-  index: GIN(tsv), HNSW(embedding)
+  index: GIN(tsv). No vector index: see below.
 kb_state(kb_version, indexed_at)            -- one row
 schema_migrations(name pk, applied_at)
 
@@ -341,6 +341,14 @@ The knowledge base tables and `markets` are a copy of the `/kb` files,
 written only by the indexer. `content_hash` is how the indexer knows
 which chunks to embed again. `meta` holds what a kind needs besides its
 text, such as a mistake's checker rule or an example's market.
+
+Search by meaning scans every chunk and has no vector index. An HNSW
+index is approximate and applies a filter after choosing its candidates,
+so a search filtered by `kind` sometimes came back short or empty. At
+this size (hundreds of chunks, thousands planned) an exact scan takes
+milliseconds and always returns the true nearest rows. Add an index
+again, in a new migration, if `kb_chunks` passes some tens of thousands
+of rows.
 
 Usage counters live in Redis (`quota:{user}:{yyyy-mm-dd}`, TTL 48 h), with
 the daily totals copied into `runs` for analytics.
@@ -363,7 +371,10 @@ the daily totals copied into `runs` for analytics.
 ```
 - Every mistake entry is run through the checker in the tests: its bad
   example must set off the rule it names and no other, and its good
-  example must be clean.
+  example must be clean. An entry with no rule is one only the AI review
+  can catch, and its bad example must set off nothing.
+- Every example strategy must pass the checker with nothing reported,
+  and code shown in a concept note must have no Critical finding.
 - `make index` loads the files into Postgres: it replaces the function,
   built-in and market rows, and inserts, updates or deletes chunks so
   the tables match the files. Only chunks whose text changed are

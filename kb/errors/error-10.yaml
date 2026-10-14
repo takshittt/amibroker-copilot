@@ -1,0 +1,12 @@
+id: error-10
+code: 10
+title: An index outside the bars that exist
+explanation: >-
+  The formula read or wrote an array element that is not there. Elements
+  run from 0 to BarCount - 1. This usually happens in a loop that starts
+  at 0 and reads the bar before, or that runs one step too far.
+fix: >-
+  Start the loop late enough for every index it uses, for example at 1
+  when the body reads [i - 1], and stop it at i < BarCount. Remember that
+  BarCount can be small when few bars are loaded.
+tags: [loops, arrays, subscript]

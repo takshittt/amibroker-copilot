@@ -1,0 +1,12 @@
+id: error-29
+code: 29
+title: A variable is read before it has been given a value
+explanation: >-
+  The formula uses a variable that nothing has assigned yet. Often the
+  name is misspelt, so it is really a different variable, or the
+  assignment sits inside an if block that did not run.
+fix: >-
+  Check the spelling of the name the message shows. Give the variable a
+  starting value before the line that reads it, and before any if that
+  might skip the assignment.
+tags: [variables]

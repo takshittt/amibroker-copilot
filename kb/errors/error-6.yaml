@@ -1,0 +1,12 @@
+id: error-6
+code: 6
+title: An array used as the condition of if, while or for
+explanation: >-
+  The condition of if, while or for must be one true or false. An
+  expression such as Close > Open is an array, with a separate answer for
+  every bar, so the statement cannot decide which way to go.
+fix: >-
+  To choose a value bar by bar, use IIf. To act on one bar's value, take
+  it with LastValue or SelectedValue, or use an index such as Close[i]
+  inside a loop.
+tags: [arrays, if, iif]

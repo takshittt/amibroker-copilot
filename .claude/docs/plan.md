@@ -6,6 +6,12 @@ Each later stage gets its own detail (files, order, proof) added here
 before work on it starts. When the code departs from the plan, the plan
 is updated in the same commit.
 
+## Changes in effect
+
+- 2026-10-14: the remaining stages are built before the OpenAI key is
+  available, and the proofs that need a real model are owed until it
+  arrives. See `.claude/changes/2026-10-14-build-without-openai-key.md`.
+
 ## Build order
 
 The order follows the dependencies: the checker needs the function list,
@@ -106,24 +112,61 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
 
-## Stage 4b: KB content (not started)
+## Stage 4b: KB content
 
-Stage 5 retrieves concept notes, pins mistake entries and may show
-examples, so this content must exist before it. No earlier stage wrote
-it. The formats, the validator and the indexer support are done (stage
-4), and the ten mistake entries that match the checker rules exist.
-Still to write, all in our own words:
+Status: done. `kb_version` is 4. All of it is written in our own words;
+none of it has been reviewed by a second person yet.
 
-- **Concept notes** (`kb/concepts/*.md`): arrays and loops, `IIf`,
-  `ExRem`, stops with `ApplyStop`, position sizing, trade delays and
-  trade prices, plotting, time filters and the data-feed time zone.
-- **Example strategies** (`kb/examples/*.afl` with a `.md` beside each):
-  generic strategies across markets and timeframes. A test must run the
-  checker over every example and require a clean pass.
-- **Error notes** (`kb/errors/*.yaml`): the AmiBroker errors users paste
-  most often, for Fix-from-error.
-- **More mistake entries** where the checker has no rule, with
-  `checker_rule: null`.
+**What `/kb` now holds besides functions, built-ins and markets**
+- 12 concept notes (`kb/concepts/*.md`): arrays, `IIf`, signals and
+  `ExRem`, `ApplyStop`, position sizing, trade delays and prices,
+  look-ahead bias, time filters and the end-of-day exit, the data feed's
+  time zone, parameters, plotting, explorations.
+- 10 example strategies (`kb/examples/`): daily and intraday, long-only
+  and long-short, on NSE equity, NSE F&O, MCX and crypto, plus one
+  exploration and one indicator.
+- 19 error notes (`kb/errors/*.yaml`). Every error number was checked
+  against AmiBroker's own error list; the wording is ours.
+- 14 mistake entries: the ten that match checker rules, and four the
+  checker cannot see (`checker_rule: null`): trading on `Zig`/`Peak`,
+  a time written as 915, `Cross` with its arguments swapped, and a level
+  that contains the current bar.
+
+**Tests that tie the content to the checker** (`api/tests/kb/test_content.py`
+and `test_mistakes_seed.py`)
+- Every example passes the checker with nothing reported, not even a Tip.
+- Every code block in a concept note has no Critical finding.
+- A mistake entry's wrong example sets off the rule it names and no
+  other; an entry with no rule sets off nothing; every right example is
+  clean.
+- A function named as `Name(` in a note must exist.
+
+**Changed outside `/kb`**
+- The `eod_exit` rule no longer fires for a market that trades all day,
+  every day (crypto). `Market.never_closes` decides.
+- The mistake entry for `=` in a condition now says what AmiBroker does:
+  it gives warning 501 and carries on, with the variable changed. The
+  checker still reports it as Critical, since the logic is silently
+  wrong.
+
+**A fault found in stage 4 and fixed here**
+- Vector search filtered by `kind` sometimes returned fewer rows than
+  asked for, or none. The cause was the HNSW index, which is approximate
+  and filters after picking candidates. It showed up as a test that
+  failed about one run in eight. Migration `0002_exact_vector_search.sql`
+  drops the index, so the search is now an exact scan; a test runs 200
+  filtered searches and requires every one to fill its limit.
+- Three search tests that named exact results were rewritten, because
+  the new notes changed the rankings: a concept note with a function's
+  name in its title now ranks beside the function itself.
+
+**Known gaps**
+- `eod_exit` accepts any exit that depends on `TimeNum()` at all. An
+  exit built from an opening-range level, which is worked out from the
+  time, passes even with no end-of-day exit.
+- The four mistakes with no rule are caught only by the AI review, which
+  does not exist until stage 6.
+- More examples and error notes will be wanted as the eval set grows.
 
 ## Stage 4: Database and indexer
 

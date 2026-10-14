@@ -1,0 +1,11 @@
+id: warning-502
+code: 502
+title: Plot is called far too many times
+explanation: >-
+  This is a warning. Plot or PlotOHLC is being called hundreds of times in
+  one run, nearly always because it sits inside a loop. The chart becomes
+  very slow.
+fix: >-
+  Move Plot out of the loop. Build the whole array first, then plot it
+  once.
+tags: [plot, loops]

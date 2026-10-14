@@ -75,7 +75,11 @@ def vector_search(
     limit: int = 30,
     kinds: list[str] | None = None,
 ) -> list[Hit]:
-    """Nearest chunks by cosine distance. The score is the cosine similarity."""
+    """Nearest chunks by cosine distance. The score is the cosine similarity.
+
+    This is an exact scan of every chunk, with no vector index: see
+    api/migrations/0002_exact_vector_search.sql for why.
+    """
     literal = vector_literal(embedding)
     rows = conn.execute(
         f"select {_COLUMNS}, 1 - (embedding <=> %s::vector) as score "

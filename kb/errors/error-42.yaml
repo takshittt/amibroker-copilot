@@ -1,0 +1,10 @@
+id: error-42
+code: 42
+title: An included file was not found
+explanation: >-
+  An #include line names a file that AmiBroker cannot find. The message
+  shows the folder it looked in.
+fix: >-
+  Check the file name and its spelling. Put the file in AmiBroker's
+  Include folder, or give the full path in the #include line.
+tags: [include]

@@ -1,0 +1,9 @@
+id: error-46
+code: 46
+title: A comma is missing between arguments
+explanation: >-
+  Two arguments of a function call are not separated by a comma.
+fix: >-
+  Put a comma between each pair of arguments in the call the message
+  points to.
+tags: [syntax, arguments]

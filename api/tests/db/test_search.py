@@ -31,9 +31,15 @@ def test_trailing_stop_finds_apply_stop_among_every_kind(indexed):
     assert "ApplyStop" in refs(keyword_search(indexed, "trailing stop"))
 
 
-def test_exact_function_name_comes_first(indexed):
-    assert refs(keyword_search(indexed, "ApplyStop"))[0] == "ApplyStop"
-    assert refs(keyword_search(indexed, "timenum"))[0] == "TimeNum"
+def test_exact_function_name_comes_first_among_functions(indexed):
+    assert refs(keyword_search(indexed, "ApplyStop", kinds=["function"]))[0] == "ApplyStop"
+    assert refs(keyword_search(indexed, "timenum", kinds=["function"]))[0] == "TimeNum"
+
+
+def test_function_and_the_notes_named_after_it_lead_a_search_for_its_name(indexed):
+    # A note with the name in its title is as good a match as the function itself.
+    top = refs(keyword_search(indexed, "ApplyStop", limit=3))
+    assert {"ApplyStop", "stops-with-applystop"} <= set(top)
 
 
 def test_word_forms_match(indexed):
@@ -50,8 +56,10 @@ def test_any_word_is_enough_and_more_words_rank_higher(indexed):
 
 
 def test_exact_name_beats_a_note_that_mentions_it_often(indexed):
-    hits = keyword_search(indexed, "TimeNum")
-    assert [hit.ref for hit in hits[:2]] == ["TimeNum", "hardcoded-session-times"]
+    # hardcoded-session-times mentions TimeNum four times, but only in its body.
+    found = refs(keyword_search(indexed, "TimeNum"))
+    assert found[0] == "TimeNum"
+    assert found.index("TimeNum") < found.index("hardcoded-session-times")
 
 
 def test_kinds_limit_what_is_searched(indexed):
@@ -106,4 +114,39 @@ def test_vector_search_respects_kinds_and_limit(indexed, embedder):
 
 def test_vector_search_with_nothing_of_that_kind(indexed, embedder):
     (vector,) = embedder.embed(["anything"])
-    assert vector_search(indexed, vector, kinds=["concept"]) == []
+    assert vector_search(indexed, vector, kinds=["no-such-kind"]) == []
+
+
+@pytest.mark.parametrize("kind", ["mistake", "concept", "example", "error", "function"])
+def test_filtered_vector_search_always_fills_the_limit(indexed, embedder, kind):
+    # An approximate index applies the filter after picking its candidates
+    # and can come back short or empty. Many different query vectors, so a
+    # search that is only sometimes short is still caught.
+    vectors = embedder.embed([f"query number {number}" for number in range(40)])
+    for vector in vectors:
+        hits = vector_search(indexed, vector, limit=5, kinds=[kind])
+        assert len(hits) == 5
+        assert {hit.kind for hit in hits} == {kind}
+
+
+def test_vector_search_gives_the_true_nearest_chunks(indexed, catalog, notes, embedder):
+    chunks = build_chunks(catalog, notes)
+    texts = [chunk.text for chunk in chunks]
+    stored = embedder.embed(texts)
+    (query,) = embedder.embed(["which chunks are closest to this"])
+
+    def similarity(vector):
+        return sum(a * b for a, b in zip(query, vector, strict=True))
+
+    ranked = sorted(zip(chunks, stored, strict=True), key=lambda pair: -similarity(pair[1]))
+    expected = [(chunk.kind, chunk.ref) for chunk, _ in ranked[:10]]
+    found = [(hit.kind, hit.ref) for hit in vector_search(indexed, query, limit=10)]
+    assert found == expected
+
+
+def test_there_is_no_approximate_index_on_the_embeddings(indexed):
+    rows = indexed.execute(
+        "select indexname from pg_indexes where tablename = 'kb_chunks' and indexdef ilike %s",
+        ("%hnsw%",),
+    ).fetchall()
+    assert rows == []

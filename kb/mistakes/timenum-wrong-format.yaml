@@ -1,0 +1,25 @@
+id: timenum-wrong-format
+title: Writing a time as 915 when TimeNum counts seconds too
+checker_rule: null
+timeframe: 5min
+explanation: >-
+  TimeNum gives the time as HHMMSS, six digits with the seconds, so a
+  quarter past nine in the morning is 91500, not 915. Compared with 915
+  or 1515, almost every bar of the day counts as later. The entry filter
+  then lets everything through and the exit fires on every bar, with no
+  error to show for it. ParamTime returns the time in the right form.
+bad_example: |
+  StartTime = 915;
+  ExitTime = 1515;
+  SetTradeDelays(0, 0, 0, 0);
+  tn = TimeNum();
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND tn >= StartTime;
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR tn >= ExitTime;
+good_example: |
+  StartTime = ParamTime("First entry", "09:15");
+  ExitTime = ParamTime("Exit time", "15:15");
+  SetTradeDelays(0, 0, 0, 0);
+  tn = TimeNum();
+  Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND tn >= StartTime;
+  Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR tn >= ExitTime;
+tags: [intraday, time]

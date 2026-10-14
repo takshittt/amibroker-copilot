@@ -2,9 +2,11 @@ id: assignment-in-condition
 title: One equals sign where a comparison is meant
 checker_rule: syntax
 explanation: >-
-  A single = stores a value; it does not compare. AFL does not accept an
-  assignment inside the brackets of if, while or IIf, so the formula will
-  not run. Use == to ask whether two values are equal.
+  A single = stores a value; it does not compare. Inside the brackets of
+  if, while or IIf it changes the variable and then tests the value just
+  stored, so the condition no longer asks the question you meant.
+  AmiBroker only gives a warning and carries on. Use == to ask whether
+  two values are equal.
 bad_example: |
   Mode = Param("Mode", 1, 1, 2, 1);
   Length = 20;

@@ -1,0 +1,22 @@
+id: cross-arguments-swapped
+title: Cross with its two arguments the wrong way round
+checker_rule: null
+explanation: >-
+  Cross is true when its first argument moves from below the second to
+  above it. The order is the whole meaning: swapping the arguments gives
+  the opposite signal. A strategy meant to buy strength then buys every
+  breakdown, and it still runs without any error.
+bad_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Fast = EMA(Close, 9);
+  Slow = EMA(Close, 21);
+  // Meant to buy when the fast average rises above the slow one.
+  Buy = Cross(Slow, Fast);
+  Sell = Cross(Fast, Slow);
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Fast = EMA(Close, 9);
+  Slow = EMA(Close, 21);
+  Buy = Cross(Fast, Slow);
+  Sell = Cross(Slow, Fast);
+tags: [signals, cross]

@@ -1,0 +1,21 @@
+id: zigzag-in-signals
+title: Trading on Zig, Peak or Trough
+checker_rule: null
+explanation: >-
+  Zig, Peak, Trough, PeakBars and TroughBars find turning points by
+  looking at what price did afterwards. A low is only marked as a trough
+  once price has risen away from it, so on the bar itself nobody could
+  have known. A signal built on them buys exact bottoms and sells exact
+  tops in the backtest and cannot be traded. Use them for drawing, and
+  build signals from values that are fixed when the bar closes.
+bad_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Turn = Zig(Close, 5);
+  Buy = Turn > Ref(Turn, -1) AND Ref(Turn, -1) < Ref(Turn, -2);
+  Sell = Turn < Ref(Turn, -1) AND Ref(Turn, -1) > Ref(Turn, -2);
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > Ref(HHV(High, 20), -1);
+  Sell = Close < Ref(LLV(Low, 10), -1);
+  Plot(Zig(Close, 5), "Swings, for viewing only", colorBlue, styleLine);
+tags: [look-ahead, zigzag, backtest]
