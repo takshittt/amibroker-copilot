@@ -38,8 +38,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
-      - run: make lint
-      - run: make test
+      - run: make lint-api
+      - run: make test-api
       - run: make validate-kb
 
   web:

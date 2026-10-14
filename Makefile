@@ -1,4 +1,4 @@
-.PHONY: test lint format validate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai api reset-password web-install web demo e2e bugfix-on bugfix-off
+.PHONY: test test-api test-web lint lint-api lint-web formatvalidate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai api reset-password web-install web demo e2e bugfix-on bugfix-off
 
 # Settings such as OPENAI_API_KEY are read from .env when it exists, and
 # handed to every command below. Write each line as NAME=value, with no
@@ -29,12 +29,22 @@ services-up:
 services-down:
 	docker compose down
 
-test:
+# `make test` and `make lint` cover both halves. CI runs each half in its
+# own job, since the API job has no Node and the web job no Python.
+test: test-api test-web
+
+test-api:
 	cd api && uv run pytest
+
+test-web:
 	cd web && pnpm test
 
-lint:
+lint: lint-api lint-web
+
+lint-api:
 	cd api && uv run ruff check . && uv run ruff format --check .
+
+lint-web:
 	cd web && pnpm lint
 
 format:
