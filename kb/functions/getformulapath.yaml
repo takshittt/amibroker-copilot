@@ -1,0 +1,6 @@
+name: GetFormulaPath
+category: misc
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getformulapath.html
+since: "5.90"

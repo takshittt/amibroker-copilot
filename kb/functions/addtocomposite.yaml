@@ -1,0 +1,10 @@
+name: AddToComposite
+category: composite
+returns: none
+params:
+  - {name: array, type: array, optional: false}
+  - {name: ticker, type: string, optional: false}
+  - {name: field, type: string, optional: false}
+  - {name: flags, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/addtocomposite.html
+since: "4.0"

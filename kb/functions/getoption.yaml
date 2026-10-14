@@ -1,0 +1,9 @@
+name: GetOption
+category: backtest
+returns: number
+params:
+  - {name: fieldname, type: string, optional: false}
+description: >-
+  Reads one backtester setting by name.
+doc_url: https://www.amibroker.com/guide/afl/getoption.html
+since: "4.60"

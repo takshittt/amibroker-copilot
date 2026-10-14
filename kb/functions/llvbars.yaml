@@ -1,0 +1,9 @@
+name: LLVBars
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Number of bars since the lowest value within the last `periods` bars.
+doc_url: https://www.amibroker.com/guide/afl/llvbars.html

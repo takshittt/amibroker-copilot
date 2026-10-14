@@ -1,0 +1,7 @@
+name: NVI
+category: indicator
+returns: array
+params: []
+description: >-
+  Negative Volume Index, which moves only on bars where volume fell.
+doc_url: https://www.amibroker.com/guide/afl/nvi.html

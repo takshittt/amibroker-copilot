@@ -1,0 +1,11 @@
+name: GuiSetRange
+category: gui
+returns: none
+params:
+  - {name: id, type: any, optional: false}
+  - {name: min, type: any, optional: false}
+  - {name: max, type: any, optional: false}
+  - {name: step, type: any, optional: false}
+  - {name: ticfreq, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisetrange.html
+since: "6.30"

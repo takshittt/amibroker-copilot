@@ -1,0 +1,9 @@
+name: StrSort
+category: string
+returns: string
+params:
+  - {name: list, type: string, optional: false}
+  - {name: casesensitive, type: any, optional: true}
+  - {name: separator, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/strsort.html
+since: "5.90"

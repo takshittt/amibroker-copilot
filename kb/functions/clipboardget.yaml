@@ -1,0 +1,6 @@
+name: ClipboardGet
+category: misc
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/clipboardget.html
+since: "4.60"

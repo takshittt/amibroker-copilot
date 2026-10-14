@@ -1,0 +1,10 @@
+// context: timeframe=daily market=nse_eq
+// expect: arg_count 8
+// expect: unknown_function 9
+//
+// StrFormat takes any number of values, but it still needs its format
+// string. FormatNumber is not an AFL function.
+
+Label = StrFormat();
+Other = FormatNumber(Close, 2);
+Title = StrFormat("%s %g %g %g", Name(), Open, High, Low);

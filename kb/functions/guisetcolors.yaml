@@ -1,0 +1,21 @@
+name: GuiSetColors
+category: gui
+returns: none
+params:
+  - {name: idfrom, type: any, optional: false}
+  - {name: idto, type: any, optional: false}
+  - {name: border, type: any, optional: false}
+  - {name: clrtext, type: any, optional: true}
+  - {name: clrback, type: any, optional: true}
+  - {name: clrborder, type: any, optional: true}
+  - {name: clrseltext, type: any, optional: true}
+  - {name: clrselback, type: any, optional: true}
+  - {name: clrselborder, type: any, optional: true}
+  - {name: clrhovertext, type: any, optional: true}
+  - {name: clrhoverback, type: any, optional: true}
+  - {name: clrhoverborder, type: any, optional: true}
+  - {name: clrdistext, type: any, optional: true}
+  - {name: clrdisback, type: any, optional: true}
+  - {name: clrdisborder, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/guisetcolors.html
+since: "4.30"

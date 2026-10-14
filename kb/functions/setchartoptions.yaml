@@ -12,3 +12,4 @@ description: >-
   Switches chart display options on or off, such as the date axis or trade
   arrows.
 doc_url: https://www.amibroker.com/guide/afl/setchartoptions.html
+since: "4.70"

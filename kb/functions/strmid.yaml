@@ -1,0 +1,9 @@
+name: StrMid
+category: string
+returns: string
+params:
+  - {name: string, type: string, optional: false}
+  - {name: start, type: any, optional: false}
+  - {name: count, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strmid.html
+since: "4.0"

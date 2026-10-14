@@ -1,0 +1,10 @@
+name: Sort
+category: misc
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: first, type: any, optional: true}
+  - {name: last, type: any, optional: true}
+  - {name: indexmode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/sort.html
+since: "5.90"

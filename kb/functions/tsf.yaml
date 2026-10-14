@@ -1,0 +1,10 @@
+name: TSF
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  Time series forecast: a straight-line fit projected one bar ahead.
+doc_url: https://www.amibroker.com/guide/afl/tsf.html
+since: "4.20"

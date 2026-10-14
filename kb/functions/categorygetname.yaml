@@ -1,0 +1,8 @@
+name: CategoryGetName
+category: info
+returns: string
+params:
+  - {name: category, type: any, optional: false}
+  - {name: number, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/categorygetname.html
+since: "4.50"

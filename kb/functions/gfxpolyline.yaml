@@ -1,0 +1,11 @@
+name: GfxPolyline
+category: graphics
+returns: none
+params:
+  - {name: x1, type: any, optional: false}
+  - {name: y1, type: any, optional: false}
+  - {name: x2, type: any, optional: false}
+  - {name: y2, type: any, optional: false}
+variadic: true
+doc_url: https://www.amibroker.com/guide/afl/gfxpolyline.html
+since: "5.0"

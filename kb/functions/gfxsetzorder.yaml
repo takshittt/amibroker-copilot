@@ -1,0 +1,7 @@
+name: GfxSetZOrder
+category: graphics
+returns: none
+params:
+  - {name: layer, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxsetzorder.html
+since: "4.80"

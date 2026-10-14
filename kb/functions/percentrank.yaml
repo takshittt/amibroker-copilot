@@ -1,0 +1,11 @@
+name: PercentRank
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: range, type: any, optional: false}
+description: >-
+  Percentage of the earlier values in the lookback window that lie below
+  the current value.
+doc_url: https://www.amibroker.com/guide/afl/percentrank.html
+since: "5.40"

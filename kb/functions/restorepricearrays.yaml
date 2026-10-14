@@ -1,0 +1,9 @@
+name: RestorePriceArrays
+category: foreign
+returns: none
+params:
+  - {name: tradeprices, type: any, optional: true}
+description: >-
+  Puts back the current symbol's price arrays after SetForeign.
+doc_url: https://www.amibroker.com/guide/afl/restorepricearrays.html
+since: "4.50"

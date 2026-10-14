@@ -1,0 +1,6 @@
+name: UncIssues
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/uncissues.html
+since: "3.20"

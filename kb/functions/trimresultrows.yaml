@@ -1,0 +1,9 @@
+name: TrimResultRows
+category: exploration
+returns: none
+params:
+  - {name: row_count, type: any, optional: false}
+description: >-
+  Cuts the exploration result list down to a given number of rows.
+doc_url: https://www.amibroker.com/guide/afl/trimresultrows.html
+since: "6.90"

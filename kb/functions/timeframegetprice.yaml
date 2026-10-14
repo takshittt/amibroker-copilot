@@ -1,0 +1,10 @@
+name: TimeFrameGetPrice
+category: timeframe
+returns: array
+params:
+  - {name: pricefield, type: any, optional: false}
+  - {name: interval, type: any, optional: false}
+  - {name: shift, type: any, optional: true}
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/timeframegetprice.html
+since: "4.50"

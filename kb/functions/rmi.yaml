@@ -1,0 +1,11 @@
+name: RMI
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+  - {name: momentum, type: any, optional: true}
+description: >-
+  Relative Momentum Index: RSI calculated on the change over several bars
+  instead of one.
+doc_url: https://www.amibroker.com/guide/afl/rmi.html
+since: "4.10"

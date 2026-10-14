@@ -102,6 +102,56 @@ def test_only_mcx_has_seasonal_rules(catalog):
     assert [m.id for m in catalog.markets.values() if m.dst_rules] == ["mcx"]
 
 
-def test_every_function_links_to_its_own_reference_page(catalog):
-    for function in catalog.functions.values():
-        assert function.doc_url.endswith(f"/guide/afl/{function.name.lower()}.html")
+# Functions documented on another function's reference page.
+SHARED_PAGES = {"rsia": "rsi", "ccia": "cci"}
+
+
+def test_every_function_links_to_its_reference_page(catalog):
+    for key, function in catalog.functions.items():
+        page = SHARED_PAGES.get(key, key)
+        assert function.doc_url == f"https://www.amibroker.com/guide/afl/{page}.html"
+
+
+def test_the_full_function_list_is_present(catalog):
+    assert len(catalog.functions) == 447
+    assert catalog.kb_version >= 2
+
+
+def test_functions_that_take_any_number_of_arguments(catalog):
+    variadic = sorted(f.name for f in catalog.functions.values() if f.variadic)
+    assert variadic == [
+        "AddSummaryRows",
+        "GfxPolygon",
+        "GfxPolyline",
+        "SetSortColumns",
+        "StrFormat",
+        "_TRACEF",
+        "printf",
+    ]
+    assert catalog.function("StrFormat").min_args == 1
+    assert catalog.function("StrFormat").max_args is None
+
+
+def test_functions_v1_generates_from_all_have_a_description(catalog):
+    in_scope = {
+        "indicator",
+        "signal",
+        "stops",
+        "sizing",
+        "time",
+        "plot",
+        "param",
+        "math",
+        "exploration",
+        "statistics",
+        "pattern",
+    }
+    missing = sorted(
+        f.name for f in catalog.functions.values() if f.category in in_scope and not f.description
+    )
+    assert missing == []
+
+
+def test_descriptions_that_warn_about_looking_ahead(catalog):
+    for name in ["Peak", "Trough", "ZIG", "Ref"]:
+        assert "ahead" in catalog.function(name).description

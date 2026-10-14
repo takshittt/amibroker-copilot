@@ -1,0 +1,8 @@
+name: sin
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Sine of an angle given in radians.
+doc_url: https://www.amibroker.com/guide/afl/sin.html

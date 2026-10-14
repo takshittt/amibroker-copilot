@@ -1,0 +1,7 @@
+name: StaticVarRemove
+category: misc
+returns: none
+params:
+  - {name: variablename, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvarremove.html
+since: "4.80"

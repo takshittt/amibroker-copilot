@@ -1,0 +1,13 @@
+name: SetChartBkGradientFill
+category: plot
+returns: none
+params:
+  - {name: topcolor, type: any, optional: false}
+  - {name: bottomcolor, type: any, optional: false}
+  - {name: titlebkcolor, type: any, optional: true}
+  - {name: miny, type: any, optional: true}
+  - {name: maxy, type: any, optional: true}
+description: >-
+  Fills the chart background with a gradient between two colours.
+doc_url: https://www.amibroker.com/guide/afl/setchartbkgradientfill.html
+since: "4.90"

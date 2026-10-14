@@ -1,0 +1,9 @@
+name: _DEFAULT_NAME
+category: plot
+returns: string
+params: []
+description: >-
+  The default name for a plot, made from the section name and its
+  parameter values.
+doc_url: https://www.amibroker.com/guide/afl/_default_name.html
+since: "4.70"

@@ -1,0 +1,16 @@
+name: PlotTextSetFont
+category: plot
+returns: none
+params:
+  - {name: text, type: string, optional: false}
+  - {name: fontname, type: string, optional: false}
+  - {name: pointsize, type: any, optional: false}
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: color, type: any, optional: false}
+  - {name: bkcolor, type: any, optional: true}
+  - {name: yoffset, type: any, optional: true}
+description: >-
+  Writes text on the chart with a chosen font and size.
+doc_url: https://www.amibroker.com/guide/afl/plottextsetfont.html
+since: "4.80"

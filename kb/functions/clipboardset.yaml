@@ -1,0 +1,7 @@
+name: ClipboardSet
+category: misc
+returns: number
+params:
+  - {name: text, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/clipboardset.html
+since: "4.60"

@@ -1,0 +1,10 @@
+name: RequestTimedRefresh
+category: plot
+returns: none
+params:
+  - {name: interval, type: any, optional: false}
+  - {name: onlyvisible, type: any, optional: true}
+description: >-
+  Asks AmiBroker to redraw the chart at a regular interval, in seconds.
+doc_url: https://www.amibroker.com/guide/afl/requesttimedrefresh.html
+since: "4.90"

@@ -1,0 +1,10 @@
+name: OscP
+category: indicator
+returns: array
+params:
+  - {name: fast, type: any, optional: false}
+  - {name: slow, type: any, optional: false}
+description: >-
+  Price oscillator: compares a fast moving average of the close with a
+  slow one.
+doc_url: https://www.amibroker.com/guide/afl/oscp.html

@@ -1,0 +1,8 @@
+name: Minute
+category: time
+returns: array
+params: []
+description: >-
+  Minute of each bar's time.
+doc_url: https://www.amibroker.com/guide/afl/minute.html
+since: "4.0"

@@ -1,0 +1,6 @@
+name: GetScriptObject
+category: misc
+returns: any
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getscriptobject.html
+since: "3.80"

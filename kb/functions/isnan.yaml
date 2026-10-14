@@ -1,0 +1,9 @@
+name: IsNan
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  True where the value is not a number.
+doc_url: https://www.amibroker.com/guide/afl/isnan.html
+since: "4.30"

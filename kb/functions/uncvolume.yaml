@@ -1,0 +1,6 @@
+name: UncVolume
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/uncvolume.html
+since: "3.20"

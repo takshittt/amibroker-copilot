@@ -1,0 +1,11 @@
+name: Lookup
+category: lookup
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+  - {name: datetime, type: any, optional: false}
+  - {name: mode, type: any, optional: true}
+description: >-
+  Finds the array's value at a given date and time.
+doc_url: https://www.amibroker.com/guide/afl/lookup.html
+since: "5.40"

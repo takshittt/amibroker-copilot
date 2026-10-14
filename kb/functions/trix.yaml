@@ -1,0 +1,8 @@
+name: TRIX
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+description: >-
+  Rate of change of a triple-smoothed exponential average of the close.
+doc_url: https://www.amibroker.com/guide/afl/trix.html

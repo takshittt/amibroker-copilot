@@ -1,0 +1,11 @@
+name: SumSince
+category: math
+returns: array
+params:
+  - {name: condition, type: any, optional: false}
+  - {name: array, type: array, optional: false}
+  - {name: incfirst, type: any, optional: true}
+description: >-
+  Running total of the array since the condition was last true.
+doc_url: https://www.amibroker.com/guide/afl/sumsince.html
+since: "6.10"

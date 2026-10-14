@@ -1,0 +1,7 @@
+name: GetCursorXPosition
+category: gui
+returns: number
+params:
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/getcursorxposition.html
+since: "4.80"

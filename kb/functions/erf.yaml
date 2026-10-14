@@ -1,0 +1,9 @@
+name: erf
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  Gauss error function.
+doc_url: https://www.amibroker.com/guide/afl/erf.html
+since: "6.40"

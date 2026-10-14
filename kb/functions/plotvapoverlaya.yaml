@@ -1,0 +1,13 @@
+name: PlotVAPOverlayA
+category: plot
+returns: none
+params:
+  - {name: segments, type: any, optional: false}
+  - {name: lines, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+  - {name: color, type: any, optional: true}
+  - {name: vapstyle, type: any, optional: true}
+description: >-
+  Draws volume-at-price histograms for the segments of the chart you mark.
+doc_url: https://www.amibroker.com/guide/afl/plotvapoverlaya.html
+since: "5.20"

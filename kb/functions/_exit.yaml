@@ -1,0 +1,6 @@
+name: _exit
+category: misc
+returns: none
+params: []
+doc_url: https://www.amibroker.com/guide/afl/_exit.html
+since: "6.40"

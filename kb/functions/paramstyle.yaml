@@ -1,0 +1,12 @@
+name: ParamStyle
+category: param
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: defaultstyle, type: any, optional: true}
+  - {name: mask, type: any, optional: true}
+description: >-
+  Adds a chooser of plot styles to the Parameters window and returns the
+  combined style value.
+doc_url: https://www.amibroker.com/guide/afl/paramstyle.html
+since: "4.70"

@@ -1,0 +1,8 @@
+name: fdir
+category: file
+returns: string
+params:
+  - {name: wildcard, type: string, optional: false}
+  - {name: flags, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/fdir.html
+since: "5.70"

@@ -1,0 +1,7 @@
+name: GapDown
+category: pattern
+returns: array
+params: []
+description: >-
+  True on bars whose high is below the previous bar's low.
+doc_url: https://www.amibroker.com/guide/afl/gapdown.html

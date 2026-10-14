@@ -1,0 +1,7 @@
+name: StaticVarGetText
+category: misc
+returns: string
+params:
+  - {name: varname, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvargettext.html
+since: "4.60"

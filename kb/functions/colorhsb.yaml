@@ -1,0 +1,11 @@
+name: ColorHSB
+category: plot
+returns: number
+params:
+  - {name: hue, type: any, optional: false}
+  - {name: saturation, type: any, optional: false}
+  - {name: brightness, type: any, optional: false}
+description: >-
+  Builds a colour from hue, saturation and brightness.
+doc_url: https://www.amibroker.com/guide/afl/colorhsb.html
+since: "4.80"

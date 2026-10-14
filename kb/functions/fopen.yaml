@@ -1,0 +1,9 @@
+name: fopen
+category: file
+returns: any
+params:
+  - {name: filename, type: string, optional: false}
+  - {name: mode, type: string, optional: false}
+  - {name: shared, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/fopen.html
+since: "4.50"

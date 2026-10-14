@@ -1,0 +1,7 @@
+name: feof
+category: file
+returns: number
+params:
+  - {name: filehandle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/feof.html
+since: "4.50"

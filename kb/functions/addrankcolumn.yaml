@@ -1,0 +1,8 @@
+name: AddRankColumn
+category: exploration
+returns: none
+params: []
+description: >-
+  Adds a column with the rank of each row under the current sort order.
+doc_url: https://www.amibroker.com/guide/afl/addrankcolumn.html
+since: "7.70"

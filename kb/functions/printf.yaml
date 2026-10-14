@@ -1,0 +1,10 @@
+name: printf
+category: string
+returns: none
+params:
+  - {name: formatstr, type: string, optional: false}
+variadic: true
+description: >-
+  Writes formatted text to the commentary or interpretation window.
+doc_url: https://www.amibroker.com/guide/afl/printf.html
+since: "4.50"

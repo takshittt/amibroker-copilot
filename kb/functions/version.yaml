@@ -1,0 +1,9 @@
+name: Version
+category: misc
+returns: number
+params:
+  - {name: minrequired, type: any, optional: true}
+description: >-
+  AmiBroker's version number.
+doc_url: https://www.amibroker.com/guide/afl/version.html
+since: "3.90"

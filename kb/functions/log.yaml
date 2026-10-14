@@ -1,0 +1,8 @@
+name: log
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Natural logarithm.
+doc_url: https://www.amibroker.com/guide/afl/log.html

@@ -1,0 +1,6 @@
+name: DecVolume
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/decvolume.html
+since: "3.20"

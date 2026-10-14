@@ -6,3 +6,4 @@ description: >-
   Date of each bar as one number. It changes when a new day starts, which
   makes it useful for per-day logic.
 doc_url: https://www.amibroker.com/guide/afl/datenum.html
+since: "3.40"

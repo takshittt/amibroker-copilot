@@ -1,0 +1,7 @@
+name: GfxSelectStockObject
+category: graphics
+returns: none
+params:
+  - {name: id, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxselectstockobject.html
+since: "6.0"

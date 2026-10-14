@@ -1,0 +1,8 @@
+name: Say
+category: speech
+returns: number
+params:
+  - {name: text, type: string, optional: false}
+  - {name: purge, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/say.html
+since: "4.90"

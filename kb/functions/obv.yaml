@@ -1,0 +1,8 @@
+name: OBV
+category: indicator
+returns: array
+params: []
+description: >-
+  On Balance Volume: a running total that adds volume on up closes and
+  subtracts it on down closes.
+doc_url: https://www.amibroker.com/guide/afl/obv.html

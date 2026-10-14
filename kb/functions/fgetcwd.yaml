@@ -1,0 +1,6 @@
+name: fgetcwd
+category: file
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/fgetcwd.html
+since: "6.10"

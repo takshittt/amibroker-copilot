@@ -1,0 +1,10 @@
+name: mtRandomA
+category: statistics
+returns: array
+params:
+  - {name: seed, type: any, optional: true}
+description: >-
+  An array of random numbers between 0 and 1 from the Mersenne Twister
+  generator.
+doc_url: https://www.amibroker.com/guide/afl/mtrandoma.html
+since: "5.0"

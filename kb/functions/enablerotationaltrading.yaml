@@ -1,0 +1,9 @@
+name: EnableRotationalTrading
+category: backtest
+returns: none
+params: []
+description: >-
+  Switches the backtester to rotational mode, where positions follow
+  PositionScore rankings.
+doc_url: https://www.amibroker.com/guide/afl/enablerotationaltrading.html
+since: "4.50"

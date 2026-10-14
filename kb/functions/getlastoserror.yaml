@@ -1,0 +1,6 @@
+name: GetLastOSError
+category: misc
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getlastoserror.html
+since: "6.30"

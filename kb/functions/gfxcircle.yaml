@@ -1,0 +1,9 @@
+name: GfxCircle
+category: graphics
+returns: none
+params:
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: radius, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxcircle.html
+since: "5.0"

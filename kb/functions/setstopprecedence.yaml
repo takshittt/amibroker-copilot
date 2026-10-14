@@ -1,0 +1,13 @@
+name: SetStopPrecedence
+category: backtest
+returns: none
+params:
+  - {name: type1, type: any, optional: false}
+  - {name: type2, type: any, optional: false}
+  - {name: type3, type: any, optional: false}
+  - {name: type4, type: any, optional: false}
+description: >-
+  Sets the order in which the built-in stops are evaluated when several
+  trigger on one bar.
+doc_url: https://www.amibroker.com/guide/afl/setstopprecedence.html
+since: "6.0"

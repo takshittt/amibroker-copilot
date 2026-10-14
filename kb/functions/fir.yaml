@@ -1,0 +1,12 @@
+name: FIR
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: coefficients, type: any, optional: false}
+  - {name: size, type: any, optional: false}
+description: >-
+  Finite impulse response filter: a weighted sum of recent bars using your
+  own table of weights.
+doc_url: https://www.amibroker.com/guide/afl/fir.html
+since: "5.40"

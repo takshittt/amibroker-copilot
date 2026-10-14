@@ -1,0 +1,12 @@
+name: GfxRoundRect
+category: graphics
+returns: none
+params:
+  - {name: x1, type: any, optional: false}
+  - {name: y1, type: any, optional: false}
+  - {name: x2, type: any, optional: false}
+  - {name: y2, type: any, optional: false}
+  - {name: x3, type: any, optional: false}
+  - {name: y3, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxroundrect.html
+since: "5.0"

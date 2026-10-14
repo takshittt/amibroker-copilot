@@ -1,0 +1,10 @@
+name: DateTimeFormat
+category: time
+returns: string
+params:
+  - {name: formatstr, type: string, optional: false}
+  - {name: datetime, type: any, optional: false}
+description: >-
+  Formats a date-time value as text using a format string.
+doc_url: https://www.amibroker.com/guide/afl/datetimeformat.html
+since: "6.20"

@@ -1,0 +1,7 @@
+name: VoiceSetVolume
+category: speech
+returns: none
+params:
+  - {name: volume, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/voicesetvolume.html
+since: "6.30"

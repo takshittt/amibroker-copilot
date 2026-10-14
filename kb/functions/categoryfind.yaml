@@ -1,0 +1,8 @@
+name: CategoryFind
+category: info
+returns: number
+params:
+  - {name: name, type: string, optional: false}
+  - {name: category, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/categoryfind.html
+since: "5.0"

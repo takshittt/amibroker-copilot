@@ -1,0 +1,9 @@
+name: GfxDrawImage
+category: graphics
+returns: none
+params:
+  - {name: filename, type: string, optional: false}
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/gfxdrawimage.html
+since: "6.20"

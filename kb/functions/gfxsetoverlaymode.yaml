@@ -1,0 +1,7 @@
+name: GfxSetOverlayMode
+category: graphics
+returns: none
+params:
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/gfxsetoverlaymode.html
+since: "5.0"

@@ -1,0 +1,7 @@
+name: TimeFrameRestore
+category: timeframe
+returns: none
+params:
+  - {name: tradeprices, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/timeframerestore.html
+since: "4.50"

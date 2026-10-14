@@ -1,0 +1,7 @@
+name: NoteGet
+category: misc
+returns: string
+params:
+  - {name: symbol, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/noteget.html
+since: "4.60"

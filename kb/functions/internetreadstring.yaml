@@ -1,0 +1,7 @@
+name: InternetReadString
+category: file
+returns: string
+params:
+  - {name: handle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/internetreadstring.html
+since: "6.20"

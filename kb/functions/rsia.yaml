@@ -1,0 +1,9 @@
+name: RSIa
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: true}
+description: >-
+  RSI calculated on an array you supply instead of on the close.
+doc_url: https://www.amibroker.com/guide/afl/rsi.html

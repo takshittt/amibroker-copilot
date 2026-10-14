@@ -1,0 +1,6 @@
+name: DecIssues
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/decissues.html
+since: "3.20"

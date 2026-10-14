@@ -1,0 +1,10 @@
+name: ProdSince
+category: math
+returns: array
+params:
+  - {name: condition, type: any, optional: false}
+  - {name: array, type: array, optional: false}
+description: >-
+  Running product of the array since the condition was last true.
+doc_url: https://www.amibroker.com/guide/afl/prodsince.html
+since: "6.20"

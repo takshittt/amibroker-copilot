@@ -1,0 +1,13 @@
+name: Trough
+category: pattern
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: change, type: any, optional: false}
+  - {name: n, type: any, optional: true}
+description: >-
+  Value of a recent trough found by the zig-zag of a given percentage
+  change. It uses later bars to confirm a trough, so it looks ahead and
+  must not drive backtest signals.
+doc_url: https://www.amibroker.com/guide/afl/trough.html
+since: "3.10"

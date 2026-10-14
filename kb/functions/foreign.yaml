@@ -1,0 +1,12 @@
+name: Foreign
+category: foreign
+returns: array
+params:
+  - {name: ticker, type: any, optional: false}
+  - {name: datafield, type: any, optional: false}
+  - {name: fixup, type: any, optional: true}
+description: >-
+  Returns a price field of another symbol, aligned to the current symbol's
+  bars.
+doc_url: https://www.amibroker.com/guide/afl/foreign.html
+since: "3.50"

@@ -1,0 +1,9 @@
+name: tan
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Tangent of an angle given in radians.
+doc_url: https://www.amibroker.com/guide/afl/tan.html
+since: "3.0"

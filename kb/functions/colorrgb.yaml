@@ -1,0 +1,11 @@
+name: ColorRGB
+category: plot
+returns: number
+params:
+  - {name: red, type: any, optional: false}
+  - {name: green, type: any, optional: false}
+  - {name: blue, type: any, optional: false}
+description: >-
+  Builds a colour from red, green and blue components.
+doc_url: https://www.amibroker.com/guide/afl/colorrgb.html
+since: "4.80"

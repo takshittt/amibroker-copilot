@@ -1,0 +1,12 @@
+name: SetGradientFill
+category: plot
+returns: none
+params:
+  - {name: topcolor, type: any, optional: false}
+  - {name: bottomcolor, type: any, optional: false}
+  - {name: baseline, type: any, optional: true}
+  - {name: baselinecolor, type: any, optional: true}
+description: >-
+  Sets the colours of a plot drawn with the gradient-fill style.
+doc_url: https://www.amibroker.com/guide/afl/setgradientfill.html
+since: "5.60"

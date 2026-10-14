@@ -1,0 +1,8 @@
+name: NoteSet
+category: misc
+returns: number
+params:
+  - {name: symbol, type: string, optional: false}
+  - {name: text, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/noteset.html
+since: "4.60"

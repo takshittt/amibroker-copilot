@@ -1,0 +1,9 @@
+name: InternetPostRequest
+category: file
+returns: any
+params:
+  - {name: url, type: string, optional: false}
+  - {name: data, type: any, optional: false}
+  - {name: flags, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/internetpostrequest.html
+since: "6.30"

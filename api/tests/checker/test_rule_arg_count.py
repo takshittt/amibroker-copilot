@@ -67,3 +67,23 @@ def test_unknown_function_is_left_to_the_other_rule(found):
 def test_nested_calls_are_counted_separately(found):
     (finding,) = found("x = MA(EMA(Close, 5), 10) + MA(EMA(Close), 10);\n", RULE)
     assert "EMA" in finding.message
+
+
+@pytest.mark.parametrize(
+    "call",
+    [
+        'StrFormat("plain")',
+        'StrFormat("%g", Close)',
+        'StrFormat("%s %g %g %g %g", Name(), Open, High, Low, Close)',
+        'printf("%g\\n", Close)',
+        "SetSortColumns(1)",
+        "SetSortColumns(1, -2, 3)",
+    ],
+)
+def test_function_taking_any_number_of_arguments(found, call):
+    assert found(f"x = {call};\n", RULE) == []
+
+
+def test_function_taking_any_number_still_needs_its_required_ones(found):
+    (finding,) = found("x = StrFormat();\n", RULE)
+    assert finding.message == "StrFormat takes at least 1 argument but is called with 0."

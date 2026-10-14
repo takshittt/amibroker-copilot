@@ -1,0 +1,8 @@
+name: SparseCompress
+category: misc
+returns: array
+params:
+  - {name: query_points, type: any, optional: false}
+  - {name: data, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/sparsecompress.html
+since: "6.0"

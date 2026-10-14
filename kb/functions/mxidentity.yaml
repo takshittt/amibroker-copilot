@@ -1,0 +1,7 @@
+name: MxIdentity
+category: matrix
+returns: any
+params:
+  - {name: size, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxidentity.html
+since: "6.0"

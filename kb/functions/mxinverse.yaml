@@ -1,0 +1,7 @@
+name: MxInverse
+category: matrix
+returns: any
+params:
+  - {name: mx, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxinverse.html
+since: "6.10"

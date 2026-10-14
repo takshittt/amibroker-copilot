@@ -1,0 +1,8 @@
+name: Lowest
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Lowest value of the array from the first bar up to each bar.
+doc_url: https://www.amibroker.com/guide/afl/lowest.html

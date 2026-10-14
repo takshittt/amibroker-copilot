@@ -1,0 +1,9 @@
+name: GfxSelectPen
+category: graphics
+returns: none
+params:
+  - {name: color, type: any, optional: false}
+  - {name: width, type: any, optional: true}
+  - {name: penstyle, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/gfxselectpen.html
+since: "5.0"

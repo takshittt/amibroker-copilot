@@ -1,0 +1,10 @@
+name: LinearReg
+category: statistics
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: periods, type: any, optional: false}
+description: >-
+  End point of a straight line fitted to the last `periods` bars.
+doc_url: https://www.amibroker.com/guide/afl/linearreg.html
+since: "4.20"

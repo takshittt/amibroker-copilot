@@ -1,0 +1,7 @@
+name: Prefs
+category: misc
+returns: any
+params:
+  - {name: index, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/prefs.html
+since: "3.40"

@@ -1,0 +1,9 @@
+name: TimeFrameCompress
+category: timeframe
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: interval, type: any, optional: false}
+  - {name: mode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/timeframecompress.html
+since: "4.50"

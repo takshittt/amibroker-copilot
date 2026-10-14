@@ -1,0 +1,8 @@
+name: asin
+category: math
+returns: any
+params:
+  - {name: x, type: any, optional: false}
+description: >-
+  Arc sine, in radians.
+doc_url: https://www.amibroker.com/guide/afl/asin.html

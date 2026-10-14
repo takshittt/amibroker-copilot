@@ -1,0 +1,8 @@
+name: GuiSetText
+category: gui
+returns: number
+params:
+  - {name: text, type: string, optional: false}
+  - {name: id, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisettext.html
+since: "6.30"

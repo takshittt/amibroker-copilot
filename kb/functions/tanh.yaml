@@ -1,0 +1,9 @@
+name: tanh
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Hyperbolic tangent.
+doc_url: https://www.amibroker.com/guide/afl/tanh.html
+since: "4.80"

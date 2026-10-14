@@ -1,0 +1,8 @@
+name: GuiSetVisible
+category: gui
+returns: number
+params:
+  - {name: id, type: any, optional: false}
+  - {name: visible, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/guisetvisible.html
+since: "6.30"

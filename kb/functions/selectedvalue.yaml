@@ -1,0 +1,10 @@
+name: SelectedValue
+category: lookup
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Turns an array into one number: its value at the bar selected on the
+  chart.
+doc_url: https://www.amibroker.com/guide/afl/selectedvalue.html
+since: "4.10"

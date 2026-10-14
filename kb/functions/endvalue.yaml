@@ -1,0 +1,9 @@
+name: EndValue
+category: lookup
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  The array's value at the end of the range marked on the chart.
+doc_url: https://www.amibroker.com/guide/afl/endvalue.html
+since: "4.30"

@@ -12,3 +12,4 @@ params:
 description: >-
   Adds a numeric column to the Exploration result list.
 doc_url: https://www.amibroker.com/guide/afl/addcolumn.html
+since: "3.80"

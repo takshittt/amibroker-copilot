@@ -1,0 +1,6 @@
+name: AdvIssues
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/advissues.html
+since: "3.20"

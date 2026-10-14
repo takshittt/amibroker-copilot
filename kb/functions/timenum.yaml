@@ -6,3 +6,4 @@ description: >-
   Time of each bar as a number in HHMMSS form, for example 91500 for
   09:15:00. The time is the data feed's time.
 doc_url: https://www.amibroker.com/guide/afl/timenum.html
+since: "4.0"

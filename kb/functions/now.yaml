@@ -1,0 +1,9 @@
+name: Now
+category: time
+returns: any
+params:
+  - {name: format, type: any, optional: true}
+description: >-
+  The computer's current date or time, in a form chosen by a number.
+doc_url: https://www.amibroker.com/guide/afl/now.html
+since: "4.30"

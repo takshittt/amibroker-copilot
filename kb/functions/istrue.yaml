@@ -1,0 +1,9 @@
+name: IsTrue
+category: math
+returns: any
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  True where the value is neither empty nor zero.
+doc_url: https://www.amibroker.com/guide/afl/istrue.html
+since: "3.50"

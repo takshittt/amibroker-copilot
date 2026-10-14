@@ -1,0 +1,8 @@
+name: Date
+category: time
+returns: string
+params: []
+description: >-
+  The date of the selected bar as text.
+doc_url: https://www.amibroker.com/guide/afl/date.html
+since: "3.10"

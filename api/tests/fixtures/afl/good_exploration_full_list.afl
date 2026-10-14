@@ -1,0 +1,26 @@
+// context: timeframe=daily market=nse_eq
+// expect: none
+//
+// A daily exploration that uses functions from beyond the first seed:
+// more indicators, text functions and one that takes any number of
+// arguments.
+
+Trend = ADX(14);
+Fast = StochK(14, 3);
+Slow = StochD(14, 3, 3);
+Momentum = RSIa(Close, 14);
+Hull = HMA(Close, 20);
+
+Strong = Trend > 25 AND Close > Hull;
+Turning = Cross(Fast, Slow) AND Momentum < 60;
+
+Filter = Strong AND Turning;
+
+AddTextColumn(FullName(), "Company");
+AddColumn(Close, "Close");
+AddColumn(Trend, "ADX");
+AddColumn(HHVBars(High, 50), "Bars since 50-bar high");
+AddTextColumn(NumToStr(Momentum, 1.1), "RSI");
+SetSortColumns(-4);
+
+Title = StrFormat("%s  ADX %g  RSI %g", Name(), SelectedValue(Trend), SelectedValue(Momentum));

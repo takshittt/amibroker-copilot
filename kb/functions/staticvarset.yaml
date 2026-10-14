@@ -1,0 +1,10 @@
+name: StaticVarSet
+category: misc
+returns: number
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: value, type: any, optional: false}
+  - {name: persistent, type: any, optional: true}
+  - {name: compressionmode, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/staticvarset.html
+since: "4.60"

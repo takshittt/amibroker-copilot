@@ -1,0 +1,8 @@
+name: Asc
+category: string
+returns: number
+params:
+  - {name: string, type: string, optional: false}
+  - {name: pos, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/asc.html
+since: "4.80"

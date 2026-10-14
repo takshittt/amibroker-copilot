@@ -1,0 +1,13 @@
+name: Remap
+category: math
+returns: any
+params:
+  - {name: value, type: any, optional: false}
+  - {name: srcmin, type: any, optional: false}
+  - {name: srcmax, type: any, optional: false}
+  - {name: dstmin, type: any, optional: false}
+  - {name: dstmax, type: any, optional: false}
+description: >-
+  Rescales a value from one range to another.
+doc_url: https://www.amibroker.com/guide/afl/remap.html
+since: "6.30"

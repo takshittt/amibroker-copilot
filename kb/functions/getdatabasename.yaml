@@ -1,0 +1,6 @@
+name: GetDatabaseName
+category: info
+returns: string
+params: []
+doc_url: https://www.amibroker.com/guide/afl/getdatabasename.html
+since: "4.30"

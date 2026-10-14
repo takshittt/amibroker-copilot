@@ -1,0 +1,8 @@
+name: GetPriceStyle
+category: plot
+returns: number
+params: []
+description: >-
+  The price chart style chosen in the View menu, for use in Plot.
+doc_url: https://www.amibroker.com/guide/afl/getpricestyle.html
+since: "4.70"

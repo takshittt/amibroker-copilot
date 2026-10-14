@@ -1,0 +1,8 @@
+name: fputs
+category: file
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+  - {name: filehandle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/fputs.html
+since: "4.50"

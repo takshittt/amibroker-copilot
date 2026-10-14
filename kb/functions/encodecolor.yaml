@@ -1,0 +1,9 @@
+name: EncodeColor
+category: plot
+returns: string
+params:
+  - {name: colorindex, type: any, optional: false}
+description: >-
+  Returns a marker that changes the text colour inside the chart title.
+doc_url: https://www.amibroker.com/guide/afl/encodecolor.html
+since: "4.20"

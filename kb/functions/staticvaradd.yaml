@@ -1,0 +1,10 @@
+name: StaticVarAdd
+category: misc
+returns: none
+params:
+  - {name: name, type: string, optional: false}
+  - {name: value, type: any, optional: false}
+  - {name: keepall, type: any, optional: true}
+  - {name: persistent, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/staticvaradd.html
+since: "6.10"

@@ -1,0 +1,14 @@
+name: XYChartAddPoint
+category: exploration
+returns: number
+params:
+  - {name: chartname, type: string, optional: false}
+  - {name: text, type: string, optional: false}
+  - {name: x, type: any, optional: false}
+  - {name: y, type: any, optional: false}
+  - {name: color, type: any, optional: false}
+  - {name: linecolor, type: any, optional: true}
+description: >-
+  Adds a point to a scatter chart in the exploration results.
+doc_url: https://www.amibroker.com/guide/afl/xychartaddpoint.html
+since: "5.60"

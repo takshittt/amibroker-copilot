@@ -1,0 +1,11 @@
+name: atan2
+category: math
+returns: any
+params:
+  - {name: y, type: any, optional: false}
+  - {name: x, type: any, optional: false}
+description: >-
+  Angle whose tangent is y divided by x, using the signs of both to pick
+  the quadrant.
+doc_url: https://www.amibroker.com/guide/afl/atan2.html
+since: "4.90"

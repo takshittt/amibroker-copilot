@@ -1,0 +1,8 @@
+name: GetCategorySymbols
+category: info
+returns: string
+params:
+  - {name: category, type: any, optional: false}
+  - {name: index, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/getcategorysymbols.html
+since: "4.40"

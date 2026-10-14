@@ -1,0 +1,8 @@
+name: GuiGetEvent
+category: gui
+returns: any
+params:
+  - {name: num, type: any, optional: false}
+  - {name: what, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/guigetevent.html
+since: "6.30"

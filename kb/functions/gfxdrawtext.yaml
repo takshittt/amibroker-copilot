@@ -1,0 +1,12 @@
+name: GfxDrawText
+category: graphics
+returns: none
+params:
+  - {name: text, type: string, optional: false}
+  - {name: left, type: any, optional: false}
+  - {name: top, type: any, optional: false}
+  - {name: right, type: any, optional: false}
+  - {name: bottom, type: any, optional: false}
+  - {name: format, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/gfxdrawtext.html
+since: "5.0"

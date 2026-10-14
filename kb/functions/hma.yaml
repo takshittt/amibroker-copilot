@@ -1,0 +1,11 @@
+name: HMA
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: range, type: any, optional: false}
+description: >-
+  Hull moving average, a smooth average built from weighted averages to
+  reduce lag.
+doc_url: https://www.amibroker.com/guide/afl/hma.html
+since: "5.40"

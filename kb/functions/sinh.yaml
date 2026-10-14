@@ -1,0 +1,9 @@
+name: sinh
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Hyperbolic sine.
+doc_url: https://www.amibroker.com/guide/afl/sinh.html
+since: "4.80"

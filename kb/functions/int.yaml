@@ -1,0 +1,8 @@
+name: Int
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  The whole-number part of a number, with the fraction dropped.
+doc_url: https://www.amibroker.com/guide/afl/int.html

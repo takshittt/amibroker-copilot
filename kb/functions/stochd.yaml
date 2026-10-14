@@ -1,0 +1,10 @@
+name: StochD
+category: indicator
+returns: array
+params:
+  - {name: periods, type: any, optional: true}
+  - {name: ksmooth, type: any, optional: true}
+  - {name: dsmooth, type: any, optional: true}
+description: >-
+  Slow stochastic %D: a moving average of %K.
+doc_url: https://www.amibroker.com/guide/afl/stochd.html

@@ -1,0 +1,6 @@
+name: EnableScript
+category: misc
+returns: none
+params:
+  - {name: enginename, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/enablescript.html

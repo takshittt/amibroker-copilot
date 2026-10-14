@@ -1,0 +1,9 @@
+name: _TRACE
+category: misc
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+description: >-
+  Writes a message to the system debug viewer.
+doc_url: https://www.amibroker.com/guide/afl/_trace.html
+since: "4.40"

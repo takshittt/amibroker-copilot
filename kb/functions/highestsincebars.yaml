@@ -1,0 +1,12 @@
+name: HighestSinceBars
+category: lookup
+returns: array
+params:
+  - {name: expression, type: any, optional: false}
+  - {name: array, type: array, optional: false}
+  - {name: nth, type: any, optional: true}
+description: >-
+  Number of bars since the highest value reached after the condition was
+  last true.
+doc_url: https://www.amibroker.com/guide/afl/highestsincebars.html
+since: "3.40"

@@ -1,0 +1,11 @@
+name: AMA2
+category: indicator
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+  - {name: smoothingfactor, type: any, optional: false}
+  - {name: feedbackfactor, type: any, optional: false}
+description: >-
+  Adaptive moving average with separate smoothing and feedback factors.
+doc_url: https://www.amibroker.com/guide/afl/ama2.html
+since: "3.50"

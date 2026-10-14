@@ -1,0 +1,10 @@
+name: Status
+category: misc
+returns: any
+params:
+  - {name: statuscode, type: string, optional: false}
+description: >-
+  Reads run-time information by name, such as which bars are visible or
+  what kind of run is in progress.
+doc_url: https://www.amibroker.com/guide/afl/status.html
+since: "3.650"

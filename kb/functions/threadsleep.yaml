@@ -1,0 +1,7 @@
+name: ThreadSleep
+category: misc
+returns: none
+params:
+  - {name: milliseconds, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/threadsleep.html
+since: "5.50"

@@ -1,0 +1,6 @@
+name: AdvVolume
+category: composite
+returns: array
+params: []
+doc_url: https://www.amibroker.com/guide/afl/advvolume.html
+since: "3.20"

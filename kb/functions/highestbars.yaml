@@ -1,0 +1,8 @@
+name: HighestBars
+category: lookup
+returns: array
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  Number of bars since the highest value so far.
+doc_url: https://www.amibroker.com/guide/afl/highestbars.html

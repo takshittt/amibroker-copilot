@@ -1,0 +1,7 @@
+name: EnableTextOutput
+category: misc
+returns: none
+params:
+  - {name: mode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/enabletextoutput.html
+since: "4.20"

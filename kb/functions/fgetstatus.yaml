@@ -1,0 +1,9 @@
+name: fgetstatus
+category: file
+returns: any
+params:
+  - {name: filename, type: any, optional: false}
+  - {name: what, type: any, optional: false}
+  - {name: format, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/fgetstatus.html
+since: "4.90"

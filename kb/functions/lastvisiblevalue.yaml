@@ -1,0 +1,9 @@
+name: LastVisibleValue
+category: plot
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  The array's value on the last bar currently visible on the chart.
+doc_url: https://www.amibroker.com/guide/afl/lastvisiblevalue.html
+since: "5.40"

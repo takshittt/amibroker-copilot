@@ -1,0 +1,9 @@
+name: cosh
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Hyperbolic cosine.
+doc_url: https://www.amibroker.com/guide/afl/cosh.html
+since: "4.80"

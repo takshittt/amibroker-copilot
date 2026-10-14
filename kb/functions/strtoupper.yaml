@@ -1,0 +1,7 @@
+name: StrToUpper
+category: string
+returns: string
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/strtoupper.html
+since: "4.80"

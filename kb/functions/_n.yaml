@@ -1,0 +1,10 @@
+name: _N
+category: plot
+returns: none
+params:
+  - {name: string, type: string, optional: false}
+description: >-
+  Evaluates a text expression without printing it to the commentary
+  window. Commonly wrapped around a Title assignment.
+doc_url: https://www.amibroker.com/guide/afl/_n.html
+since: "4.10"

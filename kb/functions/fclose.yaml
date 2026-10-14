@@ -1,0 +1,7 @@
+name: fclose
+category: file
+returns: none
+params:
+  - {name: filehandle, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/fclose.html
+since: "4.50"

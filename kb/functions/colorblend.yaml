@@ -1,0 +1,11 @@
+name: ColorBlend
+category: plot
+returns: number
+params:
+  - {name: colorfrom, type: any, optional: false}
+  - {name: colorto, type: any, optional: false}
+  - {name: factor, type: any, optional: true}
+description: >-
+  Mixes two colours in a given proportion.
+doc_url: https://www.amibroker.com/guide/afl/colorblend.html
+since: "5.30"

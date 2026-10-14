@@ -8,3 +8,4 @@ params:
 description: >-
   Rolling standard deviation of the array over `periods` bars.
 doc_url: https://www.amibroker.com/guide/afl/stdev.html
+since: "3.40"

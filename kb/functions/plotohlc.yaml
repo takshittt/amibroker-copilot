@@ -1,0 +1,21 @@
+name: PlotOHLC
+category: plot
+returns: number
+params:
+  - {name: open, type: any, optional: false}
+  - {name: high, type: any, optional: false}
+  - {name: low, type: any, optional: false}
+  - {name: close, type: any, optional: false}
+  - {name: name, type: any, optional: false}
+  - {name: color_barcolor, type: any, optional: false}
+  - {name: style, type: any, optional: true}
+  - {name: minvalue, type: any, optional: true}
+  - {name: maxvalue, type: any, optional: true}
+  - {name: xshift, type: any, optional: true}
+  - {name: zorder, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+description: >-
+  Draws candles or bars from four arrays you supply as open, high, low and
+  close.
+doc_url: https://www.amibroker.com/guide/afl/plotohlc.html
+since: "4.20"

@@ -1,0 +1,8 @@
+name: FullName
+category: info
+returns: string
+params: []
+description: >-
+  The full name of the current symbol.
+doc_url: https://www.amibroker.com/guide/afl/fullname.html
+since: "3.10"

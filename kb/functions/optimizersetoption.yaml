@@ -1,0 +1,8 @@
+name: OptimizerSetOption
+category: misc
+returns: none
+params:
+  - {name: name, type: string, optional: false}
+  - {name: value, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/optimizersetoption.html
+since: "5.20"

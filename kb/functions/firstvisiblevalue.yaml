@@ -1,0 +1,9 @@
+name: FirstVisibleValue
+category: plot
+returns: number
+params:
+  - {name: array, type: array, optional: false}
+description: >-
+  The array's value on the first bar currently visible on the chart.
+doc_url: https://www.amibroker.com/guide/afl/firstvisiblevalue.html
+since: "5.40"

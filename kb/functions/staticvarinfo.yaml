@@ -1,0 +1,8 @@
+name: StaticVarInfo
+category: misc
+returns: any
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: field, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvarinfo.html
+since: "5.60"

@@ -1,0 +1,8 @@
+name: ceil
+category: math
+returns: any
+params:
+  - {name: number, type: any, optional: false}
+description: >-
+  Rounds up to the nearest whole number.
+doc_url: https://www.amibroker.com/guide/afl/ceil.html

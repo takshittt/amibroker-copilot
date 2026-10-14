@@ -1,0 +1,9 @@
+name: CategorySetName
+category: info
+returns: none
+params:
+  - {name: name, type: any, optional: false}
+  - {name: category, type: any, optional: false}
+  - {name: number, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/categorysetname.html
+since: "5.20"

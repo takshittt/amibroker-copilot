@@ -1,0 +1,7 @@
+name: IcbID
+category: info
+returns: string
+params:
+  - {name: mode, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/icbid.html
+since: "5.60"

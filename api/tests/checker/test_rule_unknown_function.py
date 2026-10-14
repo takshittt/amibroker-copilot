@@ -49,3 +49,13 @@ def test_function_named_in_a_comment_or_string_is_not_a_call(found):
 
 def test_variable_with_brackets_is_not_a_call(found):
     assert found("x = Close;\ny = x[0] + (x);\n", RULE) == []
+
+
+def test_functions_from_the_full_list_are_known(found):
+    source = (
+        "x = StochK(14, 3) + ADX(14) + HMA(Close, 20) + RSIa(Close, 14);\n"
+        'Title = StrFormat("%s", Name()) + NumToStr(Close, 1.2);\n'
+        'y = StaticVarGet("state");\nz = TimeFrameGetPrice("C", inDaily, -1);\n'
+        'fh = fopen("notes.txt", "w");\n'
+    )
+    assert found(source, RULE) == []

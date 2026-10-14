@@ -1,0 +1,7 @@
+name: MxFromString
+category: matrix
+returns: any
+params:
+  - {name: string, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/mxfromstring.html
+since: "6.10"

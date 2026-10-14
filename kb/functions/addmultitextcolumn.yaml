@@ -1,0 +1,16 @@
+name: AddMultiTextColumn
+category: exploration
+returns: none
+params:
+  - {name: array, type: array, optional: false}
+  - {name: textlist, type: string, optional: false}
+  - {name: caption, type: string, optional: false}
+  - {name: format, type: any, optional: true}
+  - {name: fgcolor, type: any, optional: true}
+  - {name: bkcolor, type: any, optional: true}
+  - {name: width, type: any, optional: true}
+description: >-
+  Adds an exploration column that shows one text from a list, picked by a
+  number in an array.
+doc_url: https://www.amibroker.com/guide/afl/addmultitextcolumn.html
+since: "6.20"

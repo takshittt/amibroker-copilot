@@ -1,0 +1,8 @@
+name: StaticVarGet
+category: misc
+returns: any
+params:
+  - {name: varname, type: string, optional: false}
+  - {name: align, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/staticvarget.html
+since: "4.60"

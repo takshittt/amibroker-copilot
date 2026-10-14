@@ -1,0 +1,9 @@
+name: RWIHi
+category: indicator
+returns: array
+params:
+  - {name: minperiods, type: any, optional: false}
+  - {name: maxperiods, type: any, optional: false}
+description: >-
+  Random Walk Index of the highs.
+doc_url: https://www.amibroker.com/guide/afl/rwihi.html

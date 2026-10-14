@@ -1,0 +1,6 @@
+name: IsContinuous
+category: info
+returns: number
+params: []
+doc_url: https://www.amibroker.com/guide/afl/iscontinuous.html
+since: "4.60"

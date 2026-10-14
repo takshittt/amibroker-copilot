@@ -1,0 +1,9 @@
+name: SendEmail
+category: misc
+returns: none
+params:
+  - {name: subject, type: string, optional: false}
+  - {name: message, type: string, optional: false}
+  - {name: showui, type: any, optional: true}
+doc_url: https://www.amibroker.com/guide/afl/sendemail.html
+since: "5.90"

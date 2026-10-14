@@ -1,0 +1,7 @@
+name: InICB
+category: info
+returns: number
+params:
+  - {name: icb_code, type: string, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/inicb.html
+since: "5.60"

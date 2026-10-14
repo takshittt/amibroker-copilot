@@ -1,0 +1,9 @@
+name: StaticVarGetRankedSymbols
+category: misc
+returns: string
+params:
+  - {name: outputprefix, type: string, optional: false}
+  - {name: inputprefix, type: string, optional: false}
+  - {name: datetime, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/staticvargetrankedsymbols.html
+since: "5.70"

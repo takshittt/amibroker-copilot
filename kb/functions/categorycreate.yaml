@@ -1,0 +1,8 @@
+name: CategoryCreate
+category: info
+returns: string
+params:
+  - {name: name, type: string, optional: false}
+  - {name: category, type: any, optional: false}
+doc_url: https://www.amibroker.com/guide/afl/categorycreate.html
+since: "5.70"

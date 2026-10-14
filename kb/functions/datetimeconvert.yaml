@@ -1,0 +1,11 @@
+name: DateTimeConvert
+category: time
+returns: any
+params:
+  - {name: format, type: any, optional: false}
+  - {name: date, type: any, optional: false}
+  - {name: time, type: any, optional: true}
+description: >-
+  Converts between date-time numbers and the DateNum and TimeNum forms.
+doc_url: https://www.amibroker.com/guide/afl/datetimeconvert.html
+since: "4.90"

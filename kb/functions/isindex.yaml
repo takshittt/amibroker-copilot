@@ -1,0 +1,6 @@
+name: IsIndex
+category: info
+returns: number
+params: []
+doc_url: https://www.amibroker.com/guide/afl/isindex.html
+since: "4.50"

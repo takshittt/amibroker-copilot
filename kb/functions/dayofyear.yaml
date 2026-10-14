@@ -1,0 +1,8 @@
+name: DayOfYear
+category: time
+returns: array
+params: []
+description: >-
+  Day of the year of each bar, counted from 1 January.
+doc_url: https://www.amibroker.com/guide/afl/dayofyear.html
+since: "4.40"
