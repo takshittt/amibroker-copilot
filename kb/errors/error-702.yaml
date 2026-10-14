@@ -1,0 +1,11 @@
+id: error-702
+code: 702
+title: The backtest has no Short or Cover
+explanation: >-
+  The backtester's settings allow short trades, but the formula does not
+  assign both Short and Cover.
+fix: >-
+  For a long-only strategy, set the positions to long only in the
+  backtester's settings, or add Short = 0; and Cover = 0; to the formula.
+  Otherwise assign both variables.
+tags: [backtest, signals]

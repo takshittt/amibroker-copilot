@@ -58,3 +58,21 @@ def test_daily_strategy_is_not_checked(found):
 
 def test_intraday_indicator_with_no_signals_passes(found):
     assert found('Plot(EMA(Close, 9), "EMA", colorRed);\n', RULE, timeframe="5min") == []
+
+
+def test_market_that_never_closes_needs_no_end_of_day_exit(run):
+    source = ENTRIES + "Sell = Cross(EMA(Close, 21), EMA(Close, 9));\n"
+    rules = {f.rule for f in run(source, timeframe="hourly", market_id="crypto").findings}
+    assert RULE not in rules
+
+
+def test_market_that_closes_still_needs_one_when_the_market_is_given(run):
+    source = ENTRIES + "Sell = Cross(EMA(Close, 21), EMA(Close, 9));\n"
+    rules = {f.rule for f in run(source, timeframe="hourly", market_id="nse_fo").findings}
+    assert RULE in rules
+
+
+def test_unknown_market_is_treated_as_one_that_closes(run):
+    source = ENTRIES + "Sell = Cross(EMA(Close, 21), EMA(Close, 9));\n"
+    rules = {f.rule for f in run(source, timeframe="hourly", market_id="moon").findings}
+    assert RULE in rules

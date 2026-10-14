@@ -1,0 +1,19 @@
+id: level-includes-current-bar
+title: Comparing a bar with a level that already contains it
+checker_rule: null
+explanation: >-
+  HHV and LLV include the current bar. The close can never be above the
+  highest high of a range that contains its own bar, and the low can
+  never be below the lowest low. A breakout or stop written this way
+  never triggers, and the backtest quietly shows no trades or no exits.
+  Shift the level back one bar with Ref so that it is made of earlier
+  bars only.
+bad_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > HHV(High, 20);
+  Sell = Close < LLV(Low, 10);
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > Ref(HHV(High, 20), -1);
+  Sell = Close < Ref(LLV(Low, 10), -1);
+tags: [breakout, look-ahead, hhv]

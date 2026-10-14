@@ -1,0 +1,12 @@
+id: error-30
+code: 30
+title: A line that AFL cannot read
+explanation: >-
+  Something on the line breaks the rules of the language: an operator with
+  nothing after it, a bracket in the wrong place, or a word AFL does not
+  know used where a value is expected.
+fix: >-
+  Look at the spot the message marks and just before it. Check that
+  brackets are paired, that every operator has a value on both sides, and
+  that function names are spelt as AmiBroker spells them.
+tags: [syntax]

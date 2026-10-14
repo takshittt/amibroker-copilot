@@ -1,0 +1,12 @@
+id: error-52
+code: 52
+title: An argument with a value the function cannot use
+explanation: >-
+  A function was given a number outside what it accepts, most often a
+  length of zero, a negative length or an empty value where a positive
+  number is needed. The message names the function and the parameter.
+fix: >-
+  Check where that number comes from. If it is a parameter or a calculated
+  length, make sure it cannot be zero, negative or empty, for example with
+  Max(1, Length).
+tags: [functions, arguments]

@@ -1,0 +1,10 @@
+id: error-7
+code: 7
+title: Text used as the condition of if, while or for
+explanation: >-
+  The condition is a string. A condition has to be a number, which is
+  treated as true when it is not zero.
+fix: >-
+  Compare the text with something so the result is a number, for example
+  Name() == "NIFTY", or use StrLen to ask whether the text is empty.
+tags: [if, strings, types]

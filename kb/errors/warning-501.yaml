@@ -1,0 +1,11 @@
+id: warning-501
+code: 501
+title: A single = inside a condition
+explanation: >-
+  This is a warning, not an error: the formula runs. A condition contains
+  =, which stores a value, where == was almost certainly meant. The
+  variable is changed and the condition tests the value just stored, so
+  the logic is wrong.
+fix: >-
+  Replace = with == in the condition.
+tags: [syntax, comparison]

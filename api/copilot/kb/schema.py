@@ -209,6 +209,14 @@ class Market(Record):
 
     _timezone_exists = field_validator("timezone")(_check_time_zone)
 
+    @property
+    def never_closes(self) -> bool:
+        """True for a market that trades all day, every day of the week."""
+        return any(
+            session.open == "00:00" and session.close == "23:59" and len(session.days) == 7
+            for session in self.sessions
+        )
+
     @model_validator(mode="after")
     def _check_sessions_and_rules(self) -> "Market":
         sessions = {session.name: session for session in self.sessions}

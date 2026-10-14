@@ -1,0 +1,11 @@
+id: error-701
+code: 701
+title: The backtest has no Buy or Sell
+explanation: >-
+  A backtest or scan was run on a formula that does not assign both Buy
+  and Sell. The backtester needs both, even when exits are handled by
+  ApplyStop.
+fix: >-
+  Assign both variables. If stops do all the exiting, write Sell = 0; so
+  the variable exists.
+tags: [backtest, signals]

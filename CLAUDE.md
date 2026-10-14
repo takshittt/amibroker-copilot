@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 4 of the plan are done: `api/copilot/kb/` holds the KB record formats and loaders; `/kb` holds all 447 AFL functions, the built-ins, the v1 markets and ten mistake entries; `api/copilot/checker/` holds the checker with its 10 rules; and the Postgres schema, the indexer and the keyword and vector searches exist. Next is stage 4b, the rest of the KB content (concept notes, examples, error notes). There is no pipeline or API yet, and no `web/` side. Nothing has been run against Supabase or with real OpenAI embeddings yet.
+The design is accepted. Stages 0 to 4b of the plan are done: `api/copilot/kb/` holds the KB record formats and loaders; `/kb` holds all 447 AFL functions, the built-ins, the v1 markets, 14 mistake entries, 12 concept notes, 10 example strategies and 19 error notes; `api/copilot/checker/` holds the checker with its 10 rules; and the Postgres schema, the indexer and the keyword and vector searches exist. Next is stage 5, the Write pipeline. There is no pipeline or API yet, and no `web/` side. Nothing has been run against Supabase or with real OpenAI calls yet (see `.claude/changes/`).
 
 ## Commands
 
@@ -38,6 +38,7 @@ If these disagree, the later document in the list is the more recent decision, b
 - Never invent AmiBroker functions. Every function call in generated code must exist in the project's function list.
 - Never label unchecked code as checked. If checks still fail after the retry limit, or the checker itself crashes, the code is shown with a visible "not fully checked" warning listing what failed.
 - Never execute AFL.
+- Every example in `kb/examples` must pass the checker with nothing reported. If a test for the KB content fails, fix the content or, when the checker is wrong, fix the checker and say so; never loosen the test.
 - No private strategies in the knowledge base. Examples are generic ones written for this project.
 - Do not store or show AmiBroker's doc or forum text. The knowledge base is written in our own words and links to the official docs.
 - Out of scope for the product: backtesting, live trading, and strategy or profit advice.
@@ -65,7 +66,7 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 Project documentation lives under `.claude/`, not at the repository root:
 
 - `.claude/adr/`: architecture decision records (empty).
-- `.claude/changes/`: change records (empty).
+- `.claude/changes/`: change records, one dated file for each departure from the plan. Read the ones still in effect before starting a stage.
 - `.claude/hooks/`: hook scripts, registered in `.claude/settings.json`. They block writing, staging or committing `.env` files; format and lint each edited Python file under `api/`; and lock test files while bug-fix mode is on. Only the user switches bug-fix mode, with `make bugfix-on` and `make bugfix-off`.
 - `.claude/skills/testing-strategy/`: project skill for test plans. Its note that the stack is undecided is out of date.
 

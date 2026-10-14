@@ -1,0 +1,12 @@
+id: error-1
+code: 1
+title: Two values that cannot be combined
+explanation: >-
+  An operator such as +, * or > was given values it cannot work with. The
+  usual cause is mixing text with numbers: adding a number to a string, or
+  comparing a string with an array.
+fix: >-
+  Check the two values on that line. Convert a number to text with
+  NumToStr before joining it to a string, and convert text to a number
+  with StrToNum before doing arithmetic.
+tags: [types, operators]

@@ -1,0 +1,11 @@
+id: error-31
+code: 31
+title: A different symbol was expected here
+explanation: >-
+  AFL understood the line up to a point and then met something other than
+  what must come next. The message lists what it would have accepted. A
+  closing bracket missing earlier on the line is a frequent cause.
+fix: >-
+  Read the list of expected symbols in the message; it usually names the
+  missing piece. Count the opening and closing brackets on the line.
+tags: [syntax]

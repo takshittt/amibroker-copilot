@@ -1,0 +1,12 @@
+id: error-51
+code: 51
+title: An index that has no value
+explanation: >-
+  The number used as an array index is empty (Null). It usually comes from
+  a calculation that has no result on the early bars, such as a moving
+  average before enough bars exist, or from ValueWhen when the condition
+  has never been true.
+fix: >-
+  Make sure the index has a value before using it: replace empty values
+  with Nz, or test it with IsNull and skip the bar.
+tags: [loops, arrays, subscript]
