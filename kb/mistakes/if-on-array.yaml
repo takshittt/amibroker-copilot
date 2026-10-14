@@ -1,0 +1,23 @@
+id: if-on-array
+title: Using if on a whole array
+checker_rule: if_on_array
+explanation: >-
+  Close > Avg is not one answer; it is a separate answer for every bar.
+  The if statement needs a single true or false, so it cannot decide.
+  IIf makes the choice bar by bar and gives back an array.
+bad_example: |
+  Avg = MA(Close, 20);
+  if (Close > Avg)
+  {
+      BarColour = colorGreen;
+  }
+  else
+  {
+      BarColour = colorRed;
+  }
+  Plot(Close, "Close", BarColour);
+good_example: |
+  Avg = MA(Close, 20);
+  BarColour = IIf(Close > Avg, colorGreen, colorRed);
+  Plot(Close, "Close", BarColour);
+tags: [arrays, iif]

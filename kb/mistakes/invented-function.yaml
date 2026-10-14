@@ -1,0 +1,16 @@
+id: invented-function
+title: Calling a function AmiBroker does not have
+checker_rule: unknown_function
+explanation: >-
+  Names such as SuperTrend or TrailingStop sound like built-in functions
+  but are not part of AFL, so the formula stops with an error. Build the
+  calculation from functions that exist, or write your own with the
+  function keyword before using it.
+bad_example: |
+  Trend = SuperTrend(10, 3);
+  Plot(Trend, "Trend", colorRed);
+good_example: |
+  Mid = (High + Low) / 2;
+  UpperBand = Mid + 3 * ATR(10);
+  Plot(UpperBand, "Upper band", colorRed);
+tags: [functions]

@@ -1,0 +1,18 @@
+id: look-ahead-ref
+title: Reading a future bar with Ref
+checker_rule: lookahead_ref
+explanation: >-
+  Ref with a positive number reads bars that have not happened yet. A
+  signal built on it buys today because tomorrow closes higher, so the
+  backtest looks excellent and the strategy cannot be traded. Signals
+  must use only the current bar and earlier ones, which means a negative
+  number in Ref.
+bad_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Ref(Close, 1) > Close;
+  Sell = Close < MA(Close, 20);
+good_example: |
+  SetTradeDelays(1, 1, 1, 1);
+  Buy = Close > Ref(Close, -1);
+  Sell = Close < MA(Close, 20);
+tags: [look-ahead, ref, backtest]

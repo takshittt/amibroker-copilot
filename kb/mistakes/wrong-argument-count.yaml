@@ -1,0 +1,14 @@
+id: wrong-argument-count
+title: Leaving out an argument a function needs
+checker_rule: arg_count
+explanation: >-
+  Every function takes a fixed set of arguments, some of them optional.
+  Leaving out a required one, or adding one too many, stops the formula.
+  MA needs both the array and the number of bars.
+bad_example: |
+  Fast = MA(Close);
+  Plot(Fast, "Fast", colorGreen);
+good_example: |
+  Fast = MA(Close, 20);
+  Plot(Fast, "Fast", colorGreen);
+tags: [functions, arguments]
