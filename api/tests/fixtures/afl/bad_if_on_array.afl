@@ -1,0 +1,18 @@
+// context: timeframe=daily market=nse_eq
+// expect: if_on_array 10
+//
+// The classic beginner mistake: if on a whole array.
+
+SetTradeDelays(1, 1, 1, 1);
+
+Avg = MA(Close, 20);
+
+if (Close > Avg)
+{
+    Buy = 1;
+}
+else
+{
+    Buy = 0;
+}
+Sell = Close < Avg;

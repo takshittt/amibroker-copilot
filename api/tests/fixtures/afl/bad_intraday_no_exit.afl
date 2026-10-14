@@ -1,0 +1,17 @@
+// context: timeframe=5min market=nse_fo
+// expect: eod_exit 14
+// expect: eod_exit 16
+//
+// Bank Nifty, 5-minute bars. Entries stop at 14:30, but nothing closes
+// the position before the market does.
+
+LastEntryTime = ParamTime("Last entry", "14:30");
+
+SetTradeDelays(0, 0, 0, 0);
+
+CanEnter = TimeNum() <= LastEntryTime;
+
+Buy = Cross(RSI(14), 60) AND CanEnter;
+Sell = Cross(50, RSI(14));
+Short = Cross(40, RSI(14)) AND CanEnter;
+Cover = Cross(RSI(14), 50);

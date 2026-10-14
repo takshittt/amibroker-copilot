@@ -1,0 +1,10 @@
+// context: timeframe=5min market=nse_fo
+// status: passed
+// expect: hardcoded_times 9
+// expect: hardcoded_times 10
+//
+// Works, but the times are buried in the logic. A Tip, not a failure.
+
+SetTradeDelays(0, 0, 0, 0);
+Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND TimeNum() < 143000;
+Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR TimeNum() >= 151500;

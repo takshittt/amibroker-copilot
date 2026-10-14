@@ -1,0 +1,9 @@
+// context: timeframe=daily market=nse_eq
+// expect: syntax 6
+// expect: syntax 8
+
+SetTradeDelays(1, 1, 1, 1);
+Fast = EMA(Close, 9)
+Slow = EMA(Close, 21);
+Buy = Cross(Fast, Slow)
+Sell = Cross(Slow, Fast);

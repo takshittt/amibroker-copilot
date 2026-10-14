@@ -1,0 +1,11 @@
+// context: timeframe=daily market=nse_eq
+// expect: exrem 10
+// expect: exrem 11
+//
+// Arrows repeat on every bar above or below the average.
+
+SetTradeDelays(1, 1, 1, 1);
+Buy = Close > MA(Close, 20);
+Sell = Close < MA(Close, 20);
+PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+PlotShapes(Sell * shapeDownArrow, colorRed, 0, High);

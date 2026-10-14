@@ -1,0 +1,12 @@
+// context: timeframe=daily market=nse_eq
+// expect: trade_delays 11
+//
+// Signals come from today's close, and the trade is filled at today's
+// open: a price from before the signal existed.
+
+SetTradeDelays(0, 0, 0, 0);
+
+Buy = Close > HHV(Ref(Close, 0), 20) OR Cross(Close, MA(Close, 20));
+Sell = Cross(MA(Close, 20), Close);
+BuyPrice = Open;
+SellPrice = Close;

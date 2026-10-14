@@ -1,0 +1,10 @@
+// context: timeframe=daily market=nse_eq
+// expect: unknown_function 7
+//
+// MyTrend may live in the included file, so this is a Warning.
+
+#include <mytools.afl>
+Trend = MyTrend(Close, 20);
+SetTradeDelays(1, 1, 1, 1);
+Buy = Cross(Close, Trend);
+Sell = Cross(Trend, Close);

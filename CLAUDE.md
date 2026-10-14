@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 and 1 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`, and `/kb` holds a seed of 45 functions, the built-ins and the v1 markets. There is no checker, pipeline or API yet, and no `web/` side.
+The design is accepted. Stages 0 to 2 of the plan are done: `api/copilot/kb/` holds the KB record formats and the loader that turns `/kb` into a `Catalog`; `/kb` holds a seed of 45 functions, the built-ins and the v1 markets; and `api/copilot/checker/` holds the checker with its 10 rules. Until stage 3 adds the full function list, the checker reports any real AFL function outside the seed as unknown. There is no pipeline or API yet, and no `web/` side.
 
 ## Commands
 
