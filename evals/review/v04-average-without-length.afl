@@ -1,0 +1,29 @@
+// context: timeframe=daily market=nse_eq
+// planted: verified arg_count
+
+_SECTION_BEGIN("RSI pullback");
+
+RsiLen = Param("RSI length", 14, 2, 30, 1);
+BuyLevel = Param("Buy below", 30, 10, 45, 1);
+SellLevel = Param("Sell above", 55, 50, 80, 1);
+TrendLen = Param("Trend average", 200, 50, 300, 10);
+StopPercent = Param("Stop loss %", 5, 1, 15, 0.5);
+
+SetTradeDelays(1, 1, 1, 1);
+SetPositionSize(10, spsPercentOfEquity);
+
+Momentum = RSI(RsiLen);
+Uptrend = Close > MA(Close);
+
+Buy = Cross(BuyLevel, Momentum) AND Uptrend;
+Sell = Cross(Momentum, SellLevel);
+BuyPrice = Open;
+SellPrice = Open;
+
+ApplyStop(stopTypeLoss, stopModePercent, StopPercent, True);
+
+Plot(Momentum, "RSI", colorBlue, styleLine);
+Plot(BuyLevel, "Buy level", colorGreen, styleDashed);
+Plot(SellLevel, "Sell level", colorRed, styleDashed);
+
+_SECTION_END();

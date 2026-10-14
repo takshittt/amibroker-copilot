@@ -151,7 +151,9 @@ def test_command_prints_the_report_and_writes_json(deps, tmp_path, capsys):
         "request: Use MA and Cross.\nexpect:\n  status: checked\n  retrieved: [MA]\n"
     )
     out = tmp_path / "report.json"
-    code = main([str(tasks_dir), "--json", str(out)], deps=deps([generation(GOOD)], [BRIEF]))
+    code = main(
+        ["write", str(tasks_dir), "--json", str(out)], deps=deps([generation(GOOD)], [BRIEF])
+    )
     assert code == 0
     assert "sample" in capsys.readouterr().out
     saved = json.loads(out.read_text())
@@ -161,5 +163,54 @@ def test_command_prints_the_report_and_writes_json(deps, tmp_path, capsys):
 
 def test_command_reports_a_bad_task_file(deps, tmp_path, capsys):
     (tmp_path / "bad.yaml").write_text("id: bad\n")
-    assert main([str(tmp_path)], deps=deps([], [])) == 2
+    assert main(["write", str(tmp_path)], deps=deps([], [])) == 2
     assert "bad.yaml" in capsys.readouterr().err
+
+
+# Review samples with the AI review switched on
+
+
+def test_review_evals_with_the_model_score_the_ai_findings(indexed, catalog):
+    from copilot.evals import Planted, ReviewSample, render_review, run_review_evals
+
+    code = (
+        "SetTradeDelays(1, 1, 1, 1);\nFast = EMA(Close, 9);\nSlow = EMA(Close, 21);\n"
+        "Buy = Cross(Slow, Fast);\nSell = Cross(Fast, Slow);\n"
+    )
+    samples = [
+        ReviewSample(
+            "swapped", "nse_eq", "daily", code, (Planted("ai", line=4, description="swap"),)
+        ),
+        ReviewSample(
+            "missed", "nse_eq", "daily", code, (Planted("ai", line=4, description="swap"),)
+        ),
+        ReviewSample(
+            "clean", "nse_eq", "daily", code.replace("Slow, Fast);\nSell", "Fast, Slow);\nSell"), ()
+        ),
+    ]
+    replies = [
+        {
+            "findings": [
+                {"severity": "critical", "line": 4, "problem": "Swapped.", "fix": "Swap."}
+            ],
+            "summary": "",
+        },
+        {"findings": [], "summary": ""},
+        {
+            "findings": [{"severity": "tip", "line": 2, "problem": "Could be tidier.", "fix": "x"}],
+            "summary": "",
+        },
+    ]
+    deps = Deps(
+        indexed, catalog, ScriptedLLM(replies), FakeEmbedder(DEFAULT_EMBEDDING_DIMENSIONS), SETTINGS
+    )
+    report = run_review_evals(samples, catalog, deps)
+    assert report.with_ai
+    assert report.metrics["ai_bugs_planted"] == 2
+    assert report.metrics["ai_bugs_found"] == 1
+    assert report.metrics["ai_recall"] == 0.5
+    assert report.metrics["ai_findings_on_clean_samples"] == 1
+    assert report.metrics["cost_usd"] > 0
+    text = render_review(report)
+    assert "checker and AI" in text
+    assert "AI MISSED swap" in text

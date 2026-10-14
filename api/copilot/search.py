@@ -101,3 +101,22 @@ def chunks_with_tags(conn: psycopg.Connection, kind: str, tags: list[str]) -> li
         (kind, tags),
     ).fetchall()
     return _hits(rows)
+
+
+def mistakes_without_rule(conn: psycopg.Connection) -> list[Hit]:
+    """The mistake entries no checker rule catches: what the AI review must look for."""
+    rows = conn.execute(
+        f"select {_COLUMNS}, 0 as score from kb_chunks "
+        "where kind = 'mistake' and meta->>'checker_rule' is null order by ref"
+    ).fetchall()
+    return _hits(rows)
+
+
+def error_note(conn: psycopg.Connection, code: int) -> Hit | None:
+    """Our note on the AmiBroker error with this number, if there is one."""
+    rows = conn.execute(
+        f"select {_COLUMNS}, 0 as score from kb_chunks "
+        "where kind = 'error' and meta->>'code' = %s order by ref limit 1",
+        (str(code),),
+    ).fetchall()
+    return _hits(rows)[0] if rows else None

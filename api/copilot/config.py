@@ -34,6 +34,9 @@ class Settings:
     rerank_keep: int = 10  # candidates kept after reranking
     max_request_chars: int = 4000  # longest request text accepted
     max_output_tokens: int = 4000  # cap on one model reply
+    max_code_bytes: int = 30_000  # largest pasted code accepted (Review, Fix-from-error)
+    max_error_chars: int = 2000  # longest pasted AmiBroker error text accepted
+    max_ai_findings: int = 15  # AI-suggested findings shown for one review
     llm_timeout_seconds: int = 60
 
     # US dollars for a million tokens, to work out what a run cost.
@@ -99,6 +102,9 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         rerank_keep=_whole_number(env, "RERANK_KEEP", Settings.rerank_keep),
         max_request_chars=_whole_number(env, "MAX_REQUEST_CHARS", Settings.max_request_chars),
         max_output_tokens=_whole_number(env, "MAX_OUTPUT_TOKENS", Settings.max_output_tokens),
+        max_code_bytes=_whole_number(env, "MAX_CODE_BYTES", Settings.max_code_bytes),
+        max_error_chars=_whole_number(env, "MAX_ERROR_CHARS", Settings.max_error_chars),
+        max_ai_findings=_whole_number(env, "MAX_AI_FINDINGS", Settings.max_ai_findings),
         llm_timeout_seconds=_whole_number(env, "LLM_TIMEOUT_SECONDS", Settings.llm_timeout_seconds),
         strong_price_in=_price(env, "STRONG_PRICE_IN"),
         strong_price_out=_price(env, "STRONG_PRICE_OUT"),

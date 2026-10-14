@@ -1,4 +1,4 @@
-.PHONY: test lint format validate-kb services-up services-down db-migrate index write evals bugfix-on bugfix-off
+.PHONY: test lint format validate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai bugfix-on bugfix-off
 
 # Settings such as OPENAI_API_KEY are read from .env when it exists, and
 # handed to every command below. Write each line as NAME=value, with no
@@ -51,10 +51,30 @@ index:
 write:
 	cd api && uv run python -m copilot.write --market "$(MARKET)" --timeframe "$(TIMEFRAME)" "$(TEXT)"
 
+# Reviews an AFL file: Verified findings from the checker, AI-suggested
+# ones from the model. Add APPLY=1 to also rewrite the code. Real OpenAI calls.
+#   make review MARKET=nse_fo TIMEFRAME=5min FILE=/path/to/strategy.afl
+review:
+	cd api && uv run python -m copilot.review --market "$(MARKET)" --timeframe "$(TIMEFRAME)" $(if $(APPLY),--apply,) "$(FILE)"
+
+# Corrects an AFL file from the error AmiBroker gave. Real OpenAI calls.
+#   make fix MARKET=nse_fo TIMEFRAME=5min FILE=/path/to/strategy.afl ERROR="Error 32. ..."
+fix:
+	cd api && uv run python -m copilot.fix --market "$(MARKET)" --timeframe "$(TIMEFRAME)" --error "$(ERROR)" "$(FILE)"
+
 # Runs the Write test set and prints the quality measures. Makes real
 # OpenAI calls for every task, so it costs money.
 evals:
-	cd api && uv run python -m copilot.evals ../evals/write --json ../evals/last-report.json
+	cd api && uv run python -m copilot.evals write ../evals/write --json ../evals/last-report.json
+
+# Runs the Review test set through the checker only. Free: no key, no
+# database. Reports planted bugs found and false alarms.
+evals-review:
+	cd api && uv run python -m copilot.evals review ../evals/review --kb ../kb
+
+# The same with the AI review as well. Makes real OpenAI calls.
+evals-review-ai:
+	cd api && uv run python -m copilot.evals review ../evals/review --ai --json ../evals/last-review-report.json
 
 # Bug-fix mode: while it is on, Claude cannot change test files.
 # Commit the failing test first, then switch it on.

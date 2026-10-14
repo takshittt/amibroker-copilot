@@ -8,16 +8,23 @@ does not apply there.
 
 from copilot.checker.findings import Finding
 from copilot.checker.parser import Call
-from copilot.checker.symbols import SIGNAL_LABEL, Analysis
+from copilot.checker.symbols import SIGNAL_LABEL, SIGNALS, Analysis
 
 RULE = "eod_exit"
 _SIDES = (("buy", "sell", "long"), ("short", "cover", "short"))
 
 
 def _uses_time_of_day(analysis: Analysis, signal: str) -> bool:
+    """True when the exit's own condition reads the time of day.
+
+    The other signals are not followed. `Sell = ExRem(Sell, Buy)` mentions
+    Buy, and Buy may have a time filter, but a filter on entries closes
+    nothing.
+    """
+    others = frozenset(SIGNALS) - {signal}
     return any(
         isinstance(node, Call) and node.name and node.name.lower() == "timenum"
-        for node in analysis.reachable_from(signal)
+        for node in analysis.reachable(analysis.values_of(signal), stop=others)
     )
 
 

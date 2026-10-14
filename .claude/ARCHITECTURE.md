@@ -244,20 +244,37 @@ links from `kb_functions.doc_url`.
 
 ### 4.2 Review mode
 1. Check the pasted code. Deterministic findings get the label **Verified**.
-2. Extract the function calls → exact lookup; retrieve mistake entries for
-   the detected concepts.
-3. LLM review for logic issues the checker can't see. These findings get the
-   label **AI-suggested**.
-4. "Apply all fixes" → generator rewrites the code → check again → answer.
+2. Gather what the model is shown: the functions the code calls (exact
+   lookup), the market, the mistake entries for any rule that fired and
+   for the kind of code, every mistake entry no rule catches, and the
+   best few notes found by searching. Nothing is reranked.
+3. LLM review for logic issues the checker can't see. The model is given
+   the Verified findings and told not to repeat them. Its findings get
+   the label **AI-suggested**.
+4. "Apply all fixes" → the model rewrites the code → check again → answer,
+   with what still fails fed back, up to the attempt limit.
 
 The Verified vs AI-suggested split is a trust feature: users can see which
-findings are certain.
+findings are certain. The two lists are never merged.
+
+If the model fails, the Verified findings are still returned. A review
+never states that code is correct.
+
+Corrected code is "checked" when the checker has no Critical or Warning
+finding. Fixes made for AI-suggested findings cannot be verified, and the
+answer says so.
 
 ### 4.3 Fix-from-error
-The user pastes code + AmiBroker's error text. The error is parsed for line
-and column, matched against an **error catalogue** (our own notes on common
-AmiBroker errors), then the code goes through generate → check with the
-error as feedback.
+The user pastes code + AmiBroker's error text. The error is parsed for its
+number, line and column, and matched against the **error catalogue** (our
+own notes on common AmiBroker errors). The checker also runs on the code,
+since it often pinpoints the same mistake. The model then corrects the
+code, and the result goes through check → feedback → retry as in "apply
+all fixes". The answer says the fix has not been compiled, because AFL is
+never run.
+
+The pasted code and the pasted error text are placed in `<pasted_code>`
+and `<amibroker_error>` blocks and described to the model as data.
 
 ### 4.4 Progress streaming
 Server-Sent Events from FastAPI → BFF → browser:
@@ -308,7 +325,7 @@ to them)
 | `if_on_array` | The condition of `if`, `while` or `for` is known to be an array. Unknown types do not fire |
 | `lookahead_ref` | `Ref(x, n)` with `n` a positive constant feeds `Buy`, `Sell`, `Short` or `Cover`, directly or through variables and functions. A positive `Ref` that is only plotted does not fire |
 | `syntax` | A bracket, string or comment is never closed; a semicolon is missing; a token makes no sense; or `=` is used in a condition (including the condition of `IIf`) |
-| `eod_exit` | The timeframe is intraday, the market closes (not a market that trades all day, every day), a side is entered (`Buy` or `Short`), and its exit (`Sell` or `Cover`) does not depend on `TimeNum()` |
+| `eod_exit` | The timeframe is intraday, the market closes (not a market that trades all day, every day), a side is entered (`Buy` or `Short`), and its exit (`Sell` or `Cover`) does not depend on `TimeNum()`. The other signals are not followed, so a time filter on entries does not count |
 | `intrabar_stop_price` | A signal triggers on `High` rising to a level (`Buy`, `Cover`) or `Low` falling to one (`Sell`, `Short`), and the matching price variable is never assigned |
 | `trade_delays` | The code has signals and no `SetTradeDelays` call; or two calls with different delays; or a side has delay 0 with its price variable set to `Open`, unless the signal reads earlier bars with a negative `Ref` |
 | `exrem` | `Buy`/`Sell` or `Short`/`Cover` are both assigned, one of them is used in `PlotShapes`, `AddColumn` or `Filter`, and it was not passed through `ExRem` with its partner. A backtest alone does not fire |

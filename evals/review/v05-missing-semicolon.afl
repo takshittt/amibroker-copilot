@@ -1,0 +1,30 @@
+// context: timeframe=hourly market=crypto
+// planted: verified syntax
+
+_SECTION_BEGIN("MACD crossover");
+
+FastLen = Param("Fast length", 12, 5, 30, 1);
+SlowLen = Param("Slow length", 26, 10, 60, 1);
+SignalLen = Param("Signal length", 9, 3, 20, 1);
+
+SetTradeDelays(1, 1, 1, 1);
+SetPositionSize(20, spsPercentOfEquity);
+
+MacdLine = MACD(FastLen, SlowLen)
+SignalLine = Signal(FastLen, SlowLen, SignalLen);
+
+Buy = Cross(MacdLine, SignalLine);
+Sell = Cross(SignalLine, MacdLine);
+Short = Sell;
+Cover = Buy;
+
+BuyPrice = Open;
+SellPrice = Open;
+ShortPrice = Open;
+CoverPrice = Open;
+
+Plot(MacdLine, "MACD", colorBlue, styleLine);
+Plot(SignalLine, "Signal", colorRed, styleLine);
+Plot(MacdLine - SignalLine, "Histogram", colorGreen, styleHistogram);
+
+_SECTION_END();
