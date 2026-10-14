@@ -1,4 +1,4 @@
-.PHONY: test lint format validate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai bugfix-on bugfix-off
+.PHONY: test lint format validate-kb services-up services-down db-migrate index write review fix evals evals-review evals-review-ai api reset-password bugfix-on bugfix-off
 
 # Settings such as OPENAI_API_KEY are read from .env when it exists, and
 # handed to every command below. Write each line as NAME=value, with no
@@ -12,8 +12,13 @@ endif
 # environment to use others; CI sets TEST_DATABASE_URL itself.
 DATABASE_URL ?= postgresql://copilot:copilot@localhost:5432/copilot_dev
 TEST_DATABASE_URL ?= postgresql://copilot:copilot@localhost:5432/copilot_test
+REDIS_URL ?= redis://localhost:6379/0
+# Redis database 15 is wiped by the API tests.
+TEST_REDIS_URL ?= redis://localhost:6379/15
 export DATABASE_URL
 export TEST_DATABASE_URL
+export REDIS_URL
+export TEST_REDIS_URL
 
 # Starts Postgres (with pgvector) and Redis in Docker and waits until
 # they answer. Docker itself must be running (`colima start`).
@@ -61,6 +66,16 @@ review:
 #   make fix MARKET=nse_fo TIMEFRAME=5min FILE=/path/to/strategy.afl ERROR="Error 32. ..."
 fix:
 	cd api && uv run python -m copilot.fix --market "$(MARKET)" --timeframe "$(TIMEFRAME)" --error "$(ERROR)" "$(FILE)"
+
+# Runs the API on port 8000, reloading on code changes. Needs every
+# setting in .env.example, including the OpenAI key and model ids.
+api:
+	cd api && uv run uvicorn copilot.api.main:create_from_env --factory --reload --port 8000
+
+# Gives a user a new random password and prints it once.
+#   make reset-password EMAIL=trader@example.in
+reset-password:
+	cd api && uv run python -m copilot.admin reset-password "$(EMAIL)"
 
 # Runs the Write test set and prints the quality measures. Makes real
 # OpenAI calls for every task, so it costs money.

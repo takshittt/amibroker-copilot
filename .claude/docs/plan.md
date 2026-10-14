@@ -112,6 +112,77 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
 
+## Stage 7: API
+
+Status: built and tested against the Docker Postgres and Redis, with a
+scripted model. Started once locally and called with `curl`: the stream
+arrives step by step. **Not yet run with real OpenAI calls, and not
+deployed.**
+
+**Files** (all new unless noted)
+`api/copilot/api/`: `app.py` (routes), `security.py`, `limits.py`,
+`store.py`, `answers.py`, `streaming.py`, `main.py` (start from the
+environment); `api/copilot/admin.py`; `api/migrations/0003_message_answers.sql`;
+tests in `api/tests/api/`. Changed: `config.py`, the Write pipeline
+(follow-up messages), `Makefile`, CI (a Redis service), `.env.example`.
+New dependencies: `fastapi`, `uvicorn`, `pyjwt`, `argon2-cffi`, `redis`,
+`psycopg-pool`; `httpx` for tests.
+
+**What was decided** (agreed 2026-10-14)
+- **Libraries.** PyJWT signs the token and argon2-cffi hashes passwords.
+  CLAUDE.md's "no auth library" is read as no auth framework (Auth.js,
+  fastapi-users): the cryptography is not written by hand.
+- **Quota is taken before a run and given back** when the run gives no
+  answer: a clarifying question, an error from the model or from our
+  side, or a cancelled run. It is taken before the user's message is
+  saved, so a refused request leaves nothing behind.
+- **The day for quota and spend runs midnight to midnight India time**
+  (`QUOTA_TIMEZONE`).
+- **Two routes added** to the architecture's table: follow-up messages
+  in Write (the conversation's last code is the code to change, and a
+  reply to a clarifying question is added to the request that prompted
+  it), and `POST /v1/messages/{id}/apply-fixes`.
+- **A spend cap needs prices**: with `DAILY_SPEND_CAP_USD` set, the API
+  refuses to start unless all four model prices are set.
+- **Passwords**: 10 to 128 characters, nothing else required. Emails are
+  stored in lower case.
+
+**Also decided while building**
+- The BFF key is checked first, on every route including health and
+  unknown paths, before the body is read. The browser's IP comes from
+  the BFF's `X-Client-IP` header, trusted only because the key matched.
+- Wrong password and unknown email get the same answer. Login is
+  limited per email and per IP (10 in 15 minutes); a successful login
+  clears the count for that email. Sign-ups are limited per IP (5 an hour).
+- A hash made with older argon2 settings is replaced at the next login.
+- Another user's conversation or message answers 404, the same as one
+  that does not exist.
+- The API checks every limit itself (sizes of text, code and error
+  text, and of the whole body) rather than trusting the BFF.
+- Every error is JSON: `{"error": {"code", "message"}}`. Unexpected
+  errors are logged and never show internals.
+- The answer is saved with the message (`messages.status` and
+  `messages.answer`), so history shows exactly what was shown live. A
+  review's copy of the reviewed code is stored for "apply all fixes" but
+  never sent back to the browser.
+- The catalog is read from the database when the API starts. After
+  `make index`, the API must be restarted to see a new `kb_version`.
+- Tests use their own database (`copilot_api_test`, created by the
+  tests) and Redis database 15, because the API commits what it writes.
+
+**Proof**
+- API tests pass (146 of the 1167).
+- A request without the BFF key, or with a wrong one, is refused with
+  401 on every route; tested for 12 routes and 5 kinds of wrong key.
+- A failed upstream call uses no quota: tested for a model failure and
+  for a crash on our side.
+
+**Known gaps**
+- Signing out early is not possible before a token expires; rotating
+  `JWT_SECRET` signs everyone out (as designed).
+- Embeddings of repeated queries are not cached in Redis yet.
+- There is no admin dashboard and no Sentry yet (stage 9).
+
 ## Stage 6: Review and Fix-from-error
 
 Status: built. The checker half is proven on a test set. **The model

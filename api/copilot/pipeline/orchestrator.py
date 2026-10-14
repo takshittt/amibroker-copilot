@@ -46,6 +46,8 @@ class WriteRequest:
     text: str
     market_id: str
     timeframe: str
+    # The conversation's latest code, when this request is a change to it.
+    previous_code: str = ""
 
 
 @dataclass(frozen=True)
@@ -254,8 +256,10 @@ def run_write(
     brief: Brief | None = None
     try:
         progress("understanding")
-        brief = build_brief(deps.llm, meter, settings, text, market, request.timeframe)
-        if brief.missing_critical:
+        previous = request.previous_code
+        brief = build_brief(deps.llm, meter, settings, text, market, request.timeframe, previous)
+        # A change to existing code takes what the brief leaves out from that code.
+        if brief.missing_critical and not previous:
             return WriteResult(
                 status="clarify", run=record(), brief=brief, questions=tuple(brief.questions)
             )
@@ -284,6 +288,7 @@ def run_write(
                 list(items.values()),
                 function_names,
                 feedback,
+                request.previous_code,
             )
 
             progress("checking")

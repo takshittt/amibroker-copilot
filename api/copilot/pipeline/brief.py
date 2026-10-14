@@ -172,10 +172,23 @@ def wrap_user_text(text: str) -> str:
 
 
 def build_brief(
-    llm: LLM, meter: UsageMeter, settings: Settings, text: str, market: Market, timeframe: str
+    llm: LLM,
+    meter: UsageMeter,
+    settings: Settings,
+    text: str,
+    market: Market,
+    timeframe: str,
+    previous_code: str = "",
 ) -> Brief:
+    current = ""
+    if previous_code:
+        current = (
+            "The trader already has the code below, and the request may be a change to it. "
+            "Describe the strategy as it should be after the change.\n\n"
+            f"{wrap_block('pasted_code', previous_code)}\n\n"
+        )
     user = (
-        f"Market: {market.name}\nTimeframe: {timeframe}\n\n{wrap_user_text(text)}\n\n"
+        f"Market: {market.name}\nTimeframe: {timeframe}\n\n{current}{wrap_user_text(text)}\n\n"
         "Write the brief for this request."
     )
     model_brief = ask(

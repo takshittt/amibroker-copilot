@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from copilot.config import Settings
 from copilot.pipeline import prompts
-from copilot.pipeline.brief import Brief, wrap_user_text
+from copilot.pipeline.brief import Brief, wrap_block, wrap_user_text
 from copilot.pipeline.llm import LLM, UsageMeter, ask
 from copilot.pipeline.rerank import brief_text
 from copilot.pipeline.retrieve import Item
@@ -96,8 +96,15 @@ def build_prompt(
     items: list[Item],
     function_names: list[str],
     feedback: Feedback | None,
+    previous_code: str = "",
 ) -> str:
     parts = [f"Brief:\n{brief_text(brief)}", wrap_user_text(text)]
+    if previous_code:
+        parts.append(
+            "This request changes the trader's current code, below. Make the change asked "
+            "for and keep everything else as it is.\n\n"
+            + wrap_block("pasted_code", numbered(previous_code))
+        )
 
     notes = [f"### {item.kind}: {item.title}\n{item.content}" for item in items]
     parts.append("Reference notes:\n\n" + "\n\n".join(notes))
@@ -125,13 +132,14 @@ def generate(
     items: list[Item],
     function_names: list[str],
     feedback: Feedback | None = None,
+    previous_code: str = "",
 ) -> Generation:
     return ask(
         llm,
         meter,
         model=settings.strong_model or "",
         system=prompts.GENERATE_SYSTEM,
-        user=build_prompt(brief, text, items, function_names, feedback),
+        user=build_prompt(brief, text, items, function_names, feedback, previous_code),
         schema_name="generation",
         schema=GENERATION_SCHEMA,
         parse=Generation.model_validate,
