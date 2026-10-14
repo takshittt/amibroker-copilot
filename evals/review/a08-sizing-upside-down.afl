@@ -1,0 +1,29 @@
+// context: timeframe=daily market=nse_eq
+// planted: ai 17 The formula is inverted: a wider stop gives a bigger position
+//
+// Meant to risk a fixed percentage of the account on each trade.
+
+_SECTION_BEGIN("Risk-based sizing");
+
+RiskPercent = Param("Risk per trade %", 1, 0.25, 5, 0.25);
+AtrMultiple = Param("Stop in ATRs", 2, 1, 5, 0.5);
+TrendLen = Param("Trend average", 50, 10, 200, 5);
+
+SetTradeDelays(1, 1, 1, 1);
+
+StopDistance = AtrMultiple * ATR(14);
+
+// Share of equity = risk % x price / stop distance.
+SetPositionSize(RiskPercent * StopDistance / Close, spsPercentOfEquity);
+
+Buy = Cross(Close, MA(Close, TrendLen));
+Sell = Cross(MA(Close, TrendLen), Close);
+BuyPrice = Open;
+SellPrice = Open;
+
+ApplyStop(stopTypeLoss, stopModePoint, StopDistance, True);
+
+Plot(Close, "Close", colorDefault, styleCandle);
+Plot(MA(Close, TrendLen), "Trend average", colorBlue, styleLine);
+
+_SECTION_END();

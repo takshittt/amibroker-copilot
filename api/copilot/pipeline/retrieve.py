@@ -152,7 +152,7 @@ def market_item(market: Market) -> Item:
     return Item("market", market.id, f"Market: {market.name}", "\n".join(lines), pinned=True)
 
 
-def _item(hit: Hit, pinned: bool = False) -> Item:
+def hit_item(hit: Hit, pinned: bool = False) -> Item:
     return Item(hit.kind, hit.ref, hit.title, hit.content, hit.meta, pinned)
 
 
@@ -170,7 +170,7 @@ def interleave(rankings: list[list]) -> list:
     return list(merged)
 
 
-def _search(
+def search_queries(
     conn: psycopg.Connection,
     embedder: Embedder,
     queries: list[str],
@@ -235,15 +235,15 @@ def retrieve(
 
     # Mistakes: the ones tagged for this request, and the best few found by searching.
     for hit in chunks_with_tags(conn, "mistake", mistake_tags(brief, failed_rules)):
-        pin(_item(hit, pinned=True))
-    for hit in _search(conn, embedder, queries, settings, kinds=["mistake"])[
+        pin(hit_item(hit, pinned=True))
+    for hit in search_queries(conn, embedder, queries, settings, kinds=["mistake"])[
         :_MISTAKES_FROM_SEARCH
     ]:
-        pin(_item(hit, pinned=True))
+        pin(hit_item(hit, pinned=True))
 
     candidates = [
-        _item(hit)
-        for hit in _search(conn, embedder, queries, settings)
+        hit_item(hit)
+        for hit in search_queries(conn, embedder, queries, settings)
         if (hit.kind, hit.ref) not in pinned
     ]
     return Retrieved(queries, list(pinned.values()), candidates[: settings.candidate_limit])

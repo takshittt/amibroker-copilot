@@ -160,12 +160,15 @@ def finish_brief(model_brief: _ModelBrief, market: Market, timeframe: str) -> Br
     )
 
 
+def wrap_block(tag: str, text: str) -> str:
+    """Puts text someone else wrote inside a delimited block it cannot close early."""
+    safe = text.replace(f"</{tag}", f"< /{tag}").replace(f"<{tag}", f"< {tag}")
+    return f"<{tag}>\n{safe}\n</{tag}>"
+
+
 def wrap_user_text(text: str) -> str:
-    """Puts the user's words in a delimited block they cannot close early."""
-    safe = text.replace("</user_request", "< /user_request").replace(
-        "<user_request", "< user_request"
-    )
-    return f"<user_request>\n{safe}\n</user_request>"
+    """The user's request, as data for the model."""
+    return wrap_block("user_request", text)
 
 
 def build_brief(

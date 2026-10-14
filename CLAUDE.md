@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 5 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; and the Write pipeline in `api/copilot/pipeline/`, with a command-line tool and an eval runner. **The pipeline has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, and nothing has been run against Supabase (see `.claude/changes/`). Next is stage 6, Review and Fix-from-error. There is no API yet, and no `web/` side.
+The design is accepted. Stages 0 to 6 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; and all three modes (Write, Review with "apply all fixes", Fix-from-error) in `api/copilot/pipeline/`, each with a command-line tool, plus eval sets and a runner. **Everything that involves the model has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, and nothing has been run against Supabase (see `.claude/changes/`). Next is stage 7, the API. There is no `web/` side yet.
 
 ## Commands
 
@@ -19,7 +19,9 @@ Run from the repository root. Python is managed by `uv` (Python 3.12).
 - Auto-fix lint and formatting: `make format`
 - Compare `/kb` with saved pages of the official reference (by hand, needs the network once to fetch): `cd api && uv run python -m copilot.kb.importer fetch <dir>`, then `compare <dir> ../kb`
 - Write AFL for one request (real OpenAI calls; needs `OPENAI_API_KEY`, `STRONG_MODEL` and `CHEAP_MODEL` in `.env`): `make write MARKET=nse_fo TIMEFRAME=5min TEXT="..."`
+- Review an AFL file, or fix one from an AmiBroker error (real OpenAI calls): `make review MARKET=... TIMEFRAME=... FILE=...` (add `APPLY=1` to rewrite it), `make fix MARKET=... TIMEFRAME=... FILE=... ERROR="..."`
 - Run the Write test set (real OpenAI calls, costs money): `make evals`
+- Run the Review test set through the checker only (free, no key, no database): `make evals-review` (ends with the measures; `verified_recall` must be 1.00 and `verified_false_alarms` 0). With the AI review too (real calls): `make evals-review-ai`
 - Validate the knowledge base: `make validate-kb` (ends with "KB ok: ..." or lists every problem and fails)
 
 ## Verifying your work
@@ -61,7 +63,8 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 - The knowledge base tables are a copy of `/kb`, written only by the indexer. Never edit those rows by hand or from other code.
 - A migration file that has been applied is never edited; a schema change is a new numbered file.
 - Tests never call OpenAI. Code that needs embeddings takes an `Embedder` and code that needs the model takes an `LLM`; tests pass `FakeEmbedder` and `ScriptedLLM`.
-- Text the user typed reaches a prompt only through `wrap_user_text`, inside `<user_request>` tags.
+- Text the user typed or pasted reaches a prompt only through `wrap_block` (or `wrap_user_text`), inside tags such as `<user_request>`, `<pasted_code>` and `<amibroker_error>`.
+- When a checker rule changes, run `make evals-review`. A planted bug that is no longer found, or a new false alarm, is a regression.
 - A written answer is "checked" only when the checker reports nothing at all, every requirement id is covered, and no out-of-scope function is used. Never relax this to make a run pass.
 - Model ids have no defaults in code. They come from `STRONG_MODEL` and `CHEAP_MODEL`.
 - Every KB change bumps `kb_version` and goes through a pull request. Every user-reported bug becomes a new eval case.

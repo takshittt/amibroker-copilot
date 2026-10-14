@@ -76,3 +76,39 @@ def test_unknown_market_is_treated_as_one_that_closes(run):
     source = ENTRIES + "Sell = Cross(EMA(Close, 21), EMA(Close, 9));\n"
     rules = {f.rule for f in run(source, timeframe="hourly", market_id="moon").findings}
     assert RULE in rules
+
+
+def test_time_filter_on_entries_does_not_leak_into_the_exit_through_exrem(found):
+    # Sell = ExRem(Sell, Buy) mentions Buy, and Buy has a time filter. That
+    # does not make Sell an end-of-day exit.
+    source = (
+        "CanEnter = TimeNum() <= 143000;\n"
+        "Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND CanEnter;\n"
+        "Sell = Cross(EMA(Close, 21), EMA(Close, 9));\n"
+        "Buy = ExRem(Buy, Sell);\n"
+        "Sell = ExRem(Sell, Buy);\n"
+    )
+    (finding,) = found(source, RULE, timeframe="5min")
+    assert "Sell" in finding.message
+
+
+def test_exit_that_copies_the_other_sides_entry_is_not_an_end_of_day_exit(found):
+    source = (
+        "CanEnter = TimeNum() <= 143000;\n"
+        "Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND CanEnter;\n"
+        "Short = Cross(EMA(Close, 21), EMA(Close, 9)) AND CanEnter;\n"
+        "Sell = Short;\n"
+        "Cover = Buy;\n"
+    )
+    assert len(found(source, RULE, timeframe="5min")) == 2
+
+
+def test_exit_with_its_own_time_test_still_passes_when_cleaned_with_exrem(found):
+    source = (
+        'ExitTime = ParamTime("Exit", "15:15");\n'
+        "Buy = Cross(EMA(Close, 9), EMA(Close, 21)) AND TimeNum() <= 143000;\n"
+        "Sell = Cross(EMA(Close, 21), EMA(Close, 9)) OR TimeNum() >= ExitTime;\n"
+        "Buy = ExRem(Buy, Sell);\n"
+        "Sell = ExRem(Sell, Buy);\n"
+    )
+    assert found(source, RULE, timeframe="5min") == []

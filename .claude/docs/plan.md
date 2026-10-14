@@ -112,6 +112,77 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
 
+## Stage 6: Review and Fix-from-error
+
+Status: built. The checker half is proven on a test set. **The model
+half has only run against a scripted model**: AI-suggested findings and
+the rewritten code are owed until the OpenAI key is available.
+
+**Files** (all new unless noted)
+`api/copilot/pipeline/review.py`, `rewrite.py`, `fix_error.py`,
+`tracking.py`; the commands `api/copilot/review.py` and `fix.py`;
+`evals/review/*.afl` (32 samples); tests. Changed: `evals.py` (a
+`review` mode beside `write`), `prompts.py`, `search.py`, `config.py`,
+the `eod_exit` rule, `Makefile`.
+
+**What each mode does**
+- **Review**: the checker runs first; its findings are labelled
+  Verified. The model is then shown the code, those findings, the
+  functions the code calls, and the mistake entries, and asked only for
+  what the checker cannot see; its findings are labelled AI-suggested.
+  The two are never merged.
+- **Apply all fixes**: the model rewrites the code to fix the listed
+  findings, the checker examines the result, and what still fails goes
+  back, up to the attempt limit.
+- **Fix-from-error**: the error text is read for its number, line and
+  column, matched to our own note on that error, and the code is
+  corrected the same way.
+
+**What was decided while building it**
+- If the model fails during a review, the Verified findings are still
+  returned, with a note that the AI review could not be completed.
+- A review never says code is correct. With no findings it says so and
+  adds that this proves nothing; after a checker crash it says there
+  are no Verified findings and that this does not mean the code is fine.
+- AI findings with a line number outside the code are kept but shown as
+  about the whole code. At most 15 are shown (a setting).
+- The mistake entries that no rule catches are always shown to the
+  reviewing model: they are the list of what it is there to find.
+- Corrected pasted code is "checked" when the checker has no Critical
+  or Warning finding. A Tip does not fail it, unlike newly written
+  code, because it is the trader's own code; the Tip is passed on.
+- When fixing, functions already in the trader's code stay allowed,
+  even from areas v1 does not write.
+- Fixes for AI-suggested findings cannot be verified, and the answer
+  says so. A fix from an error says it has not been compiled, since we
+  never run AFL.
+- Pasted code and pasted error text reach the model only inside
+  `<pasted_code>` and `<amibroker_error>` blocks, as data.
+
+**Proof**
+- `make evals-review` runs 32 samples through the checker: 17 planted
+  bugs the checker must find, 10 only a reader can find, 6 clean
+  samples. Result: 17 of 17 found, no false alarm. A test repeats this
+  on every run, so a rule change that loses a bug fails CI.
+- Findings carry "Verified" or "AI-suggested" in every result and in
+  the command's output; tests assert both.
+- Owed: `make evals-review-ai`, which scores the 10 AI-only bugs.
+
+**A checker fault found by the test set and fixed**
+The first run found 16 of 17. `eod_exit` missed an intraday strategy
+with no end-of-day exit, because `Sell = ExRem(Sell, Buy)` mentions
+`Buy` and `Buy` had a time filter. The rule now ignores the other
+signals when it asks whether an exit depends on the time.
+
+**Known gaps**
+- The 32 samples are made from the 8 strategy examples in `/kb`, which
+  the reviewing model is also shown as notes. That is fine for the
+  checker's score but may flatter the AI score.
+- An AI finding counts as correct when it is within three lines of the
+  planted bug; nothing checks that it names the right problem.
+- A review looks at one piece of code. It does not know the trader's
+  intent beyond the code's own comments and names.
+
 ## Stage 5: Write pipeline
 
 Status: built and tested against a scripted model. **Not yet run with a
@@ -228,9 +299,11 @@ and `test_mistakes_seed.py`)
   name in its title now ranks beside the function itself.
 
 **Known gaps**
-- `eod_exit` accepts any exit that depends on `TimeNum()` at all. An
-  exit built from an opening-range level, which is worked out from the
-  time, passes even with no end-of-day exit.
+- `eod_exit` accepts any exit whose own condition depends on
+  `TimeNum()`. An exit built from an opening-range level, which is
+  worked out from the time, passes even with no end-of-day exit.
+  (Stage 6 closed the related gap where a time filter on entries was
+  counted through `ExRem`.)
 - The four mistakes with no rule are caught only by the AI review, which
   does not exist until stage 6.
 - More examples and error notes will be wanted as the eval set grows.

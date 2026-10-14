@@ -7,7 +7,7 @@ nothing to report and every requirement is accounted for.
 
 import time
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 import psycopg
 
@@ -25,6 +25,7 @@ from copilot.pipeline.retrieve import (
     allowed_function_names,
     retrieve,
 )
+from copilot.pipeline.tracking import AttemptRecord, RunRecord, cost
 
 TIME_ZONE_NOTE = (
     "This code uses the time of each bar. AmiBroker reads that time from your data, so if "
@@ -32,7 +33,7 @@ TIME_ZONE_NOTE = (
     "Check the first and last bar of a session on an intraday chart before relying on them."
 )
 _TIME_FUNCTIONS = frozenset(["timenum", "paramtime"])
-_ERROR_MESSAGES = {
+ERROR_MESSAGES = {
     "rate_limited": "The service is busy right now. Please try again in a minute.",
     "unavailable": "The AI service could not be reached. Please try again.",
     "rejected": "The AI service refused the request. This is a setup problem on our side.",
@@ -82,30 +83,6 @@ class CheckLine:
 
     name: str
     outcome: str  # passed, failed or skipped
-
-
-@dataclass(frozen=True)
-class AttemptRecord:
-    number: int
-    failed_rules: tuple[str, ...]
-    problem_count: int
-
-
-@dataclass(frozen=True)
-class RunRecord:
-    """The trace of one run. Stage 7 writes it to the `runs` table."""
-
-    attempts: int = 0
-    history: tuple[AttemptRecord, ...] = ()
-    calls: dict = field(default_factory=dict)
-    tokens_in: dict = field(default_factory=dict)
-    tokens_out: dict = field(default_factory=dict)
-    cost_usd: float | None = None
-    latency_ms: int = 0
-    model_versions: dict = field(default_factory=dict)
-    kb_version: int = 0
-    retrieved: tuple[tuple[str, str], ...] = ()  # (kind, ref) of every item given to the model
-    notes: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -180,7 +157,7 @@ def scope_problems(code: str, catalog: Catalog) -> list[Problem]:
     return problems
 
 
-def _checker_problems(result: CheckResult) -> list[Problem]:
+def checker_problems(result: CheckResult) -> list[Problem]:
     return [
         Problem("checker", f.rule, f.message, f.line, f.severity, f.fix_hint)
         for f in result.findings
@@ -194,29 +171,13 @@ def _panel(result: CheckResult, coverage: list[Problem], scope: list[Problem]) -
     return lines
 
 
-def _doc_links(code: str, catalog: Catalog) -> tuple[tuple[str, str], ...]:
+def doc_links_for(code: str, catalog: Catalog) -> tuple[tuple[str, str], ...]:
     links = []
     for name in called_functions(code):
         record = catalog.function(name)
         if record is not None:
             links.append((record.name, record.doc_url))
     return tuple(links)
-
-
-def _cost(meter: UsageMeter, settings: Settings) -> float | None:
-    """Dollars spent on model calls, or None when a price is not configured."""
-    prices = {
-        settings.strong_model: (settings.strong_price_in, settings.strong_price_out),
-        settings.cheap_model: (settings.cheap_price_in, settings.cheap_price_out),
-    }
-    total = 0.0
-    for model in meter.calls:
-        price_in, price_out = prices.get(model, (None, None))
-        if price_in is None or price_out is None:
-            return None
-        total += meter.tokens_in.get(model, 0) * price_in / 1_000_000
-        total += meter.tokens_out.get(model, 0) * price_out / 1_000_000
-    return round(total, 6)
 
 
 def _retry_queries(problems: list[Problem]) -> tuple[str, ...]:
@@ -259,7 +220,7 @@ def run_write(
             calls=dict(meter.calls),
             tokens_in=dict(meter.tokens_in),
             tokens_out=dict(meter.tokens_out),
-            cost_usd=_cost(meter, settings),
+            cost_usd=cost(meter, settings),
             latency_ms=int((time.monotonic() - started) * 1000),
             model_versions={
                 "strong": settings.strong_model,
@@ -342,7 +303,7 @@ def run_write(
                 )
             coverage = coverage_problems(brief, generation)
             scope = scope_problems(generation.code, deps.catalog)
-            problems = [*_checker_problems(result), *coverage, *scope]
+            problems = [*checker_problems(result), *coverage, *scope]
             panel = _panel(result, coverage, scope)
             rules = tuple(dict.fromkeys(problem.rule for problem in problems))
             history.append(AttemptRecord(attempt, rules, len(problems)))
@@ -375,7 +336,7 @@ def run_write(
         )
     except LLMError as error:
         return WriteResult(
-            status="error", run=record(), brief=brief, message=_ERROR_MESSAGES[error.kind]
+            status="error", run=record(), brief=brief, message=ERROR_MESSAGES[error.kind]
         )
     except Cancelled:
         return WriteResult(status="cancelled", run=record(), brief=brief)
@@ -409,6 +370,6 @@ def _answer(
         explanation_blocks=blocks,
         checks=tuple(panel),
         problems=tuple(problems),
-        doc_links=_doc_links(generation.code, catalog),
+        doc_links=doc_links_for(generation.code, catalog),
         notes=tuple(dict.fromkeys(notes)),
     )

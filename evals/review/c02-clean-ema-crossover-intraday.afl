@@ -1,0 +1,47 @@
+// context: timeframe=5min market=nse_fo
+// planted: none
+
+_SECTION_BEGIN("Intraday EMA crossover");
+
+// Session times: change these for another market or data feed.
+FirstEntryTime = ParamTime("First entry", "09:30");
+LastEntryTime = ParamTime("Last entry", "14:30");
+ExitTime = ParamTime("Exit time", "15:15");
+
+FastLen = Param("Fast EMA", 9, 2, 50, 1);
+SlowLen = Param("Slow EMA", 21, 5, 200, 1);
+
+SetTradeDelays(0, 0, 0, 0);
+SetPositionSize(1, spsShares);
+
+tn = TimeNum();
+CanEnter = tn >= FirstEntryTime AND tn <= LastEntryTime;
+DayEnd = tn >= ExitTime;
+
+Fast = EMA(Close, FastLen);
+Slow = EMA(Close, SlowLen);
+CrossUp = Cross(Fast, Slow);
+CrossDown = Cross(Slow, Fast);
+
+Buy = CrossUp AND CanEnter;
+Sell = CrossDown OR DayEnd;
+Short = CrossDown AND CanEnter;
+Cover = CrossUp OR DayEnd;
+
+BuyPrice = Close;
+SellPrice = Close;
+ShortPrice = Close;
+CoverPrice = Close;
+
+Buy = ExRem(Buy, Sell);
+Sell = ExRem(Sell, Buy);
+Short = ExRem(Short, Cover);
+Cover = ExRem(Cover, Short);
+
+Plot(Close, "Close", colorDefault, styleCandle);
+Plot(Fast, "Fast EMA", colorGreen, styleLine);
+Plot(Slow, "Slow EMA", colorRed, styleLine);
+PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+PlotShapes(Short * shapeDownArrow, colorRed, 0, High);
+
+_SECTION_END();

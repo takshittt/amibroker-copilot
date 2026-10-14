@@ -1,0 +1,42 @@
+// context: timeframe=5min market=nse_fo
+// planted: verified lookahead_ref
+
+_SECTION_BEGIN("Opening range breakout");
+
+// Session times: change these for another market or data feed.
+RangeEndTime = ParamTime("Opening range ends", "09:30");
+LastEntryTime = ParamTime("Last entry", "14:30");
+ExitTime = ParamTime("Exit time", "15:15");
+
+SetTradeDelays(0, 0, 0, 0);
+SetPositionSize(1, spsShares);
+
+tn = TimeNum();
+NewDay = DateNum() != Ref(DateNum(), -1);
+RangeDone = tn >= RangeEndTime;
+RangeJustDone = RangeDone AND NOT Ref(RangeDone, -1);
+
+// High and low of the session up to the bar before the range ended.
+RangeHigh = ValueWhen(RangeJustDone, Ref(HighestSince(NewDay, High), 1));
+RangeLow = ValueWhen(RangeJustDone, Ref(LowestSince(NewDay, Low), -1));
+
+CanEnter = RangeDone AND tn <= LastEntryTime;
+StopHit = Low < RangeLow;
+DayEnd = tn >= ExitTime;
+
+Buy = CanEnter AND High > RangeHigh;
+BuyPrice = Max(Open, RangeHigh);
+
+Sell = StopHit OR DayEnd;
+SellPrice = IIf(StopHit, Min(Open, RangeLow), Close);
+
+Buy = ExRem(Buy, Sell);
+Sell = ExRem(Sell, Buy);
+
+Plot(Close, "Close", colorDefault, styleCandle);
+Plot(RangeHigh, "Range high", colorGreen, styleDashed);
+Plot(RangeLow, "Range low", colorRed, styleDashed);
+PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+PlotShapes(Sell * shapeDownArrow, colorRed, 0, High);
+
+_SECTION_END();

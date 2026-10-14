@@ -1,0 +1,37 @@
+// context: timeframe=15min market=mcx
+// planted: ai 25 The comparison is reversed, so Sell is true all day until the exit time
+//
+// Meant to close the trade at the exit time.
+
+_SECTION_BEGIN("Commodity intraday breakout");
+
+// Session times: take these from the market preset. The MCX close
+// moves with US daylight saving.
+LastEntryTime = ParamTime("Last entry", "22:30");
+ExitTime = ParamTime("Exit time", "23:15");
+
+Lookback = Param("Breakout bars", 20, 5, 100, 1);
+AtrMultiple = Param("ATR multiple", 2, 1, 5, 0.5);
+
+SetTradeDelays(0, 0, 0, 0);
+SetPositionSize(1, spsShares);
+
+tn = TimeNum();
+Level = Ref(HHV(High, Lookback), -1);
+
+Buy = High > Level AND tn <= LastEntryTime;
+BuyPrice = Max(Open, Level);
+
+Sell = tn <= ExitTime;
+SellPrice = Close;
+
+ApplyStop(stopTypeTrailing, stopModePoint, AtrMultiple * ATR(14), True, True);
+
+Buy = ExRem(Buy, Sell);
+Sell = ExRem(Sell, Buy);
+
+Plot(Close, "Close", colorDefault, styleCandle);
+Plot(Level, "Breakout level", colorGreen, styleDashed);
+PlotShapes(Buy * shapeUpArrow, colorGreen, 0, Low);
+
+_SECTION_END();
