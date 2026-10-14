@@ -1,0 +1,130 @@
+/*
+ * Green-bar listing. The paper is continuous-form printer paper, ink is
+ * blue-black, and colour only ever means something: green stamp for a
+ * check that passed, red pen for one that failed, graphite pencil for
+ * what the AI suggests.
+ */
+
+:root {
+  --paper: #fbfcf8;
+  --band: #e7f0e4;
+  --rule: #c9d6c6;
+  --ink: #1d2532;
+  --ink-soft: #4a5566;
+  --pass: #16693d;
+  --pass-wash: #e3f1e8;
+  --fail: #b42318;
+  --fail-wash: #fbe9e7;
+  --pencil: #5c6370;
+  --pencil-wash: #eef0f3;
+  --focus: #2459c8;
+
+  --font-text: var(--font-atkinson), "Segoe UI", system-ui, sans-serif;
+  --font-code: var(--font-victor), ui-monospace, "Cascadia Mono", monospace;
+
+  /* Type scale: a perfect fourth from 1rem. */
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.333rem;
+  --step-2: 1.777rem;
+  --step-3: 2.369rem;
+
+  --line: 1.5rem; /* one printed line of the listing */
+  --gutter: 1.5rem;
+  --radius: 3px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16201d;
+    --band: #1b2824;
+    --rule: #2c3b36;
+    --ink: #dce6df;
+    --ink-soft: #a3b2aa;
+    --pass: #63c08e;
+    --pass-wash: #1c3327;
+    --fail: #f2766b;
+    --fail-wash: #3a2221;
+    --pencil: #a7aebb;
+    --pencil-wash: #232b2f;
+    --focus: #8fb4ff;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  margin: 0;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.18em;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-code);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Reduced motion must win over every component's own timing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: it must override every component */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: it must override every component */
+    transition-duration: 0.01ms !important;
+  }
+}

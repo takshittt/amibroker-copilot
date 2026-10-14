@@ -41,3 +41,55 @@ jobs:
       - run: make lint
       - run: make test
       - run: make validate-kb
+
+  web:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: copilot
+          POSTGRES_PASSWORD: copilot
+          POSTGRES_DB: copilot_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U copilot"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:8-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://copilot:copilot@localhost:5432/copilot_dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - run: cd web && pnpm install --frozen-lockfile
+      - run: cd web && pnpm lint
+      - run: cd web && pnpm test
+      - run: cd web && pnpm build
+        env:
+          API_URL: http://127.0.0.1:8000
+          JWT_SECRET: ci-build-secret-that-is-at-least-32-bytes
+          BFF_SHARED_SECRET: ci-build-key-that-is-at-least-32-bytes-long
+      # The browser tests run against the offline demo API and a real database.
+      - run: make db-migrate
+      - run: make index FAKE=1
+      - run: cd web && pnpm exec playwright install --with-deps chromium
+      - run: cd web && pnpm e2e

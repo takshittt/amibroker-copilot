@@ -68,6 +68,15 @@ code. The AI is never the source of truth for them.
 - **Supabase**: Postgres with the pgvector extension. FastAPI connects
   over TLS.
 
+**The BFF in practice** (`web/app/api/*`, `web/lib/server/`): each route
+checks the session cookie, forwards to FastAPI with the token, the shared
+key and the browser's IP, and passes the reply back unchanged, streams
+included. Requests that change something must come from the site's own
+origin. The token is never sent to the browser. For development and the
+browser tests, `make demo` runs the real API with scripted answers in
+place of OpenAI; it refuses to start without `OFFLINE_DEMO=1` and listens
+only on 127.0.0.1.
+
 **Why a BFF (Next.js proxies to FastAPI)**
 The browser never talks to FastAPI directly. There's no CORS, and the
 session JWT sits in an httpOnly cookie that page scripts can't read.

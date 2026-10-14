@@ -1,0 +1,134 @@
+.listing {
+  margin: 0;
+  border-block: 1px solid var(--rule);
+  overflow-x: auto;
+  /* Sprocket holes down the left edge of continuous-form paper. */
+  background-image: radial-gradient(
+    circle at 0.7rem 50%,
+    var(--paper) 0.22rem,
+    transparent 0.24rem
+  );
+  background-size: 1.4rem calc(var(--line) * 2);
+}
+
+/* The sheet is as wide as its longest line; on a narrow screen the
+   listing scrolls sideways rather than cutting code off. */
+.sheet {
+  width: max-content;
+  min-width: 100%;
+  display: grid;
+  /* Show exactly what must be typed: no ">=" drawn as one symbol. */
+  font-variant-ligatures: none;
+  font-feature-settings:
+    "liga" 0,
+    "calt" 0;
+  grid-template-columns: minmax(max-content, 1fr);
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+  line-height: var(--line);
+  padding-inline-start: 1.4rem;
+}
+
+[data-has-notes] .sheet {
+  grid-template-columns: minmax(max-content, 1fr) minmax(16rem, 22rem);
+}
+
+.row {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: 3ch 1.5rem max-content;
+  align-items: center;
+}
+
+.row[data-band] {
+  background: var(--band);
+}
+
+.number {
+  color: var(--ink-soft);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.gutter {
+  display: grid;
+  place-items: center;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: help;
+}
+
+.mark[data-kind="fail"] {
+  color: var(--paper);
+  background: var(--fail);
+}
+
+.mark[data-kind="tip"] {
+  color: var(--fail);
+  border: 1.5px solid var(--fail);
+}
+
+.mark[data-kind="ai"] {
+  color: var(--pencil);
+  border: 1.5px dashed var(--pencil);
+  font-family: var(--font-code);
+  font-style: italic;
+}
+
+.code {
+  white-space: pre;
+  padding-inline: 0.5rem 1rem;
+}
+
+.row[data-mark="fail"] .code {
+  text-decoration: underline wavy var(--fail);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.row[data-mark="ai"] .code {
+  text-decoration: underline dashed var(--pencil);
+  text-underline-offset: 0.3em;
+}
+
+.note {
+  grid-column: 2;
+  position: relative;
+  z-index: 1;
+  align-self: start;
+  margin: 0;
+  padding: 0.1rem 0.75rem 0.4rem 0.9rem;
+  border-inline-start: 2px solid var(--rule);
+  font-family: var(--font-text);
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--ink-soft);
+  background: var(--paper);
+  max-width: none;
+}
+
+.noteLines {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+@media (max-width: 56rem) {
+  [data-has-notes] .sheet {
+    grid-template-columns: minmax(max-content, 1fr);
+  }
+
+  .note {
+    display: none;
+  }
+}
