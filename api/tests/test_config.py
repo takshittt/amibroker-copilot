@@ -55,3 +55,47 @@ def test_flag_that_is_neither():
 def test_dimensions_must_be_a_positive_whole_number(value):
     with pytest.raises(ConfigError, match="EMBEDDING_DIMENSIONS"):
         load_settings({"EMBEDDING_DIMENSIONS": value})
+
+
+# Pipeline settings
+
+
+def test_pipeline_defaults():
+    settings = load_settings({})
+    assert settings.strong_model is None
+    assert settings.cheap_model is None
+    assert settings.max_attempts == 3
+    assert settings.rerank_keep == 10
+    assert settings.search_limit == 30
+    assert settings.strong_price_in is None
+
+
+def test_pipeline_values_come_from_the_environment():
+    settings = load_settings(
+        {
+            "STRONG_MODEL": "strong-id",
+            "CHEAP_MODEL": "cheap-id",
+            "MAX_ATTEMPTS": "2",
+            "RERANK_KEEP": "8",
+            "MAX_REQUEST_CHARS": "500",
+            "STRONG_PRICE_IN": "2.5",
+            "STRONG_PRICE_OUT": "10",
+        }
+    )
+    assert (settings.strong_model, settings.cheap_model) == ("strong-id", "cheap-id")
+    assert settings.max_attempts == 2
+    assert settings.rerank_keep == 8
+    assert settings.max_request_chars == 500
+    assert (settings.strong_price_in, settings.strong_price_out) == (2.5, 10.0)
+    assert settings.cheap_price_in is None
+
+
+@pytest.mark.parametrize("value", ["cheap", "-1"])
+def test_price_must_be_a_number_not_below_zero(value):
+    with pytest.raises(ConfigError, match="STRONG_PRICE_IN"):
+        load_settings({"STRONG_PRICE_IN": value})
+
+
+def test_max_attempts_must_be_at_least_one():
+    with pytest.raises(ConfigError, match="MAX_ATTEMPTS"):
+        load_settings({"MAX_ATTEMPTS": "0"})

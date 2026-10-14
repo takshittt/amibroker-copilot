@@ -88,3 +88,16 @@ def vector_search(
         (literal, kinds, kinds, literal, limit),
     ).fetchall()
     return _hits(rows)
+
+
+def chunks_with_tags(conn: psycopg.Connection, kind: str, tags: list[str]) -> list[Hit]:
+    """Every chunk of a kind that carries at least one of the tags. Not a
+    search: nothing is ranked, and the order is by ref."""
+    if not tags:
+        return []
+    rows = conn.execute(
+        f"select {_COLUMNS}, 0 as score from kb_chunks "
+        "where kind = %s and tags && %s::text[] order by ref",
+        (kind, tags),
+    ).fetchall()
+    return _hits(rows)

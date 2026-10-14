@@ -1,0 +1,12 @@
+id: ma-crossover-daily
+market: nse_eq
+timeframe: daily
+difficulty: easy
+request: >-
+  Buy when the 20-day simple moving average crosses above the 50-day one
+  and sell when it crosses back below. Long only. Trade at the next day's
+  open and show buy and sell arrows on the chart.
+expect:
+  status: checked
+  retrieved: [MA, Cross]
+  calls: [MA, Cross, SetTradeDelays, ExRem, PlotShapes]

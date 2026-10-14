@@ -4,7 +4,7 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 4b of the plan are done: `api/copilot/kb/` holds the KB record formats and loaders; `/kb` holds all 447 AFL functions, the built-ins, the v1 markets, 14 mistake entries, 12 concept notes, 10 example strategies and 19 error notes; `api/copilot/checker/` holds the checker with its 10 rules; and the Postgres schema, the indexer and the keyword and vector searches exist. Next is stage 5, the Write pipeline. There is no pipeline or API yet, and no `web/` side. Nothing has been run against Supabase or with real OpenAI calls yet (see `.claude/changes/`).
+The design is accepted. Stages 0 to 5 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; and the Write pipeline in `api/copilot/pipeline/`, with a command-line tool and an eval runner. **The pipeline has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, and nothing has been run against Supabase (see `.claude/changes/`). Next is stage 6, Review and Fix-from-error. There is no API yet, and no `web/` side.
 
 ## Commands
 
@@ -18,6 +18,8 @@ Run from the repository root. Python is managed by `uv` (Python 3.12).
 - Lint: `make lint` (ends with "All checks passed!" and "N files already formatted")
 - Auto-fix lint and formatting: `make format`
 - Compare `/kb` with saved pages of the official reference (by hand, needs the network once to fetch): `cd api && uv run python -m copilot.kb.importer fetch <dir>`, then `compare <dir> ../kb`
+- Write AFL for one request (real OpenAI calls; needs `OPENAI_API_KEY`, `STRONG_MODEL` and `CHEAP_MODEL` in `.env`): `make write MARKET=nse_fo TIMEFRAME=5min TEXT="..."`
+- Run the Write test set (real OpenAI calls, costs money): `make evals`
 - Validate the knowledge base: `make validate-kb` (ends with "KB ok: ..." or lists every problem and fails)
 
 ## Verifying your work
@@ -58,7 +60,10 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 - The pipeline is plain Python steps. Do not add an agent framework or an auth library.
 - The knowledge base tables are a copy of `/kb`, written only by the indexer. Never edit those rows by hand or from other code.
 - A migration file that has been applied is never edited; a schema change is a new numbered file.
-- Tests never call OpenAI. Code that needs embeddings takes an `Embedder`, and tests pass the fake one.
+- Tests never call OpenAI. Code that needs embeddings takes an `Embedder` and code that needs the model takes an `LLM`; tests pass `FakeEmbedder` and `ScriptedLLM`.
+- Text the user typed reaches a prompt only through `wrap_user_text`, inside `<user_request>` tags.
+- A written answer is "checked" only when the checker reports nothing at all, every requirement id is covered, and no out-of-scope function is used. Never relax this to make a run pass.
+- Model ids have no defaults in code. They come from `STRONG_MODEL` and `CHEAP_MODEL`.
 - Every KB change bumps `kb_version` and goes through a pull request. Every user-reported bug becomes a new eval case.
 
 ## Documentation layout

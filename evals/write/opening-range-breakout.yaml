@@ -1,0 +1,12 @@
+id: opening-range-breakout
+market: nse_fo
+timeframe: 5min
+difficulty: hard
+request: >-
+  Bank Nifty opening range breakout. Take the high and low of the first 15
+  minutes. Buy if price goes above that high, with a stop at the low of
+  the range. No new trades after 2:30 and exit at 3:15. Long only, one lot.
+expect:
+  status: checked
+  retrieved: [TimeNum, ValueWhen]
+  calls: [TimeNum, ParamTime, SetTradeDelays]

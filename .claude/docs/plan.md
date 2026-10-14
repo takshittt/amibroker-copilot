@@ -112,6 +112,73 @@ Status: done. Takshit verified the market session times on 2026-10-14.
    the v1 markets with both MCX seasonal rules.
 6. Add a CI step that validates every file in `/kb`.
 
+## Stage 5: Write pipeline
+
+Status: built and tested against a scripted model. **Not yet run with a
+real model.** The stage's proof (10 sample requests give checked code;
+the eval runner reports the spec section 10 measures) is owed until the
+OpenAI key and the model ids are available. See
+`.claude/changes/2026-10-14-build-without-openai-key.md`.
+
+**Files** (all new)
+`api/copilot/pipeline/`: `llm.py`, `prompts.py`, `brief.py`,
+`decompose.py`, `retrieve.py`, `rerank.py`, `generate.py`,
+`orchestrator.py`, `setup.py`; `api/copilot/write.py` (the command);
+`api/copilot/evals.py` (the eval runner); `evals/write/*.yaml` (10
+tasks); tests in `api/tests/pipeline/` and `api/tests/db/`. Changed:
+`config.py` (model ids, limits, prices), `search.py`, the checker
+(`called_functions`), `Makefile` (`make write`, `make evals`, and it now
+reads `.env`).
+
+**What was decided while building it**
+- **When an answer counts as checked.** The checker must report nothing
+  at all, not even a Tip, every requirement must be accounted for, and
+  no function may come from an area v1 does not write. Generated code
+  is held to a stricter standard than pasted code, because CLAUDE.md
+  requires generated timings to be parameters.
+- **Model ids have no defaults.** `STRONG_MODEL` and `CHEAP_MODEL` must
+  be set; the commands refuse to run without them. The ids in the
+  design ("GPT-6.1 Sol", "GPT-6 Luna") are unconfirmed.
+- **The brief gained `kind`** (strategy, indicator or exploration) and
+  `goal`. Entry, exit and direction are required only for a strategy.
+- **Clarifying questions are fixed sentences chosen by code**, one for
+  each missing field, two at most. The model does not write them.
+- **Each requirement gets an id** (R1, R2, ...). The model must map
+  every id to lines of code. A missing id is fed back like a checker
+  finding and, if still missing at the end, listed as a failed check.
+- **`functions_used` is not asked of the model.** The functions and the
+  doc links are read from the code itself.
+- **Merging search results.** Keyword and vector results are merged
+  with Reciprocal Rank Fusion for each query, and the queries' lists
+  are then interleaved. Summing ranks across all queries, as first
+  written, let notes that were middling for every part crowd out the
+  best note for one part.
+- **Functions the user names** are looked up exactly only when the word
+  is clearly a function: followed by a bracket, spelt as AmiBroker
+  spells it with internal capitals, or an all-capitals name of three or
+  more letters. Many function names are ordinary words (Max, Day, Hold).
+- **Mistakes shown to the model** are chosen by tag from the KB:
+  `backtest` for every strategy, `intraday` for intraday timeframes, the
+  rule's own entry after a failed check, plus the best three found by
+  searching.
+- **The generator sees** full notes for retrieved items, and the bare
+  names of every function in the categories v1 writes from, built from
+  the Catalog at run time.
+- **If reranking fails**, the search order is used and the run record
+  says so.
+- **A checker crash** ends the run at once with "not checked".
+
+**Deferred to stage 7**
+Writing the run record to the `runs` table, the quota and spend cap,
+caching query embeddings in Redis, and wiring the stop flag to a client
+disconnect.
+
+**Known gaps**
+- The prompts have never met a real model.
+- The eval set has 10 tasks; the spec wants 60 to 100.
+- A request that mixes several strategies, or asks for a change to
+  earlier code, is not handled: follow-up messages come with the API.
+
 ## Stage 4b: KB content
 
 Status: done. `kb_version` is 4. All of it is written in our own words;

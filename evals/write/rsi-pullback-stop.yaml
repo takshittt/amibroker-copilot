@@ -1,0 +1,12 @@
+id: rsi-pullback-stop
+market: nse_eq
+timeframe: daily
+difficulty: medium
+request: >-
+  Buy stocks that are above their 200 day moving average when RSI(14)
+  falls below 30, and sell when RSI goes back above 55. Use a 5% stop loss
+  and put 10% of my capital in each trade. Long only.
+expect:
+  status: checked
+  retrieved: [RSI, MA, ApplyStop, SetPositionSize]
+  calls: [RSI, MA, ApplyStop, SetPositionSize, SetTradeDelays]

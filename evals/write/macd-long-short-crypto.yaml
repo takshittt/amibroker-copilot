@@ -1,0 +1,12 @@
+id: macd-long-short-crypto
+market: crypto
+timeframe: hourly
+difficulty: easy
+request: >-
+  On hourly bars, go long when MACD crosses above its signal line and
+  reverse to short when it crosses below. Always in the market. Trade at
+  the next bar's open.
+expect:
+  status: checked
+  retrieved: [MACD, Signal, Cross]
+  calls: [MACD, Signal, Cross, SetTradeDelays]
