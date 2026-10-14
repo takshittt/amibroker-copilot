@@ -450,7 +450,21 @@ the daily totals copied into `runs` for analytics.
 | GET | `/v1/conversations/{id}` | Messages + code + findings |
 | GET | `/v1/markets` | Market presets |
 | GET | `/v1/me/usage` | Used / remaining today |
+| POST | `/v1/messages/{id}/apply-fixes` | Review's "apply all fixes" on that review's findings → **SSE stream** |
 | POST | `/v1/messages/{id}/feedback` | Thumbs up/down + comment |
+| GET | `/v1/health` | Status and `kb_version` (still needs the BFF key) |
+
+A message's mode comes from its conversation. In Write, a follow-up
+message is a change to the conversation's latest code, and a reply to a
+clarifying question is added to the request that prompted it.
+
+The stream sends `status` events (`{"stage": ...}`), then one of
+`clarify`, `result` or `error`, each with the saved message's id. A
+comment line goes out every 15 seconds while waiting. When the client
+disconnects, the run stops at its next step.
+
+Errors are JSON: `{"error": {"code": ..., "message": ...}}`. Another
+user's conversation or message answers 404, as if it did not exist.
 
 Every call except the two auth routes carries `Authorization: Bearer <JWT>`
 (HS256, `user_id` in `sub`). The BFF puts the `token` from the auth routes
@@ -460,6 +474,13 @@ including the two auth routes, also carries `X-Internal-Key` (section 2).
 **Quota rule**: 20 units per user per day to start (config value); one
 unit per completed answer. Clarifying questions and
 internal retries are free for the user.
+
+A unit is taken before the run starts (and before the user's message is
+saved) and given back if the run ends without an answer: a clarifying
+question, an error, or a cancelled run. Taking it first stops two
+requests at once from both getting past the limit. The day runs from
+midnight to midnight in `QUOTA_TIMEZONE` (India time by default). The
+daily spend cap is checked the same way and needs every model price set.
 
 ## 9. Scale and cost
 

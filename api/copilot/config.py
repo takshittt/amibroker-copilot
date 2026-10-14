@@ -37,6 +37,22 @@ class Settings:
     max_code_bytes: int = 30_000  # largest pasted code accepted (Review, Fix-from-error)
     max_error_chars: int = 2000  # longest pasted AmiBroker error text accepted
     max_ai_findings: int = 15  # AI-suggested findings shown for one review
+
+    # API. The two secrets are shared with the website (BFF) and must be at
+    # least 32 bytes; the API refuses to start without them.
+    jwt_secret: str | None = None
+    bff_shared_secret: str | None = None
+    redis_url: str | None = None
+    token_days: int = 7
+    daily_quota: int = 20  # answers per user per day
+    daily_spend_cap_usd: float | None = None  # all users together; needs the prices above
+    quota_timezone: str = "Asia/Kolkata"  # when the day, and so the quota, starts again
+    login_attempts: int = 10  # per email and per IP, in each window
+    login_window_seconds: int = 900
+    signups_per_ip_per_hour: int = 5
+    keepalive_seconds: int = 15  # a comment on the stream so proxies keep it open
+    max_body_bytes: int = 100_000
+    db_pool_size: int = 10
     llm_timeout_seconds: int = 60
 
     # US dollars for a million tokens, to work out what a run cost.
@@ -106,6 +122,23 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         max_error_chars=_whole_number(env, "MAX_ERROR_CHARS", Settings.max_error_chars),
         max_ai_findings=_whole_number(env, "MAX_AI_FINDINGS", Settings.max_ai_findings),
         llm_timeout_seconds=_whole_number(env, "LLM_TIMEOUT_SECONDS", Settings.llm_timeout_seconds),
+        jwt_secret=env.get("JWT_SECRET", "") or None,
+        bff_shared_secret=env.get("BFF_SHARED_SECRET", "") or None,
+        redis_url=env.get("REDIS_URL", "").strip() or None,
+        token_days=_whole_number(env, "TOKEN_DAYS", Settings.token_days),
+        daily_quota=_whole_number(env, "DAILY_QUOTA", Settings.daily_quota),
+        daily_spend_cap_usd=_price(env, "DAILY_SPEND_CAP_USD"),
+        quota_timezone=env.get("QUOTA_TIMEZONE", "").strip() or Settings.quota_timezone,
+        login_attempts=_whole_number(env, "LOGIN_ATTEMPTS", Settings.login_attempts),
+        login_window_seconds=_whole_number(
+            env, "LOGIN_WINDOW_SECONDS", Settings.login_window_seconds
+        ),
+        signups_per_ip_per_hour=_whole_number(
+            env, "SIGNUPS_PER_IP_PER_HOUR", Settings.signups_per_ip_per_hour
+        ),
+        keepalive_seconds=_whole_number(env, "KEEPALIVE_SECONDS", Settings.keepalive_seconds),
+        max_body_bytes=_whole_number(env, "MAX_BODY_BYTES", Settings.max_body_bytes),
+        db_pool_size=_whole_number(env, "DB_POOL_SIZE", Settings.db_pool_size),
         strong_price_in=_price(env, "STRONG_PRICE_IN"),
         strong_price_out=_price(env, "STRONG_PRICE_OUT"),
         cheap_price_in=_price(env, "CHEAP_PRICE_IN"),

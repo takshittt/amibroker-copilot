@@ -4,14 +4,15 @@ AFL Copilot: a website where a signed-in trader gets AFL (AmiBroker Formula Lang
 
 ## Current state
 
-The design is accepted. Stages 0 to 6 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; and all three modes (Write, Review with "apply all fixes", Fix-from-error) in `api/copilot/pipeline/`, each with a command-line tool, plus eval sets and a runner. **Everything that involves the model has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, and nothing has been run against Supabase (see `.claude/changes/`). Next is stage 7, the API. There is no `web/` side yet.
+The design is accepted. Stages 0 to 7 of the plan are built: the KB formats, loaders and content in `/kb`; the checker with its 10 rules; the Postgres schema, indexer and searches; all three modes (Write, Review with "apply all fixes", Fix-from-error) in `api/copilot/pipeline/`, with command-line tools and eval sets; and the API in `api/copilot/api/` (auth, BFF key, conversations, event stream, quota, spend cap) with an admin command. **Everything that involves the model has only ever run against a scripted model.** No real OpenAI call has been made, the model ids are unconfirmed, nothing has been run against Supabase, and nothing is deployed (see `.claude/changes/`). Next is stage 8, the website. There is no `web/` side yet.
 
 ## Commands
 
 Run from the repository root. Python is managed by `uv` (Python 3.12).
 
 - Start local Postgres and Redis: `make services-up` (Docker must be running: `colima start`). Stop them: `make services-down`
-- Test: `make test` (ends with "N passed"). The database tests need `make services-up` first; if the database is not reachable they are skipped and the summary says "N skipped"
+- Run the API on port 8000: `make api` (needs every setting in `.env.example`, including the OpenAI key and model ids). Give a user a new password: `make reset-password EMAIL=...`
+- Test: `make test` (ends with "N passed"). The database, Redis and API tests need `make services-up` first; if those are not reachable they are skipped and the summary says "N skipped". The API tests create and wipe their own database (`copilot_api_test`) and Redis database 15
 - Apply database migrations: `make db-migrate` (uses `DATABASE_URL`, default the `copilot_dev` database from `docker-compose.yml`)
 - Load `/kb` into the database: `make index` (needs `OPENAI_API_KEY`), or `make index FAKE=1` for made-up vectors
 - One test: `cd api && uv run pytest tests/test_smoke.py::test_package_imports`
@@ -67,6 +68,9 @@ The principle behind every choice: **the LLM writes; deterministic code decides 
 - When a checker rule changes, run `make evals-review`. A planted bug that is no longer found, or a new false alarm, is a regression.
 - A written answer is "checked" only when the checker reports nothing at all, every requirement id is covered, and no out-of-scope function is used. Never relax this to make a run pass.
 - Model ids have no defaults in code. They come from `STRONG_MODEL` and `CHEAP_MODEL`.
+- Every API route, including health, refuses a request without the BFF key, before anything else runs. Never add an exception.
+- A run takes a unit of quota before anything is saved and gives it back if no answer comes. A failure must never cost the user quota.
+- API errors are JSON (`{"error": {"code", "message"}}`) and never show internals; another user's data answers 404.
 - Every KB change bumps `kb_version` and goes through a pull request. Every user-reported bug becomes a new eval case.
 
 ## Documentation layout

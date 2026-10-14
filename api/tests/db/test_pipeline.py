@@ -110,6 +110,7 @@ def run(indexed, catalog):
         market="nse_eq",
         timeframe="daily",
         settings=SETTINGS,
+        previous_code="",
         **options,
     ):
         deps = Deps(
@@ -119,7 +120,7 @@ def run(indexed, catalog):
             embedder=FakeEmbedder(DEFAULT_EMBEDDING_DIMENSIONS),
             settings=settings,
         )
-        return run_write(WriteRequest(text, market, timeframe), deps, **options)
+        return run_write(WriteRequest(text, market, timeframe, previous_code), deps, **options)
 
     return _run
 
@@ -522,3 +523,39 @@ def test_each_part_of_the_brief_brings_its_own_notes(found):
 def test_extra_queries_are_searched_too(found):
     result = found(extra_queries=("Super Trend",))
     assert "Super Trend" in result.queries
+
+
+# Follow-up messages: a change to the conversation's current code
+
+
+def test_follow_up_shows_the_current_code_and_asks_for_a_change(run):
+    brief = {
+        **BRIEF,
+        "entry": "",
+        "exit": "",
+        "direction": "unknown",
+        "stops": ["3% stop loss"],
+        "goal": "Add a 3% stop loss.",
+    }
+    model = Model(
+        [
+            generation(
+                GOOD_CODE + "ApplyStop(stopTypeLoss, stopModePercent, 3, True);\n", covered(10)
+            )
+        ],
+        brief=brief,
+    )
+    deps_run = run(model, text="Add a 3% stop loss.", previous_code=GOOD_CODE)
+    # Entry, exit and direction come from the existing code, so nothing is asked.
+    assert deps_run.status == "checked"
+    brief_prompt = model.prompts_for("brief")[0]
+    assert "the request may be a change to it" in brief_prompt
+    assert "<pasted_code>\nFastLen = Param" in brief_prompt
+    prompt = model.prompts_for("generation")[0]
+    assert "keep everything else as it is" in prompt
+    assert "  6  Buy = Cross(Fast, Slow);" in prompt
+
+
+def test_first_message_with_missing_parts_is_still_asked_about(run):
+    model = Model([], brief={**BRIEF, "entry": ""})
+    assert run(model).status == "clarify"
