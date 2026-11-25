@@ -2,7 +2,7 @@
 
 An AI assistant for **AmiBroker Formula Language (AFL)**. It helps traders who aren't strong programmers get AFL code they can trust. It's built mainly for Indian retail algo traders on NSE, BSE and MCX.
 
-> 🚧 **Status:** in development. All three modes, the API and the website are built. It has not been deployed yet.
+> 🌐 **Try it live:** [amibroker-copilot.vercel.app](https://amibroker-copilot.vercel.app)
 
 ## What it does
 
